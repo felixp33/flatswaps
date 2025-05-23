@@ -41,7 +41,7 @@ export default function Testimonials({ testimonials }: TestimonialsProps) {
 									))}
 								</div>
 							</div>
-							<p className="text-gray-600 dark:text-gray-300 italic">"{testimonial.text}"</p>
+							<p className="text-gray-600 dark:text-gray-300 italic">&ldquo;{testimonial.text}&rdquo;</p>
 						</div>
 					))}
 				</div>
