@@ -1,6 +1,6 @@
 // src/app/profile/messages/page.tsx
 import ProfileLayout from "@/components/profile/ProfileLayout";
-import { MessageCircle, Search, Phone, Video, MoreVertical, Send, Paperclip, Smile, Star, MapPin } from "lucide-react";
+import { MessageCircle, Search, Phone, Video, MoreVertical, Send, Paperclip, Smile, MapPin } from "lucide-react";
 import Image from "next/image";
 
 export default function MessagesPage() {

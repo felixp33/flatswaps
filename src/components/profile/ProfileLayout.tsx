@@ -4,7 +4,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { User, Home, Calendar, MessageCircle, Settings, Star, MapPin, Bell } from "lucide-react";
+import { User, Home, Calendar, MessageCircle, Settings, Star, MapPin } from "lucide-react";
 
 interface ProfileLayoutProps {
 	children: React.ReactNode;
