@@ -1,10 +1,10 @@
-// Updated ProfileLayout.tsx with new navigation structure
+// src/app/profile/page.tsx
 "use client";
 
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { User, Home, Calendar, MessageCircle, Settings, Star, MapPin, Bell, Heart, Users, Search } from "lucide-react";
+import { User, Home, Calendar, MessageCircle, Settings, Star, MapPin, Heart } from "lucide-react";
 
 interface ProfileLayoutProps {
 	children: React.ReactNode;

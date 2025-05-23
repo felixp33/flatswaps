@@ -3,8 +3,6 @@ import ProfileLayout from "@/components/profile/ProfileLayout";
 import {
 	Heart,
 	MapPin,
-	Calendar,
-	Users,
 	Star,
 	MessageCircle,
 	Eye,
@@ -14,7 +12,6 @@ import {
 	Clock,
 	CheckCircle,
 	XCircle,
-	ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -272,7 +269,7 @@ export default function MatchesPage() {
 									{/* Message Preview */}
 									<div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg mb-4">
 										<p className="text-sm text-gray-700 dark:text-gray-300 italic">
-											"{match.messagePreview}"
+											&ldquo;{match.messagePreview}&rdquo;
 										</p>
 									</div>
 								</div>
