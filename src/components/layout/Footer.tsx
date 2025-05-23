@@ -4,8 +4,20 @@ import Link from "next/link";
 export default function Footer() {
 	const currentYear = new Date().getFullYear();
 
+	// Define the interface for footer links
+	interface FooterLink {
+		name: string;
+		href: string;
+		external?: boolean;
+	}
+
+	interface FooterSection {
+		title: string;
+		links: FooterLink[];
+	}
+
 	// Footer navigation sections
-	const footerSections = [
+	const footerSections: FooterSection[] = [
 		{
 			title: "Company",
 			links: [
@@ -45,7 +57,7 @@ export default function Footer() {
 	];
 
 	return (
-		<footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+		<footer className="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
 			<div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
 				<div className="grid grid-cols-2 md:grid-cols-4 gap-8">
 					{footerSections.map((section) => (

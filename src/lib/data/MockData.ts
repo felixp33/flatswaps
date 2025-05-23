@@ -1,6 +1,5 @@
 // src/lib/data/mockData.ts
-
-import { Destination, Property, Testimonial } from "@/types";
+import { Property, Destination, Testimonial } from "@/types";
 
 // Featured properties for the homepage
 export const featuredProperties: Property[] = [
@@ -11,8 +10,7 @@ export const featuredProperties: Property[] = [
 		price: "$150",
 		rating: 4.9,
 		reviews: 128,
-		imageUrl:
-			"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
+		imageUrl: "/images/property-1.png",
 		isSwapAvailable: true,
 		features: {
 			bedrooms: 2,
@@ -27,8 +25,7 @@ export const featuredProperties: Property[] = [
 		price: "$220",
 		rating: 4.8,
 		reviews: 97,
-		imageUrl:
-			"https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2274&q=80",
+		imageUrl: "/images/property-2.png",
 		isSwapAvailable: false,
 		features: {
 			bedrooms: 3,
@@ -43,8 +40,7 @@ export const featuredProperties: Property[] = [
 		price: "$180",
 		rating: 4.7,
 		reviews: 76,
-		imageUrl:
-			"https://images.unsplash.com/photo-1613545325278-f24b0cae1224?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
+		imageUrl: "/images/property-3.png",
 		isSwapAvailable: true,
 		features: {
 			bedrooms: 4,
@@ -59,41 +55,62 @@ export const popularDestinations: Destination[] = [
 	{
 		name: "London",
 		properties: 1250,
-		imageUrl:
-			"https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
+		imageUrl: "/images/destination-london.png",
 	},
 	{
 		name: "Paris",
 		properties: 980,
-		imageUrl:
-			"https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2787&q=80",
+		imageUrl: "/images/destination-paris.png",
 	},
 	{
 		name: "Tokyo",
 		properties: 1420,
-		imageUrl:
-			"https://images.unsplash.com/photo-1503899036084-c55cdd92da26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2787&q=80",
+		imageUrl: "/images/destination-tokyo.png",
 	},
 	{
 		name: "Barcelona",
 		properties: 865,
-		imageUrl:
-			"https://images.unsplash.com/photo-1583422409516-2895a77efded?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
+		imageUrl: "/images/destination-barcelona.png",
+	},
+];
+
+// Testimonials for the homepage
+export const testimonials: Testimonial[] = [
+	{
+		id: "1",
+		name: "Emma Thompson",
+		location: "London, UK",
+		text: "FlatSwaps made it so easy to exchange my London apartment for a beautiful beach house in Barcelona. The process was smooth, and I saved thousands on accommodation costs.",
+		avatar: "/images/avatar-1.png",
+	},
+	{
+		id: "2",
+		name: "James Rodriguez",
+		location: "Madrid, Spain",
+		text: "As someone who travels frequently for work, FlatSwaps has been a game-changer. I've stayed in amazing homes and met wonderful people all over the world.",
+		avatar: "/images/avatar-2.png",
+	},
+	{
+		id: "3",
+		name: "Sophie Chen",
+		location: "Singapore",
+		text: "The verification system gave me peace of mind when swapping my home. Everything was exactly as described, and my swap partners left my place spotless.",
+		avatar: "/images/avatar-3.png",
 	},
 ];
 
 // Hero images that can be randomly selected or rotated
 export const heroImages = [
 	{
-		url: "https://images.unsplash.com/photo-1501183638710-841dd1904471?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80",
+		url: "/images/hero-background.png",
 		alt: "Beautiful modern home with garden",
 	},
 	{
-		url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+		url: "/images/hero-background-2.png",
 		alt: "Cozy apartment with ocean view",
 	},
 	{
-		url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2053&q=80",
+		url: "/images/hero-background-3.png",
 		alt: "Stylish living room with large windows",
 	},
 ];
@@ -119,35 +136,5 @@ export const faqs = [
 		question: "Can I rent my property instead of swapping?",
 		answer:
 			"Absolutely! FlatSwaps allows you to list your property for both swapping and traditional rentals. You can choose one or both options, and set different availability and rates for each. This gives you maximum flexibility to utilize your property however works best for you.",
-	},
-];
-
-// Extract from src/lib/data/mockData.ts
-
-// Testimonials for the homepage
-export const testimonials: Testimonial[] = [
-	{
-		id: "1",
-		name: "Emma Thompson",
-		location: "London, UK",
-		text: "FlatSwaps made it so easy to exchange my London apartment for a beautiful beach house in Barcelona. The process was smooth, and I saved thousands on accommodation costs.",
-		avatar:
-			"https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2787&q=80",
-	},
-	{
-		id: "2",
-		name: "James Rodriguez",
-		location: "Madrid, Spain",
-		text: "As someone who travels frequently for work, FlatSwaps has been a game-changer. I've stayed in amazing homes and met wonderful people all over the world.",
-		avatar:
-			"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2787&q=80",
-	},
-	{
-		id: "3",
-		name: "Sophie Chen",
-		location: "Singapore",
-		text: "The verification system gave me peace of mind when swapping my home. Everything was exactly as described, and my swap partners left my place spotless.",
-		avatar:
-			"https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2861&q=80",
 	},
 ];
