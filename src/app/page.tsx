@@ -6,8 +6,9 @@ import HowItWorks from "@/components/landing/HowItWorks";
 import FeaturedProperties from "@/components/landing/FeaturedProperties";
 import PopularDestinations from "@/components/landing/PopularDestination";
 import Testimonials from "@/components/landing/Testimonials";
-import { featuredProperties, popularDestinations, testimonials } from "@/lib/data/MockData";
+import FAQSection from "@/components/landing/FAQSection";
 import CtaSection from "@/components/landing/CTASection";
+import { featuredProperties, popularDestinations, testimonials } from "@/lib/data/MockData";
 
 export default function HomePage() {
 	return (
@@ -19,6 +20,7 @@ export default function HomePage() {
 				<FeaturedProperties properties={featuredProperties} />
 				<PopularDestinations destinations={popularDestinations} />
 				<Testimonials testimonials={testimonials} />
+				<FAQSection />
 				<CtaSection />
 			</main>
 			<Footer />

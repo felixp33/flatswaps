@@ -48,7 +48,7 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 	];
 
 	return (
-		<div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+		<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
 			{/* Mobile sidebar backdrop */}
 			{isSidebarOpen && (
 				<div className="fixed inset-0 z-40 lg:hidden" onClick={() => setIsSidebarOpen(false)}>
@@ -59,13 +59,13 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 			{/* Sidebar */}
 			<div
 				className={`
-        fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0
+        fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 lg:flex lg:flex-col
         ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
       `}
 			>
 				<div className="flex flex-col h-full">
 					{/* Sidebar header */}
-					<div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+					<div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
 						<Link href="/" className="text-xl font-bold text-blue-600">
 							flatswaps
 						</Link>
@@ -81,7 +81,7 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 					</div>
 
 					{/* User profile summary */}
-					<div className="p-4 border-b border-gray-200 dark:border-gray-700">
+					<div className="p-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
 						<div className="flex items-center">
 							<div className="h-12 w-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-lg">
 								JD
@@ -138,7 +138,7 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 					</nav>
 
 					{/* Sidebar footer */}
-					<div className="p-4 border-t border-gray-200 dark:border-gray-700">
+					<div className="p-4 border-t border-gray-200 dark:border-gray-700 flex-shrink-0">
 						<Link
 							href="/"
 							className="flex items-center text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
@@ -158,9 +158,9 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 			</div>
 
 			{/* Main content */}
-			<div className="lg:pl-64">
+			<div className="flex-1 flex flex-col min-w-0">
 				{/* Mobile header */}
-				<div className="lg:hidden bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-2">
+				<div className="lg:hidden bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-2 flex-shrink-0">
 					<button
 						className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
 						onClick={() => setIsSidebarOpen(true)}
@@ -173,7 +173,7 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 				</div>
 
 				{/* Page content */}
-				<main className="flex-1">{children}</main>
+				<main className="flex-1 overflow-hidden">{children}</main>
 			</div>
 		</div>
 	);
