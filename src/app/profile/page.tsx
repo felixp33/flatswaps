@@ -13,6 +13,7 @@ import {
 	Award,
 	Users,
 	Clock,
+	Search,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -59,10 +60,10 @@ export default function ProfileOverview() {
 			icon: Heart,
 		},
 		{
-			type: "property_updated",
-			message: "Updated property photos",
+			type: "search_created",
+			message: "Created new search for London trip",
 			time: "3 weeks ago",
-			icon: Edit,
+			icon: Search,
 		},
 	];
 
@@ -182,6 +183,17 @@ export default function ProfileOverview() {
 						</Link>
 
 						<Link
+							href="/profile/searches"
+							className="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+						>
+							<Search className="h-5 w-5 text-orange-600 mr-3" />
+							<div>
+								<p className="text-sm font-medium text-gray-900 dark:text-white">My Searches</p>
+								<p className="text-xs text-gray-500 dark:text-gray-400">Find swap partners</p>
+							</div>
+						</Link>
+
+						<Link
 							href="/profile/messages"
 							className="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
 						>
@@ -200,17 +212,6 @@ export default function ProfileOverview() {
 							<div>
 								<p className="text-sm font-medium text-gray-900 dark:text-white">Matches</p>
 								<p className="text-xs text-gray-500 dark:text-gray-400">5 new matches</p>
-							</div>
-						</Link>
-
-						<Link
-							href="/list-property"
-							className="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-						>
-							<TrendingUp className="h-5 w-5 text-purple-600 mr-3" />
-							<div>
-								<p className="text-sm font-medium text-gray-900 dark:text-white">Add Property</p>
-								<p className="text-xs text-gray-500 dark:text-gray-400">List new home</p>
 							</div>
 						</Link>
 					</div>

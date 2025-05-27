@@ -4,7 +4,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { User, Home, Calendar, MessageCircle, Heart, Settings, Star, MapPin } from "lucide-react";
+import { User, Home, Search, MessageCircle, Heart, Settings, Star, MapPin } from "lucide-react";
 
 interface ProfileLayoutProps {
 	children: React.ReactNode;
@@ -14,7 +14,7 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const pathname = usePathname();
 
-	// Unified navigation items - consolidating both versions
+	// Updated navigation items with Searches replacing Bookings & Swaps
 	const navigationItems = [
 		{
 			name: "Overview",
@@ -29,10 +29,10 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 			description: "Manage your listings and property details",
 		},
 		{
-			name: "Bookings & Swaps",
-			href: "/profile/bookings",
-			icon: Calendar,
-			description: "View your reservations and exchanges",
+			name: "Searches",
+			href: "/profile/searches",
+			icon: Search,
+			description: "Find and manage searches for swap partners",
 		},
 		{
 			name: "Messages",
