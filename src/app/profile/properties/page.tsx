@@ -18,7 +18,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function MyProperties() {
-	// Mock properties data
+	// Mock properties data with local images
 	const properties = [
 		{
 			id: "1",
@@ -27,8 +27,7 @@ export default function MyProperties() {
 			price: "$150",
 			rating: 4.9,
 			reviews: 28,
-			imageUrl:
-				"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
+			imageUrl: "/images/properties/modern-loft-manhattan.png",
 			isSwapAvailable: true,
 			isActive: true,
 			features: {
@@ -49,8 +48,7 @@ export default function MyProperties() {
 			price: "$85",
 			rating: 4.7,
 			reviews: 15,
-			imageUrl:
-				"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+			imageUrl: "/images/properties/cozy-studio-brooklyn.png",
 			isSwapAvailable: false,
 			isActive: false,
 			features: {
@@ -63,6 +61,27 @@ export default function MyProperties() {
 				thisMonth: 0,
 			},
 			lastBooked: "2024-01-22",
+		},
+		{
+			id: "3",
+			title: "Spacious Family Home",
+			location: "Queens, NY, USA",
+			price: "$120",
+			rating: 4.8,
+			reviews: 19,
+			imageUrl: "/images/properties/family-home-queens.png",
+			isSwapAvailable: true,
+			isActive: true,
+			features: {
+				bedrooms: 3,
+				bathrooms: 2,
+				guests: 6,
+			},
+			bookings: {
+				upcoming: 2,
+				thisMonth: 5,
+			},
+			lastBooked: "2024-03-10",
 		},
 	];
 

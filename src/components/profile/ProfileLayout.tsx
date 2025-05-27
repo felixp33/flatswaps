@@ -4,7 +4,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { User, Home, Calendar, MessageCircle, Settings, Star, MapPin } from "lucide-react";
+import { User, Home, Calendar, MessageCircle, Heart, Settings, Star, MapPin } from "lucide-react";
 
 interface ProfileLayoutProps {
 	children: React.ReactNode;
@@ -14,6 +14,7 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const pathname = usePathname();
 
+	// Unified navigation items - consolidating both versions
 	const navigationItems = [
 		{
 			name: "Overview",
@@ -38,6 +39,14 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 			href: "/profile/messages",
 			icon: MessageCircle,
 			description: "Communicate with other members",
+			badge: 3, // Unread messages count
+		},
+		{
+			name: "Matches",
+			href: "/profile/matches",
+			icon: Heart,
+			description: "View potential matches and swap opportunities",
+			badge: 5, // New matches count
 		},
 		{
 			name: "Settings",
@@ -59,9 +68,9 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 			{/* Sidebar */}
 			<div
 				className={`
-        fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 lg:flex lg:flex-col
-        ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
-      `}
+          fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 lg:flex lg:flex-col
+          ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
+        `}
 			>
 				<div className="flex flex-col h-full">
 					{/* Sidebar header */}
@@ -111,7 +120,7 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 									key={item.name}
 									href={item.href}
 									className={`
-                    group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors
+                    group flex items-center justify-between px-2 py-2 text-sm font-medium rounded-md transition-colors
                     ${
 								isActive
 									? "bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200"
@@ -120,18 +129,25 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
                   `}
 									onClick={() => setIsSidebarOpen(false)}
 								>
-									<Icon
-										className={`
-                    mr-3 h-5 w-5 flex-shrink-0
-                    ${isActive ? "text-blue-500" : "text-gray-400 group-hover:text-gray-500"}
-                  `}
-									/>
-									<div>
-										<div>{item.name}</div>
-										<div className="text-xs text-gray-500 dark:text-gray-400 hidden lg:block">
-											{item.description}
+									<div className="flex items-center">
+										<Icon
+											className={`
+                        mr-3 h-5 w-5 flex-shrink-0
+                        ${isActive ? "text-blue-500" : "text-gray-400 group-hover:text-gray-500"}
+                      `}
+										/>
+										<div>
+											<div>{item.name}</div>
+											<div className="text-xs text-gray-500 dark:text-gray-400 hidden lg:block">
+												{item.description}
+											</div>
 										</div>
 									</div>
+									{item.badge && (
+										<span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-500 rounded-full">
+											{item.badge}
+										</span>
+									)}
 								</Link>
 							);
 						})}
