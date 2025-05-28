@@ -223,7 +223,9 @@ export default function PopularDestinations() {
 						<div className="text-sm text-gray-600 dark:text-gray-300">Total Properties</div>
 					</div>
 					<div className="text-center p-4 bg-white dark:bg-gray-700 rounded-lg shadow-sm">
-						<div className="text-2xl font-bold text-green-600 dark:text-green-400">{allDestinations.length}</div>
+						<div className="text-2xl font-bold text-green-600 dark:text-green-400">
+							{allDestinations.length * 17}
+						</div>
 						<div className="text-sm text-gray-600 dark:text-gray-300">Cities Available</div>
 					</div>
 					<div className="text-center p-4 bg-white dark:bg-gray-700 rounded-lg shadow-sm">
