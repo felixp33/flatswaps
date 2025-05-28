@@ -18,7 +18,7 @@ export default function HeroSection() {
 	];
 
 	return (
-		<section className="relative">
+		<section id="hero" className="relative">
 			{/* Hero Image */}
 			<div className="absolute inset-0 z-0 h-[600px] md:h-[600px]">
 				<div className="relative h-full w-full">
