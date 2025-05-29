@@ -9,6 +9,7 @@ interface Destination {
 	properties: number;
 	imageUrl: string;
 	description?: string;
+	tag: string;
 }
 
 export default function PopularDestinations() {
@@ -18,126 +19,151 @@ export default function PopularDestinations() {
 			name: "London",
 			properties: 1250,
 			imageUrl: "/images/destinations/london.png",
+			tag: "🚇 Great Transit",
 		},
 		{
 			name: "Paris",
 			properties: 980,
 			imageUrl: "/images/destinations/paris.png",
+			tag: "🎭 Cultural Immersion",
 		},
 		{
 			name: "Tokyo",
 			properties: 1420,
 			imageUrl: "/images/destinations/tokyo.png",
+			tag: "⭐ Rising Destination",
 		},
 		{
 			name: "Barcelona",
 			properties: 865,
 			imageUrl: "/images/destinations/barcelona.png",
+			tag: "🌙 Vibrant Nightlife",
 		},
 		{
 			name: "Amsterdam",
 			properties: 742,
 			imageUrl: "/images/destinations/amsterdam.png",
+			tag: "🚲 Bike-Friendly",
 		},
 		{
 			name: "Berlin",
 			properties: 623,
 			imageUrl: "/images/destinations/berlin.png",
+			tag: "💰 Budget-Friendly",
 		},
 		{
 			name: "Rome",
 			properties: 891,
 			imageUrl: "/images/destinations/rome.png",
+			tag: "🎓 Historic University",
 		},
 		{
 			name: "New York",
 			properties: 1834,
 			imageUrl: "/images/destinations/newyork.png",
+			tag: "📚 Research Hub",
 		},
 		{
 			name: "Singapore",
 			properties: 456,
 			imageUrl: "/images/destinations/singapore.png",
+			tag: "⭐ Rising Destination",
 		},
 		{
 			name: "Sydney",
 			properties: 567,
 			imageUrl: "/images/destinations/sydney.png",
+			tag: "🌊 Coastal Living",
 		},
 		{
 			name: "Vienna",
 			properties: 389,
 			imageUrl: "/images/destinations/vienna.png",
+			tag: "🎭 Cultural Immersion",
 		},
 		{
 			name: "Copenhagen",
 			properties: 298,
 			imageUrl: "/images/destinations/copenhagen.png",
+			tag: "🚲 Bike-Friendly",
 		},
 		{
 			name: "Prague",
 			properties: 445,
 			imageUrl: "/images/destinations/prague.png",
+			tag: "💰 Budget-Friendly",
 		},
 		{
 			name: "Dublin",
 			properties: 334,
 			imageUrl: "/images/destinations/dublin.png",
+			tag: "🍷 Local Flavors",
 		},
 		{
 			name: "Stockholm",
 			properties: 267,
 			imageUrl: "/images/destinations/stockholm.png",
+			tag: "🌅 Scenic Beauty",
 		},
 		{
 			name: "Heidelberg",
 			properties: 189,
 			imageUrl: "/images/destinations/heidelberg.png",
+			tag: "🏰 Medieval Charm",
 		},
 		{
 			name: "Cambridge",
 			properties: 312,
 			imageUrl: "/images/destinations/cambridge.png",
+			tag: "🎓 Historic University",
 		},
 		{
 			name: "Leuven",
 			properties: 145,
 			imageUrl: "/images/destinations/leuven.png",
+			tag: "🍷 Local Flavors",
 		},
 		{
 			name: "Salamanca",
 			properties: 203,
 			imageUrl: "/images/destinations/salamanca.png",
+			tag: "🏰 Medieval Charm",
 		},
 		{
 			name: "Göttingen",
 			properties: 156,
 			imageUrl: "/images/destinations/gottingen.png",
+			tag: "📚 Research Hub",
 		},
 		{
 			name: "Coimbra",
 			properties: 278,
 			imageUrl: "/images/destinations/coimbra.png",
+			tag: "🎓 Historic University",
 		},
 		{
 			name: "Tübingen",
 			properties: 167,
 			imageUrl: "/images/destinations/tubingen.png",
+			tag: "🌅 Scenic Beauty",
 		},
 		{
 			name: "St. Andrews",
 			properties: 134,
 			imageUrl: "/images/destinations/st-andrews.png",
+			tag: "🌊 Coastal Living",
 		},
 		{
 			name: "Uppsala",
 			properties: 201,
 			imageUrl: "/images/destinations/uppsala.png",
+			tag: "📚 Research Hub",
 		},
 		{
 			name: "Padua",
 			properties: 243,
 			imageUrl: "/images/destinations/padua.png",
+			tag: "🎓 Historic University",
 		},
 	];
 
@@ -145,23 +171,58 @@ export default function PopularDestinations() {
 	const [isFlipping, setIsFlipping] = useState([false, false, false, false]);
 	const [currentCardIndex, setCurrentCardIndex] = useState(0);
 	const [destinationPool, setDestinationPool] = useState<Destination[]>([]);
+	const [screenSize, setScreenSize] = useState<"mobile" | "tablet" | "desktop">("desktop");
 
-	// Initialize with first 4 destinations and create shuffled pool
+	// Detect screen size
 	useEffect(() => {
-		const initial = allDestinations.slice(0, 4);
+		const checkScreenSize = () => {
+			if (window.innerWidth < 640) {
+				setScreenSize("mobile");
+			} else if (window.innerWidth < 1280) {
+				setScreenSize("tablet");
+			} else {
+				setScreenSize("desktop");
+			}
+		};
+
+		checkScreenSize();
+		window.addEventListener("resize", checkScreenSize);
+		return () => window.removeEventListener("resize", checkScreenSize);
+	}, []);
+
+	// Get number of cards based on screen size
+	const getCardCount = () => {
+		switch (screenSize) {
+			case "mobile":
+				return 2;
+			case "tablet":
+				return 3;
+			case "desktop":
+				return 4;
+			default:
+				return 4;
+		}
+	};
+
+	const cardCount = getCardCount();
+
+	// Initialize with first destinations based on screen size
+	useEffect(() => {
+		const initial = allDestinations.slice(0, cardCount);
 		setCurrentDestinations(initial);
+		setIsFlipping(new Array(cardCount).fill(false));
 
 		// Create a pool of remaining destinations for rotation
-		const remaining = allDestinations.slice(4);
-		setDestinationPool([...remaining, ...allDestinations.slice(0, 4)]); // Include initial ones for continuous rotation
-	}, []);
+		const remaining = allDestinations.slice(cardCount);
+		setDestinationPool([...remaining, ...allDestinations.slice(0, cardCount)]);
+	}, [cardCount]);
 
 	// Sequential rotation - one card at a time every 2.5 seconds
 	useEffect(() => {
 		if (currentDestinations.length === 0) return;
 
 		const interval = setInterval(() => {
-			const cardToChange = currentCardIndex;
+			const cardToChange = currentCardIndex % cardCount;
 
 			// Start flip animation for current card
 			setIsFlipping((prev) => {
@@ -191,16 +252,11 @@ export default function PopularDestinations() {
 			}, 250);
 
 			// Move to next card
-			setCurrentCardIndex((prev) => (prev + 1) % 4);
+			setCurrentCardIndex((prev) => (prev + 1) % cardCount);
 		}, 2500); // Change every 2.5 seconds
 
 		return () => clearInterval(interval);
-	}, [currentCardIndex, destinationPool]);
-
-	// Stagger the flip animation for each card
-	const getFlipDelay = (index: number) => {
-		return `${index * 100}ms`;
-	};
+	}, [currentCardIndex, destinationPool, cardCount]);
 
 	return (
 		<section id="destinations" className="py-16 md:py-24 bg-gray-50 dark:bg-gray-800 overflow-hidden">
@@ -214,7 +270,7 @@ export default function PopularDestinations() {
 					</p>
 				</div>
 
-				<div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+				<div className="mt-12 grid gap-6 grid-cols-2 sm:grid-cols-3 xl:grid-cols-4">
 					{currentDestinations.map((destination, index) => (
 						<div
 							key={`${destination.name}-${index}`}
@@ -249,7 +305,7 @@ export default function PopularDestinations() {
 
 									{/* Floating badge */}
 									<div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">
-										✨ Popular
+										{destination.tag}
 									</div>
 
 									{/* Active rotation indicator */}
