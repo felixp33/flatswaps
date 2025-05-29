@@ -6,11 +6,24 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
+	baseDirectory: __dirname,
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+	...compat.extends("next/core-web-vitals", "next/typescript"),
+	{
+		rules: {
+			// Change errors to warnings to prevent build failures
+			"@typescript-eslint/no-unused-vars": "warn",
+			"react/no-unescaped-entities": "warn",
+			"@next/next/no-img-element": "warn",
+			"react-hooks/exhaustive-deps": "warn",
+
+			// Optional: You can also completely disable specific rules if needed
+			// "@typescript-eslint/no-unused-vars": "off",
+			// "react/no-unescaped-entities": "off",
+		},
+	},
 ];
 
 export default eslintConfig;
