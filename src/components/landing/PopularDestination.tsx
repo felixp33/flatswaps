@@ -89,6 +89,56 @@ export default function PopularDestinations() {
 			properties: 267,
 			imageUrl: "/images/destinations/stockholm.png",
 		},
+		{
+			name: "Heidelberg",
+			properties: 189,
+			imageUrl: "/images/destinations/heidelberg.png",
+		},
+		{
+			name: "Cambridge",
+			properties: 312,
+			imageUrl: "/images/destinations/cambridge.png",
+		},
+		{
+			name: "Leuven",
+			properties: 145,
+			imageUrl: "/images/destinations/leuven.png",
+		},
+		{
+			name: "Salamanca",
+			properties: 203,
+			imageUrl: "/images/destinations/salamanca.png",
+		},
+		{
+			name: "Göttingen",
+			properties: 156,
+			imageUrl: "/images/destinations/gottingen.png",
+		},
+		{
+			name: "Coimbra",
+			properties: 278,
+			imageUrl: "/images/destinations/coimbra.png",
+		},
+		{
+			name: "Tübingen",
+			properties: 167,
+			imageUrl: "/images/destinations/tubingen.png",
+		},
+		{
+			name: "St. Andrews",
+			properties: 134,
+			imageUrl: "/images/destinations/st-andrews.png",
+		},
+		{
+			name: "Uppsala",
+			properties: 201,
+			imageUrl: "/images/destinations/uppsala.png",
+		},
+		{
+			name: "Padua",
+			properties: 243,
+			imageUrl: "/images/destinations/padua.png",
+		},
 	];
 
 	const [currentDestinations, setCurrentDestinations] = useState<Destination[]>([]);
