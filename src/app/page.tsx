@@ -8,7 +8,7 @@ import PopularDestinations from "@/components/landing/PopularDestination";
 import Testimonials from "@/components/landing/Testimonials";
 import FAQSection from "@/components/landing/FAQSection";
 import CtaSection from "@/components/landing/CTASection";
-import { featuredProperties, popularDestinations, testimonials } from "@/lib/data/MockData";
+import { featuredProperties, testimonials } from "@/lib/data/MockData";
 
 export default function HomePage() {
 	return (
@@ -18,7 +18,7 @@ export default function HomePage() {
 				<HeroSection />
 				<HowItWorks />
 				<FeaturedProperties properties={featuredProperties} />
-				<PopularDestinations destinations={popularDestinations} />
+				<PopularDestinations />
 				<Testimonials testimonials={testimonials} />
 				<FAQSection />
 				<CtaSection />
