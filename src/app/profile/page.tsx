@@ -1,20 +1,6 @@
 // src/app/profile/page.tsx
 import ProfileLayout from "@/components/profile/ProfileLayout";
-import {
-	Edit,
-	MapPin,
-	Calendar,
-	Star,
-	Shield,
-	Home,
-	MessageCircle,
-	Heart,
-	TrendingUp,
-	Award,
-	Users,
-	Clock,
-	Search,
-} from "lucide-react";
+import { Edit, MapPin, Calendar, Star, Shield, Award } from "lucide-react";
 import Link from "next/link";
 
 export default function ProfileOverview() {
@@ -34,37 +20,10 @@ export default function ProfileOverview() {
 	};
 
 	const stats = [
-		{ label: "Total Swaps", value: "8", icon: Home, color: "text-blue-600" },
+		{ label: "Total Swaps", value: "8", icon: Shield, color: "text-blue-600" },
 		{ label: "Reviews", value: "23", icon: Star, color: "text-yellow-600" },
-		{ label: "Response Rate", value: "95%", icon: MessageCircle, color: "text-green-600" },
+		{ label: "Response Rate", value: "95%", icon: MapPin, color: "text-green-600" },
 		{ label: "Rating", value: "4.9", icon: Award, color: "text-purple-600" },
-	];
-
-	const recentActivity = [
-		{
-			type: "swap_completed",
-			message: "Completed swap with Sarah in Barcelona",
-			time: "2 days ago",
-			icon: Home,
-		},
-		{
-			type: "review_received",
-			message: "Received 5-star review from Marco",
-			time: "1 week ago",
-			icon: Star,
-		},
-		{
-			type: "new_match",
-			message: "New match found in Paris",
-			time: "2 weeks ago",
-			icon: Heart,
-		},
-		{
-			type: "search_created",
-			message: "Created new search for London trip",
-			time: "3 weeks ago",
-			icon: Search,
-		},
 	];
 
 	return (
@@ -167,77 +126,68 @@ export default function ProfileOverview() {
 					})}
 				</div>
 
-				{/* Quick Actions */}
+				{/* Personal Information */}
 				<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-					<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-						<Link
-							href="/profile/properties"
-							className="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-						>
-							<Home className="h-5 w-5 text-blue-600 mr-3" />
-							<div>
-								<p className="text-sm font-medium text-gray-900 dark:text-white">My Properties</p>
-								<p className="text-xs text-gray-500 dark:text-gray-400">Manage listings</p>
-							</div>
-						</Link>
-
-						<Link
-							href="/profile/searches"
-							className="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-						>
-							<Search className="h-5 w-5 text-orange-600 mr-3" />
-							<div>
-								<p className="text-sm font-medium text-gray-900 dark:text-white">My Searches</p>
-								<p className="text-xs text-gray-500 dark:text-gray-400">Find swap partners</p>
-							</div>
-						</Link>
-
-						<Link
-							href="/profile/messages"
-							className="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-						>
-							<MessageCircle className="h-5 w-5 text-green-600 mr-3" />
-							<div>
-								<p className="text-sm font-medium text-gray-900 dark:text-white">Messages</p>
-								<p className="text-xs text-gray-500 dark:text-gray-400">3 unread</p>
-							</div>
-						</Link>
-
-						<Link
-							href="/profile/matches"
-							className="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-						>
-							<Heart className="h-5 w-5 text-pink-600 mr-3" />
-							<div>
-								<p className="text-sm font-medium text-gray-900 dark:text-white">Matches</p>
-								<p className="text-xs text-gray-500 dark:text-gray-400">5 new matches</p>
-							</div>
-						</Link>
+					<div className="flex justify-between items-center mb-6">
+						<h3 className="text-lg font-semibold text-gray-900 dark:text-white">Personal Information</h3>
 					</div>
-				</div>
 
-				{/* Recent Activity */}
-				<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-					<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recent Activity</h3>
-					<div className="space-y-4">
-						{recentActivity.map((activity, index) => {
-							const Icon = activity.icon;
-							return (
-								<div key={index} className="flex items-start space-x-3">
-									<div className="flex-shrink-0 p-2 bg-gray-100 dark:bg-gray-700 rounded-full">
-										<Icon className="h-4 w-4 text-gray-600 dark:text-gray-300" />
-									</div>
-									<div className="flex-1 min-w-0">
-										<p className="text-sm text-gray-900 dark:text-white">{activity.message}</p>
-										<div className="flex items-center mt-1">
-											<Clock className="h-3 w-3 text-gray-400 mr-1" />
-											<p className="text-xs text-gray-500 dark:text-gray-400">{activity.time}</p>
-										</div>
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+						{/* Basic Information */}
+						<div>
+							<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-4">Basic Information</h4>
+							<div className="space-y-3">
+								<div>
+									<label className="text-sm text-gray-500 dark:text-gray-400">First Name</label>
+									<p className="text-gray-900 dark:text-white">John</p>
+								</div>
+								<div>
+									<label className="text-sm text-gray-500 dark:text-gray-400">Last Name</label>
+									<p className="text-gray-900 dark:text-white">Doe</p>
+								</div>
+								<div>
+									<label className="text-sm text-gray-500 dark:text-gray-400">Email</label>
+									<p className="text-gray-900 dark:text-white">{user.email}</p>
+								</div>
+								<div>
+									<label className="text-sm text-gray-500 dark:text-gray-400">Phone</label>
+									<p className="text-gray-900 dark:text-white">+1 (555) 123-4567</p>
+								</div>
+							</div>
+						</div>
+
+						{/* Professional Details */}
+						<div>
+							<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-4">Professional Details</h4>
+							<div className="space-y-3">
+								<div>
+									<label className="text-sm text-gray-500 dark:text-gray-400">Occupation</label>
+									<p className="text-gray-900 dark:text-white">Software Engineer</p>
+								</div>
+								<div>
+									<label className="text-sm text-gray-500 dark:text-gray-400">Company</label>
+									<p className="text-gray-900 dark:text-white">Tech Solutions Inc.</p>
+								</div>
+								<div>
+									<label className="text-sm text-gray-500 dark:text-gray-400">Work Location</label>
+									<p className="text-gray-900 dark:text-white">New York, USA</p>
+								</div>
+								<div>
+									<label className="text-sm text-gray-500 dark:text-gray-400">Languages</label>
+									<div className="flex flex-wrap gap-2 mt-1">
+										<span className="inline-flex items-center px-2 py-1 rounded text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+											English
+										</span>
+										<span className="inline-flex items-center px-2 py-1 rounded text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+											Spanish
+										</span>
+										<span className="inline-flex items-center px-2 py-1 rounded text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+											French
+										</span>
 									</div>
 								</div>
-							);
-						})}
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
