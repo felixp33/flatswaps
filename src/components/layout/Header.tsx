@@ -1,4 +1,6 @@
+// Updated Header component with test login link
 // src/components/layout/Header.tsx
+
 "use client";
 
 import { useState } from "react";
@@ -23,7 +25,7 @@ export default function Header() {
 	const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
 
 	// Simulate logged-in state - In real app, this would come from your auth context/state
-	const isLoggedIn = true; // Change to false to see the login button
+	const isLoggedIn = false; // Changed to false to show login options
 	const user = {
 		name: "John Doe",
 		email: "john.doe@example.com",
@@ -147,13 +149,30 @@ export default function Header() {
 								</Link>
 							</>
 						) : (
-							/* Sign In Button - shown when not logged in */
-							<Link
-								href="/login"
-								className="hidden md:inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-							>
-								Sign In / Register
-							</Link>
+							/* Authentication Options - shown when not logged in */
+							<div className="flex items-center space-x-3">
+								{/* Test Login Link - TEMPORARY */}
+								<Link
+									href="/auth/onboarding/step-1"
+									className="hidden sm:inline-flex items-center px-3 py-2 text-sm font-medium text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 rounded-md hover:bg-orange-100 dark:hover:bg-orange-900/30 border border-orange-200 dark:border-orange-800 transition-colors"
+								>
+									🧪 Test Onboarding
+								</Link>
+
+								<Link
+									href="/auth/signin"
+									className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+								>
+									Sign In
+								</Link>
+
+								<Link
+									href="/auth/signup"
+									className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+								>
+									Sign Up
+								</Link>
+							</div>
 						)}
 
 						{/* Mobile menu button */}
@@ -262,13 +281,32 @@ export default function Header() {
 								</Link>
 							</div>
 						) : (
-							<Link
-								href="/login"
-								className="block px-3 py-2 rounded-md text-base font-medium text-blue-600 hover:bg-gray-50 dark:hover:bg-gray-800"
-								onClick={() => setIsMenuOpen(false)}
-							>
-								Sign In / Register
-							</Link>
+							<div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4 space-y-2">
+								{/* Test Login Link - Mobile */}
+								<Link
+									href="/auth/onboarding/step-1"
+									className="block px-3 py-2 rounded-md text-base font-medium text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/30"
+									onClick={() => setIsMenuOpen(false)}
+								>
+									🧪 Test Onboarding
+								</Link>
+
+								<Link
+									href="/auth/signin"
+									className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
+									onClick={() => setIsMenuOpen(false)}
+								>
+									Sign In
+								</Link>
+
+								<Link
+									href="/auth/signup"
+									className="block px-3 py-2 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-700"
+									onClick={() => setIsMenuOpen(false)}
+								>
+									Sign Up
+								</Link>
+							</div>
 						)}
 					</div>
 				</div>

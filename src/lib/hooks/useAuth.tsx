@@ -4,7 +4,7 @@ import { useState, useEffect, createContext, useContext, ReactNode } from "react
 import { User, SignUpData, AuthContextType } from "@/types/auth";
 
 // Create the Auth Context
-const AuthContextObject = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Auth Provider Component
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -210,12 +210,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		verifyPhone,
 	};
 
-	return <AuthContextObject.Provider value={value}>{children}</AuthContextObject.Provider>;
+	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 // Custom hook to use the Auth Context
 export function useAuth(): AuthContextType {
-	const context = useContext(AuthContextObject);
+	const context = useContext(AuthContext);
 	if (context === undefined) {
 		throw new Error("useAuth must be used within an AuthProvider");
 	}
@@ -223,4 +223,4 @@ export function useAuth(): AuthContextType {
 }
 
 // Export the context for advanced usage if needed
-export { AuthContextObject as AuthContext };
+export { AuthContext };

@@ -75,7 +75,10 @@ export default function OnboardingStep3() {
 			const [parent, child] = field.split(".");
 			setPropertyData((prev) => ({
 				...prev,
-				[parent]: { ...prev[parent as keyof PropertyData], [child]: value },
+				[parent]: {
+					...(prev[parent as keyof PropertyData] as object),
+					[child]: value,
+				},
 			}));
 		} else {
 			setPropertyData((prev) => ({ ...prev, [field]: value }));

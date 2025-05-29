@@ -59,7 +59,10 @@ export default function OnboardingStep1() {
 			const [parent, child] = field.split(".");
 			setFormData((prev) => ({
 				...prev,
-				[parent]: { ...prev[parent as keyof ProfileSetupData], [child]: value },
+				[parent]: {
+					...(prev[parent as keyof ProfileSetupData] as object),
+					[child]: value,
+				},
 			}));
 		} else {
 			setFormData((prev) => ({ ...prev, [field]: value }));
