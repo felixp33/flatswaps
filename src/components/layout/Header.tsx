@@ -1,4 +1,4 @@
-// Updated Header component with test login link
+// Simplified Header component
 // src/components/layout/Header.tsx
 
 "use client";
@@ -25,7 +25,7 @@ export default function Header() {
 	const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
 
 	// Simulate logged-in state - In real app, this would come from your auth context/state
-	const isLoggedIn = false; // Changed to false to show login options
+	const isLoggedIn = true; // Changed to true to show profile for testing
 	const user = {
 		name: "John Doe",
 		email: "john.doe@example.com",
@@ -33,31 +33,7 @@ export default function Header() {
 			"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2787&q=80",
 	};
 
-	// Navigation items - updated to scroll to sections on landing page
-	const navigation = [
-		{ name: "Home", href: "/", section: "hero" },
-		{ name: "How It Works", href: "/#how-it-works", section: "how-it-works" },
-		{ name: "Properties", href: "/#properties", section: "properties" },
-		{ name: "Destinations", href: "/#destinations", section: "destinations" },
-		{ name: "Testimonials", href: "/#testimonials", section: "testimonials" },
-	];
-
-	// Function to handle smooth scrolling to sections
-	const handleSectionScroll = (e: React.MouseEvent, sectionId: string) => {
-		e.preventDefault();
-
-		// If we're not on the home page, navigate there first
-		if (pathname !== "/") {
-			window.location.href = `/#${sectionId}`;
-			return;
-		}
-
-		// Smooth scroll to section
-		const element = document.getElementById(sectionId);
-		if (element) {
-			element.scrollIntoView({ behavior: "smooth" });
-		}
-	};
+	// No navigation items needed
 
 	return (
 		<header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
@@ -70,21 +46,7 @@ export default function Header() {
 						</Link>
 					</div>
 
-					{/* Desktop Navigation */}
-					<nav className="hidden md:flex space-x-8">
-						{navigation.map((item) => (
-							<Link
-								key={item.name}
-								href={item.href}
-								onClick={(e) => (item.section !== "hero" ? handleSectionScroll(e, item.section) : undefined)}
-								className={`text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium transition-colors ${
-									pathname === item.href ? "text-blue-600 dark:text-blue-400" : ""
-								}`}
-							>
-								{item.name}
-							</Link>
-						))}
-					</nav>
+					{/* Desktop Navigation - Removed */}
 
 					{/* Right side - Auth or Profile */}
 					<div className="flex items-center space-x-4">
@@ -130,50 +92,47 @@ export default function Header() {
 							)}
 						</div>
 
-						{isLoggedIn ? (
-							<>
-								{/* Profile Link */}
-								<Link
-									href="/profile"
-									className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
-								>
-									<div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-sm">
-										{user.name
-											.split(" ")
-											.map((n) => n[0])
-											.join("")}
-									</div>
-									<span className="hidden md:block text-sm font-medium text-gray-700 dark:text-gray-300">
-										{user.name.split(" ")[0]}
-									</span>
-								</Link>
-							</>
-						) : (
-							/* Authentication Options - shown when not logged in */
-							<div className="flex items-center space-x-3">
-								{/* Test Login Link - TEMPORARY */}
-								<Link
-									href="/auth/onboarding/step-1"
-									className="hidden sm:inline-flex items-center px-3 py-2 text-sm font-medium text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 rounded-md hover:bg-orange-100 dark:hover:bg-orange-900/30 border border-orange-200 dark:border-orange-800 transition-colors"
-								>
-									🧪 Test Onboarding
-								</Link>
+						{/* Authentication Options or Profile */}
+						<div className="flex items-center space-x-3">
+							{/* Test Login Link - TEMPORARY */}
+							<Link
+								href="/auth/onboarding/step-1"
+								className="hidden sm:inline-flex items-center px-3 py-2 text-sm font-medium text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 rounded-md hover:bg-orange-100 dark:hover:bg-orange-900/30 border border-orange-200 dark:border-orange-800 transition-colors"
+							>
+								🧪 Test Onboarding
+							</Link>
 
-								<Link
-									href="/auth/signin"
-									className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-								>
-									Sign In
-								</Link>
+							{/* Profile Button - Always visible for testing */}
+							<Link
+								href="/profile"
+								className="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border border-gray-200 dark:border-gray-600"
+							>
+								<div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-sm">
+									{user.name
+										.split(" ")
+										.map((n) => n[0])
+										.join("")}
+								</div>
+								<span className="hidden md:block text-sm font-medium text-gray-700 dark:text-gray-300">
+									{user.name.split(" ")[0]}
+								</span>
+							</Link>
 
-								<Link
-									href="/auth/signup"
-									className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-								>
-									Sign Up
-								</Link>
-							</div>
-						)}
+							{/* Sign In/Up buttons - Always visible for testing auth flow */}
+							<Link
+								href="/auth/signin"
+								className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+							>
+								Sign In
+							</Link>
+
+							<Link
+								href="/auth/signup"
+								className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+							>
+								Sign Up
+							</Link>
+						</div>
 
 						{/* Mobile menu button */}
 						<button
@@ -216,28 +175,8 @@ export default function Header() {
 			{isMenuOpen && (
 				<div className="md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
 					<div className="px-2 pt-2 pb-3 space-y-1">
-						{navigation.map((item) => (
-							<Link
-								key={item.name}
-								href={item.href}
-								onClick={(e) => {
-									setIsMenuOpen(false);
-									if (item.section !== "hero") {
-										handleSectionScroll(e, item.section);
-									}
-								}}
-								className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
-									pathname === item.href
-										? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-gray-800"
-										: "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
-								}`}
-							>
-								{item.name}
-							</Link>
-						))}
-
 						{/* Mobile Language Selector */}
-						<div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+						<div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-4">
 							<p className="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
 								Language
 							</p>
@@ -261,53 +200,52 @@ export default function Header() {
 							))}
 						</div>
 
-						{isLoggedIn ? (
-							<div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
-								<Link
-									href="/profile"
-									className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
-									onClick={() => setIsMenuOpen(false)}
-								>
-									<div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-sm mr-3">
-										{user.name
-											.split(" ")
-											.map((n) => n[0])
-											.join("")}
-									</div>
-									<div>
-										<p className="text-sm font-medium text-gray-900 dark:text-white">{user.name}</p>
-										<p className="text-xs text-gray-500 dark:text-gray-400">View Profile</p>
-									</div>
-								</Link>
-							</div>
-						) : (
-							<div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4 space-y-2">
-								{/* Test Login Link - Mobile */}
-								<Link
-									href="/auth/onboarding/step-1"
-									className="block px-3 py-2 rounded-md text-base font-medium text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/30"
-									onClick={() => setIsMenuOpen(false)}
-								>
-									🧪 Test Onboarding
-								</Link>
+						{/* Mobile Auth/Profile Section */}
+						<div className="space-y-2">
+							{/* Test Login Link - Mobile */}
+							<Link
+								href="/auth/onboarding/step-1"
+								className="block px-3 py-2 rounded-md text-base font-medium text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/30"
+								onClick={() => setIsMenuOpen(false)}
+							>
+								🧪 Test Onboarding
+							</Link>
 
-								<Link
-									href="/auth/signin"
-									className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
-									onClick={() => setIsMenuOpen(false)}
-								>
-									Sign In
-								</Link>
+							{/* Profile Button - Always visible for testing */}
+							<Link
+								href="/profile"
+								className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-600"
+								onClick={() => setIsMenuOpen(false)}
+							>
+								<div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-sm mr-3">
+									{user.name
+										.split(" ")
+										.map((n) => n[0])
+										.join("")}
+								</div>
+								<div>
+									<p className="text-sm font-medium text-gray-900 dark:text-white">{user.name}</p>
+									<p className="text-xs text-gray-500 dark:text-gray-400">View Profile</p>
+								</div>
+							</Link>
 
-								<Link
-									href="/auth/signup"
-									className="block px-3 py-2 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-700"
-									onClick={() => setIsMenuOpen(false)}
-								>
-									Sign Up
-								</Link>
-							</div>
-						)}
+							{/* Sign In/Up buttons - Always visible for testing auth flow */}
+							<Link
+								href="/auth/signin"
+								className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
+								onClick={() => setIsMenuOpen(false)}
+							>
+								Sign In
+							</Link>
+
+							<Link
+								href="/auth/signup"
+								className="block px-3 py-2 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-700"
+								onClick={() => setIsMenuOpen(false)}
+							>
+								Sign Up
+							</Link>
+						</div>
 					</div>
 				</div>
 			)}

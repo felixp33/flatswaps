@@ -7,8 +7,8 @@ const rotatingPhrases = [
 	"your FlatSwap?",
 	"a new chapter?",
 	"living like a local?",
-	"a 6-month city swap?",
-	"experience a new lifestyle?",
+	"your adventure?",
+	"your study abroad?",
 ];
 
 export default function CtaSection() {
@@ -33,13 +33,13 @@ export default function CtaSection() {
 	return (
 		<section className="py-16 md:py-24 bg-blue-600">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-				<h2 className="text-3xl font-bold text-white tracking-tight sm:text-4xl">
-					<span className="inline-block">Ready to start </span>
+				<h2 className="text-3xl font-bold text-white tracking-tight sm:text-4xl flex justify-center items-baseline">
+					<span className="inline-block">Ready to start</span>
+					<span className="inline-block" style={{ width: "10px" }}></span>
 					<span
-						className={`inline-block transition-opacity duration-500 ease-in-out ${
+						className={`inline-block text-left transition-opacity duration-500 ease-in-out ${
 							isVisible ? "opacity-100" : "opacity-0"
 						}`}
-						style={{ minWidth: "320px" }}
 					>
 						{rotatingPhrases[index]}
 					</span>
