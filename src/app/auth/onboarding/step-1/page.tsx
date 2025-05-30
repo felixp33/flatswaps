@@ -1,77 +1,111 @@
-// src/app/auth/onboarding/step-1/page.tsx
+// Simplified src/app/auth/onboarding/step-1/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Camera, MapPin, Globe } from "lucide-react";
+import { Camera, MapPin, Check } from "lucide-react";
 import OnboardingLayout from "@/components/auth/OnboardingLayout";
 import FormField from "@/components/auth/FormField";
 import { validateProfileForm } from "@/lib/auth/validation";
 import { ProfileSetupData, ValidationErrors } from "@/types/auth";
+import Image from "next/image";
+
+// City data with country inference
+const POPULAR_CITIES = [
+	{ name: "Berlin", country: "Germany", flag: "🇩🇪" },
+	{ name: "London", country: "United Kingdom", flag: "🇬🇧" },
+	{ name: "Paris", country: "France", flag: "🇫🇷" },
+	{ name: "Madrid", country: "Spain", flag: "🇪🇸" },
+	{ name: "Amsterdam", country: "Netherlands", flag: "🇳🇱" },
+	{ name: "Rome", country: "Italy", flag: "🇮🇹" },
+	{ name: "Barcelona", country: "Spain", flag: "🇪🇸" },
+	{ name: "Vienna", country: "Austria", flag: "🇦🇹" },
+	{ name: "Prague", country: "Czech Republic", flag: "🇨🇿" },
+	{ name: "Copenhagen", country: "Denmark", flag: "🇩🇰" },
+	{ name: "Stockholm", country: "Sweden", flag: "🇸🇪" },
+	{ name: "Helsinki", country: "Finland", flag: "🇫🇮" },
+	{ name: "Oslo", country: "Norway", flag: "🇳🇴" },
+	{ name: "Zurich", country: "Switzerland", flag: "🇨🇭" },
+	{ name: "Brussels", country: "Belgium", flag: "🇧🇪" },
+	{ name: "Dublin", country: "Ireland", flag: "🇮🇪" },
+	{ name: "Lisbon", country: "Portugal", flag: "🇵🇹" },
+	{ name: "Warsaw", country: "Poland", flag: "🇵🇱" },
+	{ name: "Budapest", country: "Hungary", flag: "🇭🇺" },
+	{ name: "Munich", country: "Germany", flag: "🇩🇪" },
+	{ name: "Hamburg", country: "Germany", flag: "🇩🇪" },
+	{ name: "Milan", country: "Italy", flag: "🇮🇹" },
+	{ name: "Lyon", country: "France", flag: "🇫🇷" },
+	{ name: "Manchester", country: "United Kingdom", flag: "🇬🇧" },
+	{ name: "Edinburgh", country: "United Kingdom", flag: "🇬🇧" },
+	{ name: "New York", country: "United States", flag: "🇺🇸" },
+	{ name: "Los Angeles", country: "United States", flag: "🇺🇸" },
+	{ name: "San Francisco", country: "United States", flag: "🇺🇸" },
+	{ name: "Toronto", country: "Canada", flag: "🇨🇦" },
+	{ name: "Montreal", country: "Canada", flag: "🇨🇦" },
+	{ name: "Sydney", country: "Australia", flag: "🇦🇺" },
+	{ name: "Melbourne", country: "Australia", flag: "🇦🇺" },
+	{ name: "Tokyo", country: "Japan", flag: "🇯🇵" },
+	{ name: "Seoul", country: "South Korea", flag: "🇰🇷" },
+	{ name: "Singapore", country: "Singapore", flag: "🇸🇬" },
+];
 
 export default function OnboardingStep1() {
 	const router = useRouter();
 	const [formData, setFormData] = useState<ProfileSetupData>({
 		location: { city: "", country: "" },
 		bio: "",
-		languages: [],
-		contactMethod: "both",
+		languages: ["English"], // Default to English
+		contactMethod: "both", // Default preference
 	});
 	const [errors, setErrors] = useState<ValidationErrors>({});
 	const [isLoading, setIsLoading] = useState(false);
 	const [profileImage, setProfileImage] = useState<string | null>(null);
 
+	// City autocomplete state
+	const [cityInput, setCityInput] = useState("");
+	const [showSuggestions, setShowSuggestions] = useState(false);
+	const [filteredCities, setFilteredCities] = useState(POPULAR_CITIES.slice(0, 8));
+	const [selectedCity, setSelectedCity] = useState<(typeof POPULAR_CITIES)[0] | null>(null);
+
 	const stepLabels = ["Profile Setup", "Verification", "Property Setup", "Complete"];
-	const completedSteps = [false, false, false, false];
+	const completedSteps = [true, false, false, false];
 
-	// Common languages for selection
-	const availableLanguages = [
-		"English",
-		"Spanish",
-		"French",
-		"German",
-		"Italian",
-		"Portuguese",
-		"Dutch",
-		"Russian",
-		"Chinese",
-		"Japanese",
-		"Korean",
-		"Arabic",
-	];
-
-	// Common countries for quick selection
-	const popularCountries = [
-		"United States",
-		"United Kingdom",
-		"Germany",
-		"France",
-		"Spain",
-		"Italy",
-		"Netherlands",
-		"Canada",
-		"Australia",
-		"Japan",
-	];
-
-	const handleInputChange = (field: string, value: any) => {
-		if (field.includes(".")) {
-			const [parent, child] = field.split(".");
-			setFormData((prev) => ({
-				...prev,
-				[parent]: {
-					...(prev[parent as keyof ProfileSetupData] as object),
-					[child]: value,
-				},
-			}));
+	// Filter cities based on input
+	useEffect(() => {
+		if (cityInput.length > 0) {
+			const filtered = POPULAR_CITIES.filter(
+				(city) =>
+					city.name.toLowerCase().includes(cityInput.toLowerCase()) ||
+					city.country.toLowerCase().includes(cityInput.toLowerCase())
+			).slice(0, 6);
+			setFilteredCities(filtered);
+			setShowSuggestions(true);
 		} else {
-			setFormData((prev) => ({ ...prev, [field]: value }));
+			setFilteredCities(POPULAR_CITIES.slice(0, 8));
+			setShowSuggestions(false);
 		}
+	}, [cityInput]);
 
-		// Clear errors
-		if (errors[field]) {
-			setErrors((prev) => ({ ...prev, [field]: "" }));
+	const handleCitySelect = (city: (typeof POPULAR_CITIES)[0]) => {
+		setSelectedCity(city);
+		setCityInput(city.name);
+		setFormData((prev) => ({
+			...prev,
+			location: { city: city.name, country: city.country },
+		}));
+		setShowSuggestions(false);
+		if (errors.city) {
+			setErrors((prev) => ({ ...prev, city: "" }));
 		}
+	};
+
+	const handleCityInputChange = (value: string) => {
+		setCityInput(value);
+		setSelectedCity(null);
+		setFormData((prev) => ({
+			...prev,
+			location: { city: value, country: "" },
+		}));
 	};
 
 	const handleLanguageToggle = (language: string) => {
@@ -80,9 +114,6 @@ export default function OnboardingStep1() {
 			: [...formData.languages, language];
 
 		setFormData((prev) => ({ ...prev, languages: newLanguages }));
-		if (errors.languages) {
-			setErrors((prev) => ({ ...prev, languages: "" }));
-		}
 	};
 
 	const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,10 +128,24 @@ export default function OnboardingStep1() {
 		}
 	};
 
+	const validateSimplifiedForm = (): ValidationErrors => {
+		const errors: ValidationErrors = {};
+
+		if (!formData.location.city) {
+			errors.city = "Please select your city";
+		}
+
+		if (formData.languages.length === 0) {
+			errors.languages = "Please select at least one language";
+		}
+
+		return errors;
+	};
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		const validationErrors = validateProfileForm(formData);
+		const validationErrors = validateSimplifiedForm();
 		if (Object.keys(validationErrors).length > 0) {
 			setErrors(validationErrors);
 			return;
@@ -108,7 +153,6 @@ export default function OnboardingStep1() {
 
 		setIsLoading(true);
 		try {
-			// TODO: Save profile data
 			console.log("Profile setup data:", formData);
 			await new Promise((resolve) => setTimeout(resolve, 1000));
 			router.push("/auth/onboarding/step-2");
@@ -124,6 +168,9 @@ export default function OnboardingStep1() {
 		router.push("/auth/signup");
 	};
 
+	// Quick language selection (most common for students)
+	const popularLanguages = ["English", "Spanish", "French", "German", "Italian", "Portuguese"];
+
 	return (
 		<OnboardingLayout
 			currentStep={1}
@@ -131,10 +178,10 @@ export default function OnboardingStep1() {
 			completedSteps={completedSteps}
 			stepLabels={stepLabels}
 			title="Complete Your Profile"
-			subtitle="Tell us about yourself to help find better swap matches"
+			subtitle="Just a few quick details to get you started"
 			onBack={handleBack}
 		>
-			<div className="max-w-2xl mx-auto">
+			<div className="max-w-xl mx-auto">
 				<form onSubmit={handleSubmit} className="space-y-8">
 					{errors.general && (
 						<div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-4">
@@ -142,21 +189,27 @@ export default function OnboardingStep1() {
 						</div>
 					)}
 
-					{/* Profile Photo */}
+					{/* Profile Photo - Optional */}
 					<div className="text-center">
 						<div className="relative inline-block">
-							<div className="w-32 h-32 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
+							<div className="w-24 h-24 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
 								{profileImage ? (
-									<img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
+									<Image
+										src={profileImage}
+										alt="Profile"
+										width={96}
+										height={96}
+										className="w-full h-full object-cover"
+									/>
 								) : (
-									<Camera className="w-8 h-8 text-gray-400" />
+									<Camera className="w-6 h-6 text-gray-400" />
 								)}
 							</div>
 							<label
 								htmlFor="profile-photo"
-								className="absolute bottom-0 right-0 bg-blue-600 text-white p-2 rounded-full cursor-pointer hover:bg-blue-700 transition-colors"
+								className="absolute bottom-0 right-0 bg-blue-600 text-white p-1.5 rounded-full cursor-pointer hover:bg-blue-700 transition-colors"
 							>
-								<Camera className="w-4 h-4" />
+								<Camera className="w-3 h-3" />
 							</label>
 							<input
 								id="profile-photo"
@@ -166,62 +219,73 @@ export default function OnboardingStep1() {
 								className="hidden"
 							/>
 						</div>
-						<p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Upload a profile photo (optional)</p>
+						<p className="mt-2 text-xs text-gray-500 dark:text-gray-400">Add photo (optional)</p>
 					</div>
 
-					{/* Location */}
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-						<div>
-							<FormField
-								label="City"
-								name="location.city"
-								value={formData.location.city}
-								onChange={(value) => handleInputChange("location.city", value)}
-								error={errors.city}
-								placeholder="e.g., Berlin"
-								required
+					{/* City with Autocomplete */}
+					<div className="relative">
+						<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+							Where are you located? <span className="text-red-500">*</span>
+						</label>
+						<div className="relative">
+							<div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+								<MapPin className="h-4 w-4 text-gray-400" />
+							</div>
+							<input
+								type="text"
+								value={cityInput}
+								onChange={(e) => handleCityInputChange(e.target.value)}
+								onFocus={() => setShowSuggestions(true)}
+								placeholder="Start typing your city..."
+								className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500"
 							/>
+							{selectedCity && (
+								<div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+									<Check className="h-4 w-4 text-green-500" />
+								</div>
+							)}
 						</div>
-						<div>
-							<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-								Country <span className="text-red-500">*</span>
-							</label>
-							<select
-								value={formData.location.country}
-								onChange={(e) => handleInputChange("location.country", e.target.value)}
-								className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500"
-							>
-								<option value="">Select your country</option>
-								{popularCountries.map((country) => (
-									<option key={country} value={country}>
-										{country}
-									</option>
-								))}
-							</select>
-							{errors.country && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.country}</p>}
-						</div>
+
+						{/* City Suggestions */}
+						{showSuggestions && (
+							<div className="absolute z-10 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+								{filteredCities.length > 0 ? (
+									filteredCities.map((city, index) => (
+										<button
+											key={index}
+											type="button"
+											onClick={() => handleCitySelect(city)}
+											className="w-full px-4 py-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-3 transition-colors"
+										>
+											<span className="text-lg">{city.flag}</span>
+											<div>
+												<div className="font-medium text-gray-900 dark:text-white">{city.name}</div>
+												<div className="text-sm text-gray-500 dark:text-gray-400">{city.country}</div>
+											</div>
+										</button>
+									))
+								) : (
+									<div className="px-4 py-3 text-gray-500 dark:text-gray-400 text-sm">
+										No cities found. You can still type your city name.
+									</div>
+								)}
+							</div>
+						)}
+
+						{errors.city && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.city}</p>}
 					</div>
 
-					{/* Bio */}
-					<FormField
-						label="About Me"
-						name="bio"
-						type="textarea"
-						value={formData.bio}
-						onChange={(value) => handleInputChange("bio", value)}
-						error={errors.bio}
-						placeholder="Tell potential swap partners about yourself, your interests, and what makes you a great home swapper..."
-						hint="This helps other members get to know you better (max 500 characters)"
-					/>
-
-					{/* Languages */}
+					{/* Languages - Simplified */}
 					<div>
 						<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-							Languages I Speak <span className="text-red-500">*</span>
+							Languages you speak <span className="text-red-500">*</span>
 						</label>
-						<div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-							{availableLanguages.map((language) => (
-								<label key={language} className="flex items-center space-x-2 cursor-pointer">
+						<div className="grid grid-cols-2 gap-3">
+							{popularLanguages.map((language) => (
+								<label
+									key={language}
+									className="flex items-center space-x-2 cursor-pointer p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+								>
 									<input
 										type="checkbox"
 										checked={formData.languages.includes(language)}
@@ -237,38 +301,23 @@ export default function OnboardingStep1() {
 						)}
 					</div>
 
-					{/* Contact Preference */}
-					<div>
-						<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-							Preferred Contact Method
-						</label>
-						<div className="space-y-2">
-							{[
-								{ value: "email", label: "Email only" },
-								{ value: "phone", label: "Phone only" },
-								{ value: "both", label: "Both email and phone" },
-							].map((option) => (
-								<label key={option.value} className="flex items-center space-x-2 cursor-pointer">
-									<input
-										type="radio"
-										name="contactMethod"
-										value={option.value}
-										checked={formData.contactMethod === option.value}
-										onChange={(e) => handleInputChange("contactMethod", e.target.value)}
-										className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
-									/>
-									<span className="text-sm text-gray-700 dark:text-gray-300">{option.label}</span>
-								</label>
-							))}
-						</div>
-					</div>
+					{/* About Me - Optional and smaller */}
+					<FormField
+						label="Tell us about yourself (optional)"
+						name="bio"
+						type="textarea"
+						value={formData.bio}
+						onChange={(value) => setFormData((prev) => ({ ...prev, bio: value }))}
+						placeholder="What kind of traveler are you? What do you study? Any hobbies?"
+						hint="Help others get to know you better"
+					/>
 
 					{/* Submit Button */}
-					<div className="flex justify-end">
+					<div className="flex justify-end pt-4">
 						<button
 							type="submit"
 							disabled={isLoading}
-							className="px-8 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+							className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
 						>
 							{isLoading ? (
 								<div className="flex items-center">

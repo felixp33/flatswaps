@@ -17,7 +17,7 @@ export default function HomePage() {
 			<main>
 				<HeroSection />
 				<HowItWorks />
-				<FeaturedProperties properties={featuredProperties} />
+
 				<PopularDestinations />
 				<Testimonials testimonials={testimonials} />
 				<FAQSection />
