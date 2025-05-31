@@ -25,12 +25,13 @@ import {
 export default function MyFlatPage() {
 	// Mock image data - in a real app, this would come from your property data
 	const [flatImages, setFlatImages] = useState([
-		"/images/flat/living-room-main.jpg",
-		"/images/flat/kitchen.jpg",
-		"/images/flat/bedroom.jpg",
-		"/images/flat/bathroom.jpg",
-		"/images/flat/balcony.jpg",
-		"/images/flat/entrance.jpg",
+		"/images/flat/living-room-main.png",
+		"/images/flat/kitchen.png",
+		"/images/flat/bedroom.png",
+		"/images/flat/bathroom.png",
+		"/images/flat/balcony.png",
+		"/images/flat/street-view.png",
+		"/images/flat/window-view.png",
 	]);
 
 	const [selectedImageIndex, setSelectedImageIndex] = useState(0);
