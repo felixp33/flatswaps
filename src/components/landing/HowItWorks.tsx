@@ -16,7 +16,7 @@ export default function ImprovedHowItWorks() {
 			number: 2,
 			title: "Get Matched",
 			description: "We find potential swaps based on your preferences.",
-			image: "/images/how-it-works/get-matched.png",
+			image: "/images/how-it-works/get-matched-2.png",
 			icon: Users,
 			alt: "Puzzle pieces showing flat swapping matching system",
 		},
@@ -69,7 +69,7 @@ export default function ImprovedHowItWorks() {
 						How It Works
 					</h2>
 					<p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-						Exchange your home or find the perfect vacation rental in three simple steps
+						Exchange your home or find the perfect space abroad in three simple steps
 					</p>
 				</div>
 

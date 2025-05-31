@@ -1,29 +1,97 @@
 // src/app/profile/page.tsx
+"use client";
+
+import { useState } from "react";
 import ProfileLayout from "@/components/profile/ProfileLayout";
-import { Edit, MapPin, Calendar, Star, Shield, Award } from "lucide-react";
-import Link from "next/link";
+import { Edit, Save, X, Shield, Star, MapPin, Calendar } from "lucide-react";
 
 export default function ProfileOverview() {
-	// Mock user data - in real app, this would come from your auth/user context
-	const user = {
-		name: "John Doe",
+	const [isEditing, setIsEditing] = useState(false);
+	const [formData, setFormData] = useState({
+		// Basic Information
+		firstName: "John",
+		lastName: "Doe",
 		email: "john.doe@example.com",
-		location: "New York, USA",
-		memberSince: "March 2023",
+		phone: "+1 (555) 123-4567",
 		bio: "Travel enthusiast and home swap veteran. I love exploring new cultures and meeting people from around the world. My Manhattan loft is perfect for couples or small families looking to experience NYC like a local.",
-		verified: true,
-		responseRate: 95,
-		rating: 4.9,
-		reviewCount: 23,
-		swapCount: 8,
-		hostingSince: "2023",
+
+		// Occupation Details
+		employmentType: "Full-time Employee",
+		incomeRange: "€50,000 - €75,000",
+		workLocation: "New York, USA",
+		languages: ["English", "Spanish", "French"],
+	});
+
+	const [originalData, setOriginalData] = useState(formData);
+
+	const employmentTypes = [
+		"Full-time Employee",
+		"Part-time Employee",
+		"Freelancer/Contractor",
+		"Self-employed",
+		"Student",
+		"Retired",
+		"Unemployed",
+		"Other",
+	];
+
+	const incomeRanges = [
+		"Under €25,000",
+		"€25,000 - €35,000",
+		"€35,000 - €50,000",
+		"€50,000 - €75,000",
+		"€75,000 - €100,000",
+		"€100,000 - €150,000",
+		"Over €150,000",
+		"Prefer not to say",
+	];
+
+	const availableLanguages = [
+		"English",
+		"Spanish",
+		"French",
+		"German",
+		"Italian",
+		"Portuguese",
+		"Dutch",
+		"Chinese",
+		"Japanese",
+		"Arabic",
+	];
+
+	const handleInputChange = (field: string, value: string) => {
+		setFormData((prev) => ({
+			...prev,
+			[field]: value,
+		}));
+	};
+
+	const handleLanguageToggle = (language: string) => {
+		setFormData((prev) => ({
+			...prev,
+			languages: prev.languages.includes(language)
+				? prev.languages.filter((lang) => lang !== language)
+				: [...prev.languages, language],
+		}));
+	};
+
+	const handleSave = () => {
+		setOriginalData(formData);
+		setIsEditing(false);
+		// In a real app, you would save to backend here
+		console.log("Saving profile data:", formData);
+	};
+
+	const handleCancel = () => {
+		setFormData(originalData);
+		setIsEditing(false);
 	};
 
 	const stats = [
 		{ label: "Total Swaps", value: "8", icon: Shield, color: "text-blue-600" },
 		{ label: "Reviews", value: "23", icon: Star, color: "text-yellow-600" },
 		{ label: "Response Rate", value: "95%", icon: MapPin, color: "text-green-600" },
-		{ label: "Rating", value: "4.9", icon: Award, color: "text-purple-600" },
+		{ label: "Rating", value: "4.9", icon: Calendar, color: "text-purple-600" },
 	];
 
 	return (
@@ -35,13 +103,32 @@ export default function ProfileOverview() {
 						<h1 className="text-2xl font-bold text-gray-900 dark:text-white">Profile Overview</h1>
 						<p className="text-gray-600 dark:text-gray-300 mt-1">Manage your personal information and account</p>
 					</div>
-					<Link
-						href="/profile/edit"
-						className="mt-4 sm:mt-0 inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-					>
-						<Edit className="h-4 w-4 mr-2" />
-						Edit Profile
-					</Link>
+					{!isEditing ? (
+						<button
+							onClick={() => setIsEditing(true)}
+							className="mt-4 sm:mt-0 inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+						>
+							<Edit className="h-4 w-4 mr-2" />
+							Edit Profile
+						</button>
+					) : (
+						<div className="flex space-x-2 mt-4 sm:mt-0">
+							<button
+								onClick={handleCancel}
+								className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+							>
+								<X className="h-4 w-4 mr-2" />
+								Cancel
+							</button>
+							<button
+								onClick={handleSave}
+								className="inline-flex items-center px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+							>
+								<Save className="h-4 w-4 mr-2" />
+								Save Changes
+							</button>
+						</div>
+					)}
 				</div>
 
 				{/* Profile Card */}
@@ -50,50 +137,42 @@ export default function ProfileOverview() {
 						{/* Avatar */}
 						<div className="relative">
 							<div className="h-24 w-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-2xl">
-								{user.name
-									.split(" ")
-									.map((n) => n[0])
-									.join("")}
+								{formData.firstName[0]}
+								{formData.lastName[0]}
 							</div>
-							{user.verified && (
-								<div className="absolute -bottom-1 -right-1 h-8 w-8 bg-green-500 rounded-full flex items-center justify-center">
-									<Shield className="h-4 w-4 text-white" />
-								</div>
-							)}
+							<div className="absolute -bottom-1 -right-1 h-8 w-8 bg-green-500 rounded-full flex items-center justify-center">
+								<Shield className="h-4 w-4 text-white" />
+							</div>
 						</div>
 
 						{/* User Info */}
 						<div className="flex-1">
 							<div className="flex items-center space-x-3 mb-2">
-								<h2 className="text-xl font-semibold text-gray-900 dark:text-white">{user.name}</h2>
-								{user.verified && (
-									<span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
-										<Shield className="h-3 w-3 mr-1" />
-										Verified
-									</span>
-								)}
+								<h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+									{formData.firstName} {formData.lastName}
+								</h2>
+								<span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+									<Shield className="h-3 w-3 mr-1" />
+									Verified
+								</span>
 							</div>
 
 							<div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
 								<MapPin className="h-4 w-4 mr-1" />
-								{user.location}
+								New York, USA
 							</div>
 
 							<div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
 								<Calendar className="h-4 w-4 mr-1" />
-								Member since {user.memberSince}
+								Member since March 2023
 							</div>
 
 							<div className="flex items-center space-x-4">
 								<div className="flex items-center">
 									<Star className="h-4 w-4 text-yellow-400 mr-1" />
-									<span className="text-sm font-medium text-gray-900 dark:text-white">
-										{user.rating} ({user.reviewCount} reviews)
-									</span>
+									<span className="text-sm font-medium text-gray-900 dark:text-white">4.9 (23 reviews)</span>
 								</div>
-								<div className="text-sm text-gray-500 dark:text-gray-400">
-									{user.responseRate}% response rate
-								</div>
+								<div className="text-sm text-gray-500 dark:text-gray-400">95% response rate</div>
 							</div>
 						</div>
 					</div>
@@ -101,7 +180,17 @@ export default function ProfileOverview() {
 					{/* Bio */}
 					<div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
 						<h3 className="text-sm font-medium text-gray-900 dark:text-white mb-2">About</h3>
-						<p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{user.bio}</p>
+						{isEditing ? (
+							<textarea
+								value={formData.bio}
+								onChange={(e) => handleInputChange("bio", e.target.value)}
+								rows={4}
+								className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+								placeholder="Tell others about yourself..."
+							/>
+						) : (
+							<p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{formData.bio}</p>
+						)}
 					</div>
 				</div>
 
@@ -128,68 +217,166 @@ export default function ProfileOverview() {
 
 				{/* Personal Information */}
 				<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-					<div className="flex justify-between items-center mb-6">
-						<h3 className="text-lg font-semibold text-gray-900 dark:text-white">Personal Information</h3>
-					</div>
-
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-						{/* Basic Information */}
+					<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Personal Information</h3>
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<div>
-							<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-4">Basic Information</h4>
-							<div className="space-y-3">
-								<div>
-									<label className="text-sm text-gray-500 dark:text-gray-400">First Name</label>
-									<p className="text-gray-900 dark:text-white">John</p>
-								</div>
-								<div>
-									<label className="text-sm text-gray-500 dark:text-gray-400">Last Name</label>
-									<p className="text-gray-900 dark:text-white">Doe</p>
-								</div>
-								<div>
-									<label className="text-sm text-gray-500 dark:text-gray-400">Email</label>
-									<p className="text-gray-900 dark:text-white">{user.email}</p>
-								</div>
-								<div>
-									<label className="text-sm text-gray-500 dark:text-gray-400">Phone</label>
-									<p className="text-gray-900 dark:text-white">+1 (555) 123-4567</p>
-								</div>
-							</div>
+							<label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">First Name</label>
+							{isEditing ? (
+								<input
+									type="text"
+									value={formData.firstName}
+									onChange={(e) => handleInputChange("firstName", e.target.value)}
+									className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+								/>
+							) : (
+								<p className="text-gray-900 dark:text-white">{formData.firstName}</p>
+							)}
 						</div>
-
-						{/* Professional Details */}
 						<div>
-							<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-4">Professional Details</h4>
-							<div className="space-y-3">
-								<div>
-									<label className="text-sm text-gray-500 dark:text-gray-400">Occupation</label>
-									<p className="text-gray-900 dark:text-white">Software Engineer</p>
-								</div>
-								<div>
-									<label className="text-sm text-gray-500 dark:text-gray-400">Company</label>
-									<p className="text-gray-900 dark:text-white">Tech Solutions Inc.</p>
-								</div>
-								<div>
-									<label className="text-sm text-gray-500 dark:text-gray-400">Work Location</label>
-									<p className="text-gray-900 dark:text-white">New York, USA</p>
-								</div>
-								<div>
-									<label className="text-sm text-gray-500 dark:text-gray-400">Languages</label>
-									<div className="flex flex-wrap gap-2 mt-1">
-										<span className="inline-flex items-center px-2 py-1 rounded text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-											English
-										</span>
-										<span className="inline-flex items-center px-2 py-1 rounded text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-											Spanish
-										</span>
-										<span className="inline-flex items-center px-2 py-1 rounded text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-											French
-										</span>
-									</div>
-								</div>
-							</div>
+							<label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">Last Name</label>
+							{isEditing ? (
+								<input
+									type="text"
+									value={formData.lastName}
+									onChange={(e) => handleInputChange("lastName", e.target.value)}
+									className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+								/>
+							) : (
+								<p className="text-gray-900 dark:text-white">{formData.lastName}</p>
+							)}
+						</div>
+						<div>
+							<label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">Email</label>
+							{isEditing ? (
+								<input
+									type="email"
+									value={formData.email}
+									onChange={(e) => handleInputChange("email", e.target.value)}
+									className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+								/>
+							) : (
+								<p className="text-gray-900 dark:text-white">{formData.email}</p>
+							)}
+						</div>
+						<div>
+							<label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">Phone</label>
+							{isEditing ? (
+								<input
+									type="tel"
+									value={formData.phone}
+									onChange={(e) => handleInputChange("phone", e.target.value)}
+									className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+								/>
+							) : (
+								<p className="text-gray-900 dark:text-white">{formData.phone}</p>
+							)}
 						</div>
 					</div>
 				</div>
+
+				{/* Occupation Details */}
+				<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+					<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Occupation</h3>
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+						<div>
+							<label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">Employment Type</label>
+							{isEditing ? (
+								<select
+									value={formData.employmentType}
+									onChange={(e) => handleInputChange("employmentType", e.target.value)}
+									className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+								>
+									{employmentTypes.map((type) => (
+										<option key={type} value={type}>
+											{type}
+										</option>
+									))}
+								</select>
+							) : (
+								<p className="text-gray-900 dark:text-white">{formData.employmentType}</p>
+							)}
+						</div>
+						<div>
+							<label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">Income Range</label>
+							{isEditing ? (
+								<select
+									value={formData.incomeRange}
+									onChange={(e) => handleInputChange("incomeRange", e.target.value)}
+									className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+								>
+									{incomeRanges.map((range) => (
+										<option key={range} value={range}>
+											{range}
+										</option>
+									))}
+								</select>
+							) : (
+								<p className="text-gray-900 dark:text-white">{formData.incomeRange}</p>
+							)}
+						</div>
+						<div className="md:col-span-2">
+							<label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">Work Location</label>
+							{isEditing ? (
+								<input
+									type="text"
+									value={formData.workLocation}
+									onChange={(e) => handleInputChange("workLocation", e.target.value)}
+									className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+									placeholder="City, Country"
+								/>
+							) : (
+								<p className="text-gray-900 dark:text-white">{formData.workLocation}</p>
+							)}
+						</div>
+					</div>
+				</div>
+
+				{/* Languages */}
+				<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+					<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Languages</h3>
+					{isEditing ? (
+						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+							{availableLanguages.map((language) => (
+								<label key={language} className="flex items-center space-x-2 cursor-pointer">
+									<input
+										type="checkbox"
+										checked={formData.languages.includes(language)}
+										onChange={() => handleLanguageToggle(language)}
+										className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+									/>
+									<span className="text-sm text-gray-700 dark:text-gray-300">{language}</span>
+								</label>
+							))}
+						</div>
+					) : (
+						<div className="flex flex-wrap gap-2">
+							{formData.languages.map((language, index) => (
+								<span
+									key={index}
+									className="inline-flex items-center px-2 py-1 rounded text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+								>
+									{language}
+								</span>
+							))}
+						</div>
+					)}
+				</div>
+
+				{/* Save reminder for editing mode */}
+				{isEditing && (
+					<div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+						<div className="flex items-center">
+							<div className="flex-shrink-0">
+								<Edit className="h-5 w-5 text-blue-400" />
+							</div>
+							<div className="ml-3">
+								<p className="text-sm text-blue-700 dark:text-blue-300">
+									You are currently editing your profile. Don't forget to save your changes when you're done.
+								</p>
+							</div>
+						</div>
+					</div>
+				)}
 			</div>
 		</ProfileLayout>
 	);
