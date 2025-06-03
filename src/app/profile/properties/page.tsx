@@ -41,10 +41,10 @@ export default function MyFlatPage() {
 	// Mock user's flat data
 	const userFlat = {
 		id: "1",
-		title: "Modern Loft in Manhattan",
-		location: "New York, USA",
+		title: "Berlin Altbau",
+		location: "Berlin, Germany",
 		description:
-			"Beautiful modern loft in the heart of Manhattan, perfect for couples or small families. Walking distance to Central Park and excellent public transport connections.",
+			"Beautiful Altbau flat in the heart of Berlin, perfect for couples or small families. Walking distance to Flughafen Tempelhof and excellent public transport connections.",
 		isSwapAvailable: true,
 		isActive: true,
 		features: {

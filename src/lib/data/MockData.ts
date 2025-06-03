@@ -5,7 +5,7 @@ import { Property, Destination, Testimonial } from "@/types";
 export const featuredProperties: Property[] = [
 	{
 		id: "1",
-		title: "Modern Loft in Manhattan",
+		title: "Berlin Altbau",
 		location: "New York, USA",
 		price: "$150",
 		rating: 4.9,
