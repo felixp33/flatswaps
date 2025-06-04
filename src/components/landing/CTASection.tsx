@@ -50,12 +50,12 @@ export default function CtaSection() {
 				</p>
 
 				<div className="mt-8">
-					<Link
-						href="/list-property"
+					<a
+						href="/auth/signup"
 						className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
 					>
 						Start Your FlatSwap Now
-					</Link>
+					</a>
 				</div>
 			</div>
 		</section>

@@ -103,9 +103,12 @@ export default function ImprovedHeroSection() {
 						</div>
 
 						<div className="mt-8">
-							<button className="inline-block bg-green-500 text-white px-8 py-3 rounded-lg hover:bg-green-600 transition-colors font-semibold">
+							<a
+								href="/auth/signup"
+								className="inline-block bg-green-500 text-white px-8 py-3 rounded-lg hover:bg-green-600 transition-colors font-semibold"
+							>
 								Let's find your match now!
-							</button>
+							</a>
 						</div>
 					</div>
 

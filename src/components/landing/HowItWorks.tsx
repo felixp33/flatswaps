@@ -146,12 +146,14 @@ export default function ImprovedHowItWorks() {
 					</div>
 				</div>
 
-				{/* CTA Button */}
 				<div className="text-center mt-12">
-					<button className="inline-flex items-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl group">
+					<a
+						href="/auth/signup"
+						className="inline-flex items-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl group"
+					>
 						<span>Get Started Now</span>
 						<ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-					</button>
+					</a>
 					<p className="mt-3 text-sm text-gray-500 dark:text-gray-400">No credit card required • Free to start</p>
 				</div>
 			</div>
