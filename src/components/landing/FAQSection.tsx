@@ -93,9 +93,12 @@ export default function FAQSection() {
 						<p className="text-gray-600 dark:text-gray-300 mb-4">
 							Our support team is here to help you get started with your home swapping journey.
 						</p>
-						<button className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+						<a
+							href="/help"
+							className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+						>
 							Contact Support
-						</button>
+						</a>
 					</div>
 				</div>
 			</div>

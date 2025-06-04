@@ -7,13 +7,12 @@ import { useRouter } from "next/navigation";
 import SocialLogin from "@/components/auth/SocialLogin";
 import FormField from "@/components/auth/FormField";
 import PasswordStrength from "@/components/auth/PasswordStrength";
-import { validateSignUpForm } from "@/lib/auth/validation";
-import { SignUpData, ValidationErrors } from "@/types/auth";
+import { validateEmail, validatePassword } from "@/lib/auth/validation";
+import { ValidationErrors } from "@/types/auth";
 
 export default function SignUpPage() {
 	const router = useRouter();
-	const [formData, setFormData] = useState<SignUpData>({
-		fullName: "",
+	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
 		acceptTerms: false,
@@ -22,7 +21,7 @@ export default function SignUpPage() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [showPasswordStrength, setShowPasswordStrength] = useState(false);
 
-	const handleInputChange = (field: keyof SignUpData, value: string | boolean) => {
+	const handleInputChange = (field: string, value: string | boolean) => {
 		setFormData((prev) => ({ ...prev, [field]: value }));
 		// Clear error when user starts typing
 		if (errors[field]) {
@@ -35,10 +34,26 @@ export default function SignUpPage() {
 		// TODO: Implement social login
 	};
 
+	const validateForm = (): ValidationErrors => {
+		const errors: ValidationErrors = {};
+
+		const emailError = validateEmail(formData.email);
+		if (emailError) errors.email = emailError;
+
+		const passwordError = validatePassword(formData.password);
+		if (passwordError) errors.password = passwordError;
+
+		if (!formData.acceptTerms) {
+			errors.acceptTerms = "You must accept the terms and conditions";
+		}
+
+		return errors;
+	};
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		const validationErrors = validateSignUpForm(formData);
+		const validationErrors = validateForm();
 		if (Object.keys(validationErrors).length > 0) {
 			setErrors(validationErrors);
 			return;
@@ -88,18 +103,6 @@ export default function SignUpPage() {
 								<p className="text-sm text-red-600 dark:text-red-400">{errors.general}</p>
 							</div>
 						)}
-
-						<FormField
-							label="Full Name"
-							name="fullName"
-							type="text"
-							value={formData.fullName}
-							onChange={(value) => handleInputChange("fullName", value)}
-							error={errors.fullName}
-							placeholder="Enter your full name"
-							required
-							autoComplete="name"
-						/>
 
 						<FormField
 							label="Email Address"
