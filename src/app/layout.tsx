@@ -3,8 +3,8 @@ import React from "react";
 import type { Metadata } from "next";
 import { Inter, Lexend } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/provdiders/ThemeProviders";
 import { Analytics } from "@vercel/analytics/next";
+import { ThemeProvider } from "@/components/providers/ThemeProviders";
 
 const inter = Inter({
 	subsets: ["latin"],
