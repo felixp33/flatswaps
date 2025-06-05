@@ -6,14 +6,12 @@ import ProfileLayout from "@/components/profile/ProfileLayout";
 import {
 	Edit3,
 	Eye,
-	Calendar,
 	MapPin,
 	Star,
 	Users,
 	Bed,
 	Bath,
 	Home,
-	MessageCircle,
 	Shield,
 	Camera,
 	X,
@@ -135,18 +133,12 @@ export default function MyFlatPage() {
 				<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
 					<div>
 						<h1 className="text-3xl font-bold text-gray-900 dark:text-white">My Flat</h1>
-						<p className="text-gray-600 dark:text-gray-300 mt-2">
-							Manage your flat listing and track swap activity
-						</p>
+						<p className="text-gray-600 dark:text-gray-300 mt-2">Manage your flat listing</p>
 					</div>
 					<div className="flex gap-3 mt-4 sm:mt-0">
 						<button className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
 							<Edit3 className="h-4 w-4 mr-2" />
 							Edit Listing
-						</button>
-						<button className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors">
-							<Shield className="h-4 w-4 mr-2" />
-							Active
 						</button>
 					</div>
 				</div>
@@ -189,13 +181,6 @@ export default function MyFlatPage() {
 												Verified
 											</span>
 										)}
-										<span
-											className={`text-xs font-semibold px-3 py-1 rounded-full ${
-												userFlat.isActive ? "bg-blue-600 text-white" : "bg-gray-600 text-white"
-											}`}
-										>
-											{userFlat.isActive ? "Available for Swap" : "Unavailable"}
-										</span>
 									</div>
 
 									{/* Image count overlay */}
@@ -315,49 +300,25 @@ export default function MyFlatPage() {
 
 							<p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">{userFlat.description}</p>
 
-							{/* Amenities */}
+							{/* Amenities Preview */}
 							<div className="mb-6">
-								<h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">
-									Amenities & Features
-								</h3>
+								<h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Key Features</h3>
 
-								{/* General Information */}
-								<div className="mb-4">
-									<h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
-										General Information
-									</h4>
-									<div className="flex flex-wrap gap-2">
-										{userFlat.amenities.general.map((amenity, index) => (
-											<span
-												key={index}
-												className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
-											>
-												{amenity}
-											</span>
-										))}
-									</div>
-								</div>
-
-								{/* Interior */}
-								<div className="mb-4">
-									<h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
-										Interior
-									</h4>
-									<div className="flex flex-wrap gap-2">
-										{userFlat.amenities.interior.slice(0, 3).map((amenity, index) => (
-											<span
-												key={index}
-												className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
-											>
-												{amenity}
-											</span>
-										))}
-										{userFlat.amenities.interior.length > 3 && (
-											<span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400">
-												+{userFlat.amenities.interior.length - 3} more
-											</span>
-										)}
-									</div>
+								{/* Preview of Interior amenities */}
+								<div className="flex flex-wrap gap-2">
+									{userFlat.amenities.interior.slice(0, 3).map((amenity, index) => (
+										<span
+											key={index}
+											className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+										>
+											{amenity}
+										</span>
+									))}
+									{userFlat.amenities.interior.length > 3 && (
+										<span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400">
+											+{userFlat.amenities.interior.length - 3} more
+										</span>
+									)}
 								</div>
 							</div>
 
@@ -372,62 +333,104 @@ export default function MyFlatPage() {
 					</div>
 				</div>
 
-				{/* Availability & Recent Activity */}
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-					<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-						<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Availability</h3>
-						<div className="space-y-4">
-							<div>
-								<span className="text-sm font-medium text-gray-500 dark:text-gray-400">Next Available</span>
-								<p className="text-gray-900 dark:text-white">{userFlat.availability.nextAvailable}</p>
-							</div>
-							<div>
-								<span className="text-sm font-medium text-gray-500 dark:text-gray-400">Preferred Duration</span>
-								<p className="text-gray-900 dark:text-white">{userFlat.availability.preferredDuration}</p>
-							</div>
-							<div>
-								<span className="text-sm font-medium text-gray-500 dark:text-gray-400">House Rules</span>
-								<p className="text-gray-900 dark:text-white">{userFlat.availability.restrictions}</p>
-							</div>
+				{/* Complete Amenities List */}
+				<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-8">
+					<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
+						Complete Amenities & Features
+					</h3>
+
+					{/* General Information */}
+					<div className="mb-6">
+						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center">
+							<Home className="h-4 w-4 mr-2 text-blue-600 dark:text-blue-400" />
+							General Information
+						</h4>
+						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+							{userFlat.amenities.general.map((amenity, index) => (
+								<div
+									key={index}
+									className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
+								>
+									<div className="w-2 h-2 bg-blue-500 rounded-full mr-3 flex-shrink-0"></div>
+									<span className="text-sm text-gray-900 dark:text-white">{amenity}</span>
+								</div>
+							))}
 						</div>
-						<button className="mt-4 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-							<Calendar className="h-4 w-4 mr-2" />
-							Manage Calendar
-						</button>
 					</div>
 
-					<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-						<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recent Activity</h3>
-						<div className="space-y-4">
-							<div className="flex items-start space-x-3">
-								<div className="flex-shrink-0 p-2 bg-green-100 dark:bg-green-900 rounded-full">
-									<MessageCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
+					{/* Accessibility */}
+					<div className="mb-6">
+						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center">
+							<Users className="h-4 w-4 mr-2 text-green-600 dark:text-green-400" />
+							Accessibility
+						</h4>
+						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+							{userFlat.amenities.accessibility.map((amenity, index) => (
+								<div
+									key={index}
+									className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
+								>
+									<div className="w-2 h-2 bg-green-500 rounded-full mr-3 flex-shrink-0"></div>
+									<span className="text-sm text-gray-900 dark:text-white">{amenity}</span>
 								</div>
-								<div>
-									<p className="text-sm text-gray-900 dark:text-white">
-										New swap request from Sarah in Barcelona
-									</p>
-									<p className="text-xs text-gray-500 dark:text-gray-400">2 hours ago</p>
+							))}
+						</div>
+					</div>
+
+					{/* Interior Features */}
+					<div className="mb-6">
+						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center">
+							<Bed className="h-4 w-4 mr-2 text-purple-600 dark:text-purple-400" />
+							Interior Features
+						</h4>
+						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+							{userFlat.amenities.interior.map((amenity, index) => (
+								<div
+									key={index}
+									className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
+								>
+									<div className="w-2 h-2 bg-purple-500 rounded-full mr-3 flex-shrink-0"></div>
+									<span className="text-sm text-gray-900 dark:text-white">{amenity}</span>
 								</div>
-							</div>
-							<div className="flex items-start space-x-3">
-								<div className="flex-shrink-0 p-2 bg-blue-100 dark:bg-blue-900 rounded-full">
-									<Star className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+							))}
+						</div>
+					</div>
+
+					{/* Exterior Features */}
+					<div className="mb-6">
+						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center">
+							<MapPin className="h-4 w-4 mr-2 text-orange-600 dark:text-orange-400" />
+							Exterior Features
+						</h4>
+						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+							{userFlat.amenities.exterior.map((amenity, index) => (
+								<div
+									key={index}
+									className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
+								>
+									<div className="w-2 h-2 bg-orange-500 rounded-full mr-3 flex-shrink-0"></div>
+									<span className="text-sm text-gray-900 dark:text-white">{amenity}</span>
 								</div>
-								<div>
-									<p className="text-sm text-gray-900 dark:text-white">Received 5-star review from Marco</p>
-									<p className="text-xs text-gray-500 dark:text-gray-400">1 day ago</p>
+							))}
+						</div>
+					</div>
+
+					{/* Equipment & Technology */}
+					<div>
+						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center">
+							<Star className="h-4 w-4 mr-2 text-indigo-600 dark:text-indigo-400" />
+							Equipment & Technology
+						</h4>
+						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+							{userFlat.amenities.equipment.map((amenity, index) => (
+								<div
+									key={index}
+									className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
+								>
+									<div className="w-2 h-2 bg-indigo-500 rounded-full mr-3 flex-shrink-0"></div>
+									<span className="text-sm text-gray-900 dark:text-white">{amenity}</span>
 								</div>
-							</div>
-							<div className="flex items-start space-x-3">
-								<div className="flex-shrink-0 p-2 bg-purple-100 dark:bg-purple-900 rounded-full">
-									<Home className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-								</div>
-								<div>
-									<p className="text-sm text-gray-900 dark:text-white">Completed swap with Emma in London</p>
-									<p className="text-xs text-gray-500 dark:text-gray-400">1 week ago</p>
-								</div>
-							</div>
+							))}
 						</div>
 					</div>
 				</div>

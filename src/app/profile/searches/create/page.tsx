@@ -477,7 +477,7 @@ export default function CreateSearchPage() {
 					</div>
 
 					{/* Action Buttons */}
-					<div className="flex justify-between">
+					<div className="flex justify-between mt-8">
 						<button
 							type="button"
 							onClick={handleCancel}
