@@ -101,7 +101,6 @@ export default function ProfileOverview() {
 				<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
 					<div>
 						<h1 className="text-2xl font-bold text-gray-900 dark:text-white">Profile Overview</h1>
-						<p className="text-gray-600 dark:text-gray-300 mt-1">Manage your personal information and account</p>
 					</div>
 					{!isEditing ? (
 						<button

@@ -9,7 +9,6 @@ export default function ProfileSettings() {
 				{/* Header */}
 				<div>
 					<h1 className="text-2xl font-bold text-gray-900 dark:text-white">Settings</h1>
-					<p className="text-gray-600 dark:text-gray-300 mt-1">Manage your account preferences and privacy</p>
 				</div>
 
 				{/* Notification Settings */}

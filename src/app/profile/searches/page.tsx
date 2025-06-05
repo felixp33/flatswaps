@@ -1,4 +1,7 @@
 // src/app/profile/searches/page.tsx
+"use client";
+
+import { useState } from "react";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import {
 	Search,
@@ -18,10 +21,18 @@ import {
 	Eye,
 	Play,
 	Pause,
+	AlertTriangle,
 } from "lucide-react";
 import Link from "next/link";
 
 export default function SearchesPage() {
+	const [deleteModal, setDeleteModal] = useState({
+		isOpen: false,
+		searchId: null as string | null,
+		searchName: "",
+	});
+	const [isDeleting, setIsDeleting] = useState(false);
+
 	// Mock searches data
 	const searches = [
 		{
@@ -92,6 +103,29 @@ export default function SearchesPage() {
 			: "text-gray-600 bg-gray-100 dark:bg-gray-700 dark:text-gray-300";
 	};
 
+	const handleDeleteClick = (searchId: string, searchName: string) => {
+		setDeleteModal({
+			isOpen: true,
+			searchId,
+			searchName,
+		});
+	};
+
+	const handleDeleteConfirm = () => {
+		setIsDeleting(true);
+		// Simulate deletion - replace with your actual logic later
+		setTimeout(() => {
+			console.log(`Deleted search: ${deleteModal.searchId}`);
+			setDeleteModal({ isOpen: false, searchId: null, searchName: "" });
+			setIsDeleting(false);
+			// Here you would remove the item from your searches array
+		}, 1000);
+	};
+
+	const handleDeleteCancel = () => {
+		setDeleteModal({ isOpen: false, searchId: null, searchName: "" });
+	};
+
 	return (
 		<ProfileLayout>
 			<div className="p-6">
@@ -99,9 +133,6 @@ export default function SearchesPage() {
 				<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
 					<div>
 						<h1 className="text-2xl font-bold text-gray-900 dark:text-white">My Searches</h1>
-						<p className="text-gray-600 dark:text-gray-300 mt-1">
-							Create and manage your searches for swap partners
-						</p>
 					</div>
 					<Link
 						href="/profile/searches/create"
@@ -279,7 +310,10 @@ export default function SearchesPage() {
 											</>
 										)}
 									</button>
-									<button className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-red-600 hover:text-red-700 bg-white dark:bg-gray-700 border border-red-300 dark:border-red-600 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20">
+									<button
+										onClick={() => handleDeleteClick(search.id, search.name)}
+										className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-red-600 hover:text-red-700 bg-white dark:bg-gray-700 border border-red-300 dark:border-red-600 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20"
+									>
 										<Trash2 className="h-4 w-4 mr-2" />
 										Delete
 									</button>
@@ -320,6 +354,41 @@ export default function SearchesPage() {
 					</div>
 				</div>
 			</div>
+
+			{/* Delete Confirmation Popup */}
+			{deleteModal.isOpen && (
+				<div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+					<div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full">
+						<div className="p-6">
+							<div className="flex items-center mb-4">
+								<div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg mr-3">
+									<AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-400" />
+								</div>
+								<h3 className="text-lg font-semibold text-gray-900 dark:text-white">Delete Search</h3>
+							</div>
+							<p className="text-gray-600 dark:text-gray-300 mb-6">
+								Are you sure you want to delete "{deleteModal.searchName}"? This action cannot be undone.
+							</p>
+							<div className="flex justify-end space-x-3">
+								<button
+									onClick={handleDeleteCancel}
+									disabled={isDeleting}
+									className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600"
+								>
+									Cancel
+								</button>
+								<button
+									onClick={handleDeleteConfirm}
+									disabled={isDeleting}
+									className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg disabled:opacity-50"
+								>
+									{isDeleting ? "Deleting..." : "Delete"}
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
 		</ProfileLayout>
 	);
 }
