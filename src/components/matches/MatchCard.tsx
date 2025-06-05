@@ -205,10 +205,19 @@ export default function MatchCard({ match, onAccept, onReject }: MatchCardProps)
 									<p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
 										{participant.property.location}
 									</p>
-									<div className="flex items-center text-xs text-gray-600 dark:text-gray-300 space-x-3">
-										<span>{participant.property.bedrooms} bed</span>
-										<span>{participant.property.bathrooms} bath</span>
-										<span>{participant.property.guests} guests</span>
+									<div className="flex items-center justify-between">
+										<div className="flex items-center text-xs text-gray-600 dark:text-gray-300 space-x-3">
+											<span>{participant.property.bedrooms} bed</span>
+											<span>{participant.property.bathrooms} bath</span>
+											<span>{participant.property.guests} guests</span>
+										</div>
+										<Link
+											href={`/properties/${match.id}`}
+											className="inline-flex items-center px-2 py-1 border border-gray-300 dark:border-gray-600 rounded text-xs font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-600 hover:bg-gray-50 dark:hover:bg-gray-500"
+										>
+											<Eye className="h-3 w-3 mr-1" />
+											View
+										</Link>
 									</div>
 								</div>
 								<div className="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
@@ -267,14 +276,6 @@ export default function MatchCard({ match, onAccept, onReject }: MatchCardProps)
 			{/* Action Buttons */}
 			<div className="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700">
 				<div className="flex items-center space-x-4">
-					<Link
-						href={`/properties/${match.id}`}
-						className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-					>
-						<Eye className="h-4 w-4 mr-2" />
-						View Details
-					</Link>
-
 					{canShowContactInfo(match) && (
 						<Link
 							href={`/profile/messages?match=${match.id}`}
