@@ -33,17 +33,7 @@ export default function SearchesPage() {
 	});
 	const [isDeleting, setIsDeleting] = useState(false);
 
-	// Consistent date formatting function to match other files
-	const formatDate = (dateString: string): string => {
-		const date = new Date(dateString);
-		return date.toLocaleDateString("en-US", {
-			month: "short",
-			day: "numeric",
-			year: "numeric",
-		});
-	};
-
-	// Mock searches data with consistent date formatting
+	// Mock searches data
 	const searches = [
 		{
 			id: "1",
@@ -286,20 +276,22 @@ export default function SearchesPage() {
 											</div>
 										</div>
 										<div className="text-xs text-gray-500 dark:text-gray-400">
-											Last updated: {formatDate(search.lastUpdated)}
+											Last updated: {new Date(search.lastUpdated).toLocaleDateString()}
 										</div>
 									</div>
 								</div>
 
 								{/* Action Buttons */}
 								<div className="flex flex-col lg:flex-col space-y-2 lg:ml-4 mt-4 lg:mt-0">
+									{/* UPDATED: View Results link with search parameter */}
 									<Link
-										href={`/profile/matches?search=${search.id}&status=all`}
+										href={`/profile/matches?search=${search.id}`}
 										className="inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium"
 									>
 										<Eye className="h-4 w-4 mr-2" />
 										View Results ({search.matchCount})
 									</Link>
+
 									<Link
 										href={`/profile/searches/${search.id}/edit`}
 										className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -307,6 +299,7 @@ export default function SearchesPage() {
 										<Edit3 className="h-4 w-4 mr-2" />
 										Edit Search
 									</Link>
+
 									<button className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 										{search.isActive ? (
 											<>
@@ -320,6 +313,7 @@ export default function SearchesPage() {
 											</>
 										)}
 									</button>
+
 									<button
 										onClick={() => handleDeleteClick(search.id, search.name)}
 										className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-red-600 hover:text-red-700 bg-white dark:bg-gray-700 border border-red-300 dark:border-red-600 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20"

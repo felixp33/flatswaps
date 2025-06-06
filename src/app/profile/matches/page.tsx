@@ -1,35 +1,47 @@
 // src/app/profile/matches/page.tsx
 "use client";
 
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, Suspense, useEffect } from "react";
 import { Heart, Search, Filter, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams, useRouter } from "next/navigation";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import MatchFilterBar from "@/components/matches/MatchFilterBar";
 import MatchCard from "@/components/matches/MatchCard";
 import { mockMatches } from "@/lib/data/mockMatches";
 
-export default function MatchesPage() {
+function MatchesPageContent() {
 	const searchParams = useSearchParams();
-	const [activeStatusFilter, setActiveStatusFilter] = useState<string>("all");
-	const [activeSearchFilter, setActiveSearchFilter] = useState<string>("all");
+	const router = useRouter();
+
+	// Initialize filters from URL params or defaults
+	const [activeStatusFilter, setActiveStatusFilter] = useState<string>(searchParams.get("status") || "all");
+	const [activeSearchFilter, setActiveSearchFilter] = useState<string>(searchParams.get("search") || "all");
 	const [isSearchFilterOpen, setIsSearchFilterOpen] = useState(false);
 	const matches = mockMatches;
 
-	// Initialize filters from URL parameters
-	useEffect(() => {
-		const searchParam = searchParams.get("search");
-		const statusParam = searchParams.get("status");
+	// Update URL when filters change
+	const updateURL = (status: string, search: string) => {
+		const params = new URLSearchParams();
+		if (status !== "all") params.set("status", status);
+		if (search !== "all") params.set("search", search);
 
-		if (searchParam) {
-			setActiveSearchFilter(searchParam);
-		}
+		const queryString = params.toString();
+		const newUrl = queryString ? `/profile/matches?${queryString}` : "/profile/matches";
+		router.replace(newUrl, { scroll: false });
+	};
 
-		if (statusParam) {
-			setActiveStatusFilter(statusParam);
-		}
-	}, [searchParams]);
+	// Handle status filter changes
+	const handleStatusFilterChange = (newStatus: string) => {
+		setActiveStatusFilter(newStatus);
+		updateURL(newStatus, activeSearchFilter);
+	};
+
+	// Handle search filter changes
+	const handleSearchFilterChange = (newSearch: string) => {
+		setActiveSearchFilter(newSearch);
+		updateURL(activeStatusFilter, newSearch);
+	};
 
 	// Apply both filters
 	const filteredMatches = matches.filter((match) => {
@@ -76,40 +88,6 @@ export default function MatchesPage() {
 
 	const searchFilterOptions = getSearchFilterOptions();
 
-	// Update URL when filters change
-	const updateURLParams = (searchFilter: string, statusFilter: string) => {
-		const params = new URLSearchParams();
-
-		if (searchFilter !== "all") {
-			params.set("search", searchFilter);
-		}
-
-		if (statusFilter !== "all") {
-			params.set("status", statusFilter);
-		}
-
-		const newURL = params.toString() ? `${window.location.pathname}?${params.toString()}` : window.location.pathname;
-
-		window.history.pushState({}, "", newURL);
-	};
-
-	const handleSearchFilterChange = (searchId: string) => {
-		setActiveSearchFilter(searchId);
-		updateURLParams(searchId, activeStatusFilter);
-		setIsSearchFilterOpen(false);
-	};
-
-	const handleStatusFilterChange = (statusId: string) => {
-		setActiveStatusFilter(statusId);
-		updateURLParams(activeSearchFilter, statusId);
-	};
-
-	const clearAllFilters = () => {
-		setActiveSearchFilter("all");
-		setActiveStatusFilter("all");
-		updateURLParams("all", "all");
-	};
-
 	return (
 		<ProfileLayout>
 			<div className="p-6">
@@ -121,13 +99,6 @@ export default function MatchesPage() {
 							Manage your home swap matches and communications
 						</p>
 					</div>
-					<Link
-						href="/profile/searches"
-						className="mt-4 sm:mt-0 inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
-					>
-						<Search className="h-4 w-4 mr-2" />
-						Manage Searches
-					</Link>
 				</div>
 
 				{/* Search Filter Dropdown */}
@@ -156,7 +127,10 @@ export default function MatchesPage() {
 										{searchFilterOptions.map((option) => (
 											<button
 												key={option.id}
-												onClick={() => handleSearchFilterChange(option.id)}
+												onClick={() => {
+													handleSearchFilterChange(option.id);
+													setIsSearchFilterOpen(false);
+												}}
 												className={`w-full text-left px-4 py-2 text-sm flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
 													activeSearchFilter === option.id
 														? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300"
@@ -235,30 +209,21 @@ export default function MatchesPage() {
 						<p className="text-gray-500 dark:text-gray-400 mt-2">
 							{activeStatusFilter === "all" && activeSearchFilter === "all"
 								? "Create searches to find your perfect swap partners."
-								: activeSearchFilter !== "all"
-								? `No matches found for "${
-										searchFilterOptions.find((option) => option.id === activeSearchFilter)?.label
-								  }". Try adjusting your search criteria or check other searches.`
 								: "Try adjusting your filters or create new searches."}
 						</p>
 
-						{/* Clear filters option or go back to searches */}
+						{/* Clear filters option */}
 						{(activeStatusFilter !== "all" || activeSearchFilter !== "all") && (
 							<div className="mt-4 space-x-4">
 								<button
-									onClick={clearAllFilters}
+									onClick={() => {
+										handleStatusFilterChange("all");
+										handleSearchFilterChange("all");
+									}}
 									className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
 								>
 									Clear All Filters
 								</button>
-								{activeSearchFilter !== "all" && (
-									<Link
-										href="/profile/searches"
-										className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
-									>
-										Back to Searches
-									</Link>
-								)}
 							</div>
 						)}
 
@@ -299,7 +264,10 @@ export default function MatchesPage() {
 									</span>
 								)}
 								<button
-									onClick={clearAllFilters}
+									onClick={() => {
+										handleStatusFilterChange("all");
+										handleSearchFilterChange("all");
+									}}
 									className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
 								>
 									Clear all filters
@@ -310,5 +278,30 @@ export default function MatchesPage() {
 				)}
 			</div>
 		</ProfileLayout>
+	);
+}
+
+function LoadingFallback() {
+	return (
+		<ProfileLayout>
+			<div className="p-6">
+				<div className="animate-pulse space-y-4">
+					<div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/4"></div>
+					<div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+					<div className="space-y-4">
+						<div className="h-32 bg-gray-200 dark:bg-gray-700 rounded"></div>
+						<div className="h-32 bg-gray-200 dark:bg-gray-700 rounded"></div>
+					</div>
+				</div>
+			</div>
+		</ProfileLayout>
+	);
+}
+
+export default function MatchesPage() {
+	return (
+		<Suspense fallback={<LoadingFallback />}>
+			<MatchesPageContent />
+		</Suspense>
 	);
 }
