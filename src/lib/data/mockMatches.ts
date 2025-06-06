@@ -1,4 +1,4 @@
-// src/data/mockMatches.ts
+// src/lib/data/mockMatches.ts
 
 export const mockMatches = [
 	{
@@ -7,6 +7,8 @@ export const mockMatches = [
 		type: "bilateral", // bilateral, multilateral
 		matchScore: 95,
 		createdAt: "2 hours ago",
+		searchId: "1", // Which search generated this match
+		searchName: "Summer in Barcelona",
 		participants: [
 			{
 				id: "user1",
@@ -51,6 +53,8 @@ export const mockMatches = [
 		type: "multilateral",
 		matchScore: 89,
 		createdAt: "1 day ago",
+		searchId: "1", // Also from Barcelona search
+		searchName: "Summer in Barcelona",
 		participants: [
 			{
 				id: "user2",
@@ -116,6 +120,8 @@ export const mockMatches = [
 		type: "bilateral",
 		matchScore: 92,
 		createdAt: "3 days ago",
+		searchId: "2", // From Tokyo search
+		searchName: "Tokyo Adventure",
 		participants: [
 			{
 				id: "user4",
@@ -160,6 +166,8 @@ export const mockMatches = [
 		type: "bilateral",
 		matchScore: 78,
 		createdAt: "1 week ago",
+		searchId: "3", // From London search
+		searchName: "London Business Trip",
 		participants: [
 			{
 				id: "user5",
@@ -195,6 +203,52 @@ export const mockMatches = [
 					guests: 2,
 				},
 				swapDates: "Mar 1-10, 2024",
+			},
+		],
+	},
+	{
+		id: "5",
+		status: "new",
+		type: "bilateral",
+		matchScore: 87,
+		createdAt: "5 hours ago",
+		searchId: "3", // Another London match
+		searchName: "London Business Trip",
+		participants: [
+			{
+				id: "user6",
+				name: "James Smith",
+				location: "London, UK",
+				rating: 4.5,
+				reviews: 22,
+				initials: "JS",
+				hasAccepted: null,
+				property: {
+					title: "Cozy Flat in Camden",
+					location: "London, UK",
+					bedrooms: 1,
+					bathrooms: 1,
+					guests: 2,
+				},
+				swapDates: "May 15-25, 2024",
+				contactInfo: {
+					email: "james.s@email.com",
+					phone: "+44 987 654 321",
+				},
+			},
+			{
+				id: "currentUser",
+				name: "You",
+				location: "New York, USA",
+				hasAccepted: null,
+				property: {
+					title: "Manhattan Loft",
+					location: "New York, USA",
+					bedrooms: 1,
+					bathrooms: 1,
+					guests: 2,
+				},
+				swapDates: "May 20-30, 2024",
 			},
 		],
 	},
