@@ -33,7 +33,17 @@ export default function SearchesPage() {
 	});
 	const [isDeleting, setIsDeleting] = useState(false);
 
-	// Mock searches data
+	// Consistent date formatting function to match other files
+	const formatDate = (dateString: string): string => {
+		const date = new Date(dateString);
+		return date.toLocaleDateString("en-US", {
+			month: "short",
+			day: "numeric",
+			year: "numeric",
+		});
+	};
+
+	// Mock searches data with consistent date formatting
 	const searches = [
 		{
 			id: "1",
@@ -276,7 +286,7 @@ export default function SearchesPage() {
 											</div>
 										</div>
 										<div className="text-xs text-gray-500 dark:text-gray-400">
-											Last updated: {new Date(search.lastUpdated).toLocaleDateString()}
+											Last updated: {formatDate(search.lastUpdated)}
 										</div>
 									</div>
 								</div>
@@ -284,11 +294,11 @@ export default function SearchesPage() {
 								{/* Action Buttons */}
 								<div className="flex flex-col lg:flex-col space-y-2 lg:ml-4 mt-4 lg:mt-0">
 									<Link
-										href={`/profile/searches/${search.id}/results`}
+										href={`/profile/matches?search=${search.id}&status=all`}
 										className="inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium"
 									>
 										<Eye className="h-4 w-4 mr-2" />
-										View Results
+										View Results ({search.matchCount})
 									</Link>
 									<Link
 										href={`/profile/searches/${search.id}/edit`}
