@@ -4,6 +4,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 import SocialLogin from "@/components/auth/SocialLogin";
 import FormField from "@/components/auth/FormField";
 import PasswordStrength from "@/components/auth/PasswordStrength";
@@ -12,6 +13,7 @@ import { ValidationErrors } from "@/types/auth";
 
 export default function SignUpPage() {
 	const router = useRouter();
+	const { signUp } = useAuth();
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
@@ -20,6 +22,7 @@ export default function SignUpPage() {
 	const [errors, setErrors] = useState<ValidationErrors>({});
 	const [isLoading, setIsLoading] = useState(false);
 	const [showPasswordStrength, setShowPasswordStrength] = useState(false);
+	const [success, setSuccess] = useState(false);
 
 	const handleInputChange = (field: string, value: string | boolean) => {
 		setFormData((prev) => ({ ...prev, [field]: value }));
@@ -31,7 +34,7 @@ export default function SignUpPage() {
 
 	const handleSocialLogin = async (provider: string) => {
 		console.log(`Social login with ${provider}`);
-		// TODO: Implement social login
+		// TODO: Implement social login (we'll do this in the next step)
 	};
 
 	const validateForm = (): ValidationErrors => {
@@ -42,6 +45,8 @@ export default function SignUpPage() {
 
 		const passwordError = validatePassword(formData.password);
 		if (passwordError) errors.password = passwordError;
+
+		// Full name is optional, so no validation needed
 
 		if (!formData.acceptTerms) {
 			errors.acceptTerms = "You must accept the terms and conditions";
@@ -60,12 +65,25 @@ export default function SignUpPage() {
 		}
 
 		setIsLoading(true);
+		setErrors({});
+
 		try {
-			// TODO: Implement actual signup
-			console.log("Sign up with:", formData);
-			// Simulate API call
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-			router.push("/auth/onboarding/step-1");
+			const { error } = await signUp(formData.email, formData.password);
+
+			if (error) {
+				// Handle specific Supabase errors
+				if (error.message.includes("User already registered")) {
+					setErrors({ email: "An account with this email already exists" });
+				} else if (error.message.includes("Password should be at least")) {
+					setErrors({ password: "Password should be at least 6 characters" });
+				} else if (error.message.includes("Invalid email")) {
+					setErrors({ email: "Please enter a valid email address" });
+				} else {
+					setErrors({ general: error.message });
+				}
+			} else {
+				setSuccess(true);
+			}
 		} catch (error) {
 			console.error("Sign up error:", error);
 			setErrors({ general: "Something went wrong. Please try again." });
@@ -73,6 +91,48 @@ export default function SignUpPage() {
 			setIsLoading(false);
 		}
 	};
+
+	// Success state
+	if (success) {
+		return (
+			<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+				<div className="sm:mx-auto sm:w-full sm:max-w-md">
+					<Link href="/" className="flex justify-center">
+						<span className="text-3xl font-bold text-blue-600">flatswaps</span>
+					</Link>
+
+					<div className="mt-6 text-center">
+						<div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 dark:bg-green-900/20">
+							<svg
+								className="h-6 w-6 text-green-600 dark:text-green-400"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+							>
+								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+							</svg>
+						</div>
+						<h2 className="mt-4 text-3xl font-bold text-gray-900 dark:text-white">Check your email</h2>
+						<p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+							We've sent a confirmation link to {formData.email}
+						</p>
+						<p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
+							Click the link in the email to activate your account and complete your registration.
+						</p>
+					</div>
+
+					<div className="mt-8 text-center">
+						<Link
+							href="/auth/signin"
+							className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+						>
+							Back to Sign In
+						</Link>
+					</div>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex flex-col justify-center py-12 sm:px-6 lg:px-8">

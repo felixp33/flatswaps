@@ -5,6 +5,7 @@ import { Inter, Lexend } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/providers/ThemeProviders";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -29,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="en" suppressHydrationWarning>
 			<body className={`${inter.variable} ${lexend.variable} font-sans min-h-screen flex flex-col`}>
 				<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-					{children}
+					<AuthProvider>{children}</AuthProvider>
 				</ThemeProvider>
 				<Analytics />
 			</body>
