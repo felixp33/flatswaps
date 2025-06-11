@@ -7,19 +7,20 @@ import { Edit, Save, X, Shield, Star, MapPin, Calendar } from "lucide-react";
 
 export default function ProfileOverview() {
 	const [isEditing, setIsEditing] = useState(false);
+
 	const [formData, setFormData] = useState({
 		// Basic Information
-		firstName: "John",
-		lastName: "Doe",
-		email: "john.doe@example.com",
-		phone: "+1 (555) 123-4567",
-		bio: "Travel enthusiast and home swap veteran. I love exploring new cultures and meeting people from around the world. My Manhattan loft is perfect for couples or small families looking to experience NYC like a local.",
+		firstName: "Markus",
+		lastName: "Schmidt",
+		email: "markus.schmidt@example.com",
+		phone: "+49 (30) 123-45678",
+		bio: "Reisebegeisterter und erfahrener Wohnungstauscher aus Berlin. Ich liebe es, neue Kulturen zu entdecken und Menschen aus aller Welt kennenzulernen. Meine Altbauwohnung in Kreuzberg ist perfekt für Paare oder kleine Familien, die Berlin wie ein Einheimischer erleben möchten.",
 
 		// Occupation Details
 		employmentType: "Full-time Employee",
 		incomeRange: "€50,000 - €75,000",
-		workLocation: "New York, USA",
-		languages: ["English", "Spanish", "French"],
+		workLocation: "Berlin, Deutschland",
+		languages: ["Deutsch", "Englisch", "Spanisch"],
 	});
 
 	const [originalData, setOriginalData] = useState(formData);

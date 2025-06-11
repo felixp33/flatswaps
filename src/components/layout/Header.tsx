@@ -1,12 +1,10 @@
-// Simplified Header component
-// src/components/layout/Header.tsx
-
 "use client";
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Globe, ChevronDown } from "lucide-react";
+import { Globe, ChevronDown, Home } from "lucide-react";
 
 export default function Header() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,13 +39,11 @@ export default function Header() {
 				<div className="flex justify-between items-center h-16">
 					{/* Logo */}
 					<div className="flex-shrink-0 flex items-center">
-						<Link href="/" className="text-2xl font-bold text-blue-600">
-							FlatSwaps
+						<Link href="/" className="flex items-center space-x-2 text-2xl font-bold text-blue-600">
+							<Image src="/favicon-256x256.png" alt="FlatSwaps" width={256} height={256} className="h-8 w-8" />{" "}
+							<span>FlatSwaps</span>
 						</Link>
 					</div>
-
-					{/* Desktop Navigation - Removed */}
-
 					{/* Right side - Auth or Profile */}
 					<div className="flex items-center space-x-4">
 						{/* Language Selector */}

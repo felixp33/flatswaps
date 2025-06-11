@@ -3,8 +3,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { User, Home, Search, MessageCircle, Heart, Settings, Star, MapPin } from "lucide-react";
+import { User, Home, Search, MessageCircle, Heart, Settings, Star, MapPin, ArrowLeftRight } from "lucide-react";
 
 interface ProfileLayoutProps {
 	children: React.ReactNode;
@@ -69,8 +70,9 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 				<div className="flex flex-col h-full">
 					{/* Sidebar header */}
 					<div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
-						<Link href="/" className="text-xl font-bold text-blue-600">
-							flatswaps
+						<Link href="/" className="flex items-center space-x-2 text-xl font-bold text-blue-600">
+							<Image src="/favicon-256x256.png" alt="FlatSwaps" width={256} height={256} className="h-8 w-8" />
+							<span>FlatSwaps</span>
 						</Link>
 						<button
 							className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
