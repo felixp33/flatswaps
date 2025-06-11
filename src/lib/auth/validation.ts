@@ -15,6 +15,7 @@ export const validatePassword = (password: string): string | null => {
 	if (!/(?=.*[a-z])/.test(password)) return "Password must contain at least one lowercase letter";
 	if (!/(?=.*[A-Z])/.test(password)) return "Password must contain at least one uppercase letter";
 	if (!/(?=.*\d)/.test(password)) return "Password must contain at least one number";
+	// Special character requirement removed
 	return null;
 };
 
@@ -63,7 +64,7 @@ export const getPasswordStrength = (
 	if (/(?=.*[a-z])/.test(password)) score += 1;
 	if (/(?=.*[A-Z])/.test(password)) score += 1;
 	if (/(?=.*\d)/.test(password)) score += 1;
-	if (/(?=.*[@$!%*?&])/.test(password)) score += 1;
+	// Special character check removed from scoring
 
 	switch (score) {
 		case 0:
@@ -80,10 +81,6 @@ export const getPasswordStrength = (
 			color = "bg-yellow-500";
 			break;
 		case 4:
-			feedback = "Good";
-			color = "bg-blue-500";
-			break;
-		case 5:
 			feedback = "Strong";
 			color = "bg-green-500";
 			break;
