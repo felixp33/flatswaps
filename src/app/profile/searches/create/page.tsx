@@ -5,10 +5,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import FormField from "@/components/auth/FormField";
-import { Search, MapPin, Calendar, Home, Users, Bed, Bath, Check, X } from "lucide-react";
+import { Search, MapPin, Calendar, Home, Users, Bed, Bath, Check, X, Clock, Plane, GraduationCap } from "lucide-react";
 
 interface SearchFormData {
 	name?: string;
+	searchMode: "dates" | "duration"; // New: search mode
 	location: {
 		city: string;
 		country: string;
@@ -16,6 +17,15 @@ interface SearchFormData {
 	dateRange: {
 		startDate: string;
 		endDate: string;
+	};
+	duration: {
+		min: string;
+		max: string;
+		unit: "days" | "weeks" | "months";
+	};
+	timeframe: {
+		earliest: string;
+		latest: string;
 	};
 	criteria: {
 		propertyTypes: string[];
@@ -26,7 +36,6 @@ interface SearchFormData {
 		maxBudget?: number;
 	};
 	amenities: string[];
-	swapDuration: string;
 }
 
 export default function CreateSearchPage() {
@@ -36,6 +45,7 @@ export default function CreateSearchPage() {
 
 	const [formData, setFormData] = useState<SearchFormData>({
 		name: "",
+		searchMode: "dates",
 		location: {
 			city: "",
 			country: "",
@@ -44,13 +54,21 @@ export default function CreateSearchPage() {
 			startDate: "",
 			endDate: "",
 		},
+		duration: {
+			min: "",
+			max: "",
+			unit: "months",
+		},
+		timeframe: {
+			earliest: "",
+			latest: "",
+		},
 		criteria: {
 			propertyTypes: [],
 			bedrooms: 1,
 			bathrooms: 1,
 		},
 		amenities: [],
-		swapDuration: "flexible",
 	});
 
 	const propertyTypes = [
@@ -93,14 +111,10 @@ export default function CreateSearchPage() {
 		"Near Public Transport",
 	];
 
-	const swapDurations = [
-		{ value: "flexible", label: "Flexible" },
-		{ value: "1-7_days", label: "1-7 days" },
-		{ value: "1-2_weeks", label: "1-2 weeks" },
-		{ value: "2-4_weeks", label: "2-4 weeks" },
-		{ value: "1-3_months", label: "1-3 months" },
-		{ value: "3-6_months", label: "3-6 months" },
-		{ value: "6+_months", label: "6+ months" },
+	const durationUnits = [
+		{ value: "days", label: "days" },
+		{ value: "weeks", label: "weeks" },
+		{ value: "months", label: "months" },
 	];
 
 	const handleInputChange = (field: string, value: any) => {
@@ -144,6 +158,39 @@ export default function CreateSearchPage() {
 		}));
 	};
 
+	const calculateDuration = () => {
+		if (!formData.dateRange.startDate || !formData.dateRange.endDate) return "";
+		const start = new Date(formData.dateRange.startDate);
+		const end = new Date(formData.dateRange.endDate);
+		const diffTime = Math.abs(end.getTime() - start.getTime());
+		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+		if (diffDays === 1) return "1 day";
+		if (diffDays < 14) return `${diffDays} days`;
+		if (diffDays < 60) return `${Math.round(diffDays / 7)} weeks`;
+		return `${Math.round(diffDays / 30)} months`;
+	};
+
+	const getValidationMessage = () => {
+		if (formData.searchMode === "dates") {
+			const duration = calculateDuration();
+			if (duration.includes("day") && parseInt(duration) < 2) {
+				return { type: "info", message: "💡 Most hosts prefer stays of 2+ days" };
+			}
+		} else {
+			const minDuration = parseInt(formData.duration.min);
+			const unit = formData.duration.unit;
+
+			if (unit === "months" && minDuration >= 4) {
+				return { type: "success", message: "✅ Perfect for semester exchanges and long-term hosting" };
+			}
+			if (unit === "days" && minDuration < 3) {
+				return { type: "warning", message: "⚠️ Very short stays have limited availability" };
+			}
+		}
+		return null;
+	};
+
 	const validateForm = (): Record<string, string> => {
 		const newErrors: Record<string, string> = {};
 
@@ -151,19 +198,26 @@ export default function CreateSearchPage() {
 			newErrors.city = "Destination city is required";
 		}
 
-		if (!formData.dateRange.startDate) {
-			newErrors.startDate = "Start date is required";
-		}
-
-		if (!formData.dateRange.endDate) {
-			newErrors.endDate = "End date is required";
-		}
-
-		if (formData.dateRange.startDate && formData.dateRange.endDate) {
-			const start = new Date(formData.dateRange.startDate);
-			const end = new Date(formData.dateRange.endDate);
-			if (start >= end) {
-				newErrors.endDate = "End date must be after start date";
+		if (formData.searchMode === "dates") {
+			if (!formData.dateRange.startDate) {
+				newErrors.startDate = "Start date is required";
+			}
+			if (!formData.dateRange.endDate) {
+				newErrors.endDate = "End date is required";
+			}
+			if (formData.dateRange.startDate && formData.dateRange.endDate) {
+				const start = new Date(formData.dateRange.startDate);
+				const end = new Date(formData.dateRange.endDate);
+				if (start >= end) {
+					newErrors.endDate = "End date must be after start date";
+				}
+			}
+		} else {
+			if (!formData.duration.min) {
+				newErrors.minDuration = "Minimum duration is required";
+			}
+			if (!formData.timeframe.earliest) {
+				newErrors.earliest = "Earliest arrival date is required";
 			}
 		}
 
@@ -206,16 +260,7 @@ export default function CreateSearchPage() {
 		router.push("/profile/searches");
 	};
 
-	// Generate suggested search name based on location and dates
-	const generateSearchName = () => {
-		if (formData.location.city && formData.dateRange.startDate) {
-			const startDate = new Date(formData.dateRange.startDate);
-			const monthYear = startDate.toLocaleDateString("en-US", { month: "short", year: "numeric" });
-			const suggestedName = `${formData.location.city} - ${monthYear}`;
-			return suggestedName;
-		}
-		return "";
-	};
+	const validation = getValidationMessage();
 
 	return (
 		<ProfileLayout>
@@ -284,56 +329,188 @@ export default function CreateSearchPage() {
 						</div>
 					</div>
 
-					{/* Date Range */}
+					{/* Search Mode Toggle */}
 					<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6">
-						<h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
-							<Calendar className="h-5 w-5 mr-2" />
-							Travel Dates
+						<h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
+							What type of trip are you planning?
 						</h2>
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+							<button
+								type="button"
+								onClick={() => handleInputChange("searchMode", "dates")}
+								className={`p-4 rounded-lg border-2 transition-all text-left ${
+									formData.searchMode === "dates"
+										? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+										: "border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500"
+								}`}
+							>
+								<div className="flex items-center mb-2">
+									<Plane className="h-5 w-5 mr-2 text-blue-600" />
+									<span className="font-medium text-gray-900 dark:text-white">Specific Dates</span>
+								</div>
+								<p className="text-sm text-gray-600 dark:text-gray-400">
+									Holidays, events, conferences - I know exactly when I'm traveling
+								</p>
+							</button>
 
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-							<FormField
-								label="Start Date"
-								name="dateRange.startDate"
-								type="date"
-								value={formData.dateRange.startDate}
-								onChange={(value) => handleInputChange("dateRange.startDate", value)}
-								error={errors.startDate}
-								required
-							/>
-
-							<FormField
-								label="End Date"
-								name="dateRange.endDate"
-								type="date"
-								value={formData.dateRange.endDate}
-								onChange={(value) => handleInputChange("dateRange.endDate", value)}
-								error={errors.endDate}
-								required
-							/>
-						</div>
-
-						<div className="mt-4">
-							<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-								Preferred Duration
-							</label>
-							<div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-								{swapDurations.map((duration) => (
-									<label key={duration.value} className="flex items-center cursor-pointer">
-										<input
-											type="radio"
-											name="swapDuration"
-											value={duration.value}
-											checked={formData.swapDuration === duration.value}
-											onChange={(e) => handleInputChange("swapDuration", e.target.value)}
-											className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
-										/>
-										<span className="ml-2 text-sm text-gray-700 dark:text-gray-300">{duration.label}</span>
-									</label>
-								))}
-							</div>
+							<button
+								type="button"
+								onClick={() => handleInputChange("searchMode", "duration")}
+								className={`p-4 rounded-lg border-2 transition-all text-left ${
+									formData.searchMode === "duration"
+										? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+										: "border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500"
+								}`}
+							>
+								<div className="flex items-center mb-2">
+									<GraduationCap className="h-5 w-5 mr-2 text-blue-600" />
+									<span className="font-medium text-gray-900 dark:text-white">Flexible Timing</span>
+								</div>
+								<p className="text-sm text-gray-600 dark:text-gray-400">
+									Semester abroad, remote work, sabbatical - I need a certain duration
+								</p>
+							</button>
 						</div>
 					</div>
+
+					{/* Date-Driven Mode */}
+					{formData.searchMode === "dates" && (
+						<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6">
+							<div className="flex items-center mb-6">
+								<Calendar className="h-5 w-5 mr-2 text-blue-600" />
+								<h2 className="text-lg font-semibold text-gray-900 dark:text-white">Travel Dates</h2>
+							</div>
+
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+								<FormField
+									label="Check-in"
+									name="dateRange.startDate"
+									type="date"
+									value={formData.dateRange.startDate}
+									onChange={(value) => handleInputChange("dateRange.startDate", value)}
+									error={errors.startDate}
+									required
+								/>
+
+								<FormField
+									label="Check-out"
+									name="dateRange.endDate"
+									type="date"
+									value={formData.dateRange.endDate}
+									onChange={(value) => handleInputChange("dateRange.endDate", value)}
+									error={errors.endDate}
+									required
+								/>
+							</div>
+
+							{calculateDuration() && (
+								<div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-md">
+									<p className="text-sm text-blue-800 dark:text-blue-200">
+										<Clock className="inline h-4 w-4 mr-1" />
+										Duration: {calculateDuration()}
+									</p>
+								</div>
+							)}
+						</div>
+					)}
+
+					{/* Duration-Driven Mode */}
+					{formData.searchMode === "duration" && (
+						<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6">
+							<div className="flex items-center mb-6">
+								<Clock className="h-5 w-5 mr-2 text-blue-600" />
+								<h2 className="text-lg font-semibold text-gray-900 dark:text-white">Duration & Timeframe</h2>
+							</div>
+
+							<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+								<div>
+									<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+										Minimum duration
+										<span className="text-red-500 ml-1">*</span>
+									</label>
+									<input
+										type="number"
+										min="1"
+										placeholder="4"
+										value={formData.duration.min}
+										onChange={(e) => handleInputChange("duration.min", e.target.value)}
+										className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+									/>
+									{errors.minDuration && (
+										<p className="text-sm text-red-600 dark:text-red-400 mt-1">{errors.minDuration}</p>
+									)}
+								</div>
+
+								<div>
+									<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+										Maximum duration
+									</label>
+									<input
+										type="number"
+										min="1"
+										placeholder="6"
+										value={formData.duration.max}
+										onChange={(e) => handleInputChange("duration.max", e.target.value)}
+										className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+									/>
+								</div>
+
+								<div>
+									<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+										Unit
+									</label>
+									<select
+										value={formData.duration.unit}
+										onChange={(e) =>
+											handleInputChange("duration.unit", e.target.value as "days" | "weeks" | "months")
+										}
+										className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+									>
+										{durationUnits.map((unit) => (
+											<option key={unit.value} value={unit.value}>
+												{unit.label}
+											</option>
+										))}
+									</select>
+								</div>
+							</div>
+
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+								<FormField
+									label="Earliest arrival"
+									name="timeframe.earliest"
+									type="date"
+									value={formData.timeframe.earliest}
+									onChange={(value) => handleInputChange("timeframe.earliest", value)}
+									error={errors.earliest}
+									required
+								/>
+
+								<FormField
+									label="Latest arrival"
+									name="timeframe.latest"
+									type="date"
+									value={formData.timeframe.latest}
+									onChange={(value) => handleInputChange("timeframe.latest", value)}
+								/>
+							</div>
+						</div>
+					)}
+
+					{/* Validation Message */}
+					{validation && (
+						<div
+							className={`mb-6 p-3 rounded-md ${
+								validation.type === "success"
+									? "bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200"
+									: validation.type === "warning"
+									? "bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-200"
+									: "bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-200"
+							}`}
+						>
+							<p className="text-sm">{validation.message}</p>
+						</div>
+					)}
 
 					{/* Property Types - Multiple Selection */}
 					<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6">
@@ -355,7 +532,7 @@ export default function CreateSearchPage() {
 										className={`relative cursor-pointer rounded-lg border-2 p-4 transition-all ${
 											isSelected
 												? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
-												: "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
+												: "border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500"
 										}`}
 									>
 										<input
@@ -364,9 +541,9 @@ export default function CreateSearchPage() {
 											onChange={() => handlePropertyTypeToggle(type.id)}
 											className="sr-only"
 										/>
-										<div className="flex flex-col items-center text-center">
+										<div>
 											<Icon
-												className={`h-8 w-8 mb-3 ${
+												className={`h-6 w-6 mb-2 ${
 													isSelected ? "text-blue-600 dark:text-blue-400" : "text-gray-400"
 												}`}
 											/>
@@ -495,8 +672,10 @@ export default function CreateSearchPage() {
 									<div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
 									Creating Search...
 								</div>
+							) : formData.searchMode === "dates" ? (
+								"Find Available Places"
 							) : (
-								"Create Search"
+								"Find Long-term Matches"
 							)}
 						</button>
 					</div>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Globe, ChevronDown, Home } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 export default function Header() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -52,7 +52,6 @@ export default function Header() {
 								onClick={() => setIsLanguageOpen(!isLanguageOpen)}
 								className="flex items-center space-x-2 p-2 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
 							>
-								<Globe className="h-4 w-4" />
 								<span className="hidden sm:inline text-sm font-medium">
 									{selectedLanguage.flag} {selectedLanguage.name}
 								</span>
