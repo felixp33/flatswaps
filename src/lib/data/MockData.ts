@@ -6,7 +6,7 @@ export const featuredProperties: Property[] = [
 	{
 		id: "1",
 		title: "Berlin Altbau",
-		location: "New York, USA",
+		location: "Berlin, Germany",
 		price: "$150",
 		rating: 4.9,
 		reviews: 128,

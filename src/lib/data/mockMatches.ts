@@ -34,11 +34,11 @@ export const mockMatches = [
 			{
 				id: "currentUser",
 				name: "You",
-				location: "New York, USA",
+				location: "Berlin, Germany",
 				hasAccepted: null,
 				property: {
-					title: "Manhattan Loft",
-					location: "New York, USA",
+					title: "Berlin Altbau Flat",
+					location: "Berlin, Germany",
 					bedrooms: 1,
 					bathrooms: 1,
 					guests: 2,
@@ -101,11 +101,11 @@ export const mockMatches = [
 			{
 				id: "currentUser",
 				name: "You",
-				location: "New York, USA",
+				location: "Berlin, Germany",
 				hasAccepted: true, // user has already accepted
 				property: {
-					title: "Manhattan Loft",
-					location: "New York, USA",
+					title: "Berlin Altbau Flat",
+					location: "Berlin, Germany",
 					bedrooms: 1,
 					bathrooms: 1,
 					guests: 2,

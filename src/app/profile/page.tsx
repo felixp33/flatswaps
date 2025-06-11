@@ -159,7 +159,7 @@ export default function ProfileOverview() {
 
 							<div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
 								<MapPin className="h-4 w-4 mr-1" />
-								New York, USA
+								Berlin, Germany
 							</div>
 
 							<div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">

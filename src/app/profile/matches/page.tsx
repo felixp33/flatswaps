@@ -60,16 +60,6 @@ function MatchesPageContent() {
 		// TODO: Implement API call to reject match
 	};
 
-	const getStatusFilterOptions = () => {
-		return [
-			{ id: "all", label: "All Matches" },
-			{ id: "new", label: "New Matches" },
-			{ id: "pending", label: "Pending" },
-			{ id: "accepted", label: "Confirmed" },
-			{ id: "rejected", label: "Cancelled" },
-		];
-	};
-
 	// Get unique searches from matches
 	const getSearchFilterOptions = () => {
 		const uniqueSearches = matches.reduce((acc, match) => {
@@ -172,26 +162,10 @@ function MatchesPageContent() {
 					onFilterChange={handleStatusFilterChange}
 				/>
 
-				{/* Matches List */}
+				{/* Matches List - REMOVED overlapping search indicator */}
 				<div className="space-y-6">
 					{filteredMatches.map((match) => (
-						<div key={match.id} className="relative">
-							{/* Search indicator for each match */}
-							{activeSearchFilter === "all" && (
-								<div className="absolute top-4 right-4 z-10">
-									<span className="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
-										<Search className="h-3 w-3 mr-1" />
-										{match.searchName}
-									</span>
-								</div>
-							)}
-							<MatchCard
-								key={match.id}
-								match={match}
-								onAccept={handleAcceptMatch}
-								onReject={handleRejectMatch}
-							/>
-						</div>
+						<MatchCard key={match.id} match={match} onAccept={handleAcceptMatch} onReject={handleRejectMatch} />
 					))}
 				</div>
 
@@ -211,88 +185,8 @@ function MatchesPageContent() {
 								? "Create searches to find your perfect swap partners."
 								: "Try adjusting your filters or create new searches."}
 						</p>
-
-						{/* Clear filters option */}
-						{(activeStatusFilter !== "all" || activeSearchFilter !== "all") && (
-							<div className="mt-4 space-x-4">
-								<button
-									onClick={() => {
-										handleStatusFilterChange("all");
-										handleSearchFilterChange("all");
-									}}
-									className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-								>
-									Clear All Filters
-								</button>
-							</div>
-						)}
-
-						{activeStatusFilter === "all" && activeSearchFilter === "all" && (
-							<Link
-								href="/profile/searches"
-								className="mt-4 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-							>
-								<Search className="h-4 w-4 mr-2" />
-								Create Search
-							</Link>
-						)}
 					</div>
 				)}
-
-				{/* Filter Summary */}
-				{filteredMatches.length > 0 && (activeStatusFilter !== "all" || activeSearchFilter !== "all") && (
-					<div className="mt-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-						<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-							<div className="text-sm text-gray-600 dark:text-gray-300">
-								<strong>{filteredMatches.length}</strong> of <strong>{matches.length}</strong> matches shown
-							</div>
-							<div className="flex items-center space-x-4 text-sm">
-								{activeSearchFilter !== "all" && (
-									<span className="text-gray-600 dark:text-gray-300">
-										Search:{" "}
-										<span className="font-medium">
-											{searchFilterOptions.find((option) => option.id === activeSearchFilter)?.label}
-										</span>
-									</span>
-								)}
-								{activeStatusFilter !== "all" && (
-									<span className="text-gray-600 dark:text-gray-300">
-										Status:{" "}
-										<span className="font-medium">
-											{getStatusFilterOptions().find((option) => option.id === activeStatusFilter)?.label}
-										</span>
-									</span>
-								)}
-								<button
-									onClick={() => {
-										handleStatusFilterChange("all");
-										handleSearchFilterChange("all");
-									}}
-									className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
-								>
-									Clear all filters
-								</button>
-							</div>
-						</div>
-					</div>
-				)}
-			</div>
-		</ProfileLayout>
-	);
-}
-
-function LoadingFallback() {
-	return (
-		<ProfileLayout>
-			<div className="p-6">
-				<div className="animate-pulse space-y-4">
-					<div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/4"></div>
-					<div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-					<div className="space-y-4">
-						<div className="h-32 bg-gray-200 dark:bg-gray-700 rounded"></div>
-						<div className="h-32 bg-gray-200 dark:bg-gray-700 rounded"></div>
-					</div>
-				</div>
 			</div>
 		</ProfileLayout>
 	);
@@ -300,7 +194,7 @@ function LoadingFallback() {
 
 export default function MatchesPage() {
 	return (
-		<Suspense fallback={<LoadingFallback />}>
+		<Suspense fallback={<div>Loading...</div>}>
 			<MatchesPageContent />
 		</Suspense>
 	);
