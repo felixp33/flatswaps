@@ -9,6 +9,7 @@ import Testimonials from "@/components/landing/Testimonials";
 import FAQSection from "@/components/landing/FAQSection";
 import CtaSection from "@/components/landing/CTASection";
 import { featuredProperties, testimonials } from "@/lib/data/MockData";
+import PricingSection from "@/components/landing/PricingSection";
 
 export default function HomePage() {
 	return (
@@ -17,9 +18,9 @@ export default function HomePage() {
 			<main>
 				<HeroSection />
 				<HowItWorks />
-
 				<PopularDestinations />
 				<Testimonials testimonials={testimonials} />
+				<PricingSection />
 				<FAQSection />
 				<CtaSection />
 			</main>
