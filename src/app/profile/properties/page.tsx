@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation"; // Add this import
+import { useRouter } from "next/navigation";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import {
 	Edit3,
@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 
 export default function MyFlatPage() {
-	const router = useRouter(); // Add this hook
+	const router = useRouter();
 
 	// Mock image data - in a real app, this would come from your property data
 	const [flatImages, setFlatImages] = useState([
@@ -46,8 +46,6 @@ export default function MyFlatPage() {
 		location: "Berlin, Germany",
 		description:
 			"Beautiful Altbau flat in the heart of Berlin, perfect for couples or small families. Walking distance to Flughafen Tempelhof and excellent public transport connections.",
-		isSwapAvailable: true,
-		isActive: true,
 		features: {
 			bedrooms: 2,
 			bathrooms: 1,
@@ -55,24 +53,27 @@ export default function MyFlatPage() {
 			size: 85,
 		},
 		amenities: {
-			general: ["2nd Floor", "Suitable for vacation rentals"],
-			accessibility: ["Elevator"],
-			interior: ["Fitted Kitchen", "Shower", "Separate WC", "Basement Storage", "Tile Flooring"],
-			exterior: ["Mountain View", "Winter Garden", "Underground Garage", "Plastic Windows"],
-			equipment: ["DSL Connection", "Washing Machine", "Cable Connection", "WiFi"],
+			general: ["Non-smoking", "Pets allowed", "Long-term stays welcome", "Self check-in", "Private entrance"],
+			accessibility: ["Wide doorways", "Step-free access", "Accessible parking spot"],
+			interior: ["Fitted Kitchen", "Shower", "Separate WC", "WiFi", "Heating", "Dishwasher"],
+			exterior: ["Balcony", "Garden access", "Bike storage", "Parking space"],
+			equipment: ["Washing machine", "Dryer", "Iron", "Hair dryer", "First aid kit"],
 		},
 		availability: {
-			nextAvailable: "March 15, 2024",
-			preferredDuration: "1-4 weeks",
-			restrictions: "No smoking, pets welcome",
+			nextAvailable: "April 15, 2024",
+			preferredDuration: "1-3 months",
+			restrictions: "No smoking, quiet hours 10 PM - 8 AM",
 		},
-		lastUpdated: "2024-03-01",
-		memberSince: "2023-03-15",
+		rating: 4.8,
+		reviews: 23,
 		verified: true,
+		isActive: true,
+		isSwapAvailable: true,
+		lastUpdated: "March 15, 2024",
 	};
 
-	const openGallery = (imageIndex: number) => {
-		setSelectedImageIndex(imageIndex);
+	const openGallery = (index: number) => {
+		setSelectedImageIndex(index);
 		setIsGalleryOpen(true);
 	};
 
@@ -80,52 +81,41 @@ export default function MyFlatPage() {
 		setIsGalleryOpen(false);
 	};
 
-	const navigateGallery = (direction: "next" | "prev") => {
-		if (direction === "next") {
-			setSelectedImageIndex((prev) => (prev + 1) % flatImages.length);
+	const navigateGallery = (direction: "prev" | "next") => {
+		if (direction === "prev") {
+			setSelectedImageIndex((prev) => (prev === 0 ? flatImages.length - 1 : prev - 1));
 		} else {
-			setSelectedImageIndex((prev) => (prev - 1 + flatImages.length) % flatImages.length);
+			setSelectedImageIndex((prev) => (prev === flatImages.length - 1 ? 0 : prev + 1));
 		}
 	};
 
-	const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const files = Array.from(event.target.files || []);
-		if (files.length === 0) return;
+	const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+		const files = event.target.files;
+		if (!files) return;
 
 		setIsUploading(true);
-
-		// Simulate upload process
-		files.forEach((file) => {
-			const reader = new FileReader();
-			reader.onload = (e) => {
-				if (e.target?.result) {
-					setFlatImages((prev) => [...prev, e.target!.result as string]);
-				}
-			};
-			reader.readAsDataURL(file);
-		});
-
+		// Simulate upload delay
 		setTimeout(() => {
 			setIsUploading(false);
-		}, 1000);
+		}, 2000);
+
+		// In a real app, you would upload to your backend/Supabase storage here
+		// For now, we'll just simulate adding new images
+		const newImageUrls = Array.from(files).map((file) => URL.createObjectURL(file));
+		setFlatImages((prev) => [...prev, ...newImageUrls]);
 	};
 
-	const removeImage = (indexToRemove: number) => {
-		setFlatImages((prev) => prev.filter((_, index) => index !== indexToRemove));
-	};
-
-	// Add handler for View Public Listing button
 	const handleViewPublicListing = () => {
 		router.push(`/listing/${userFlat.id}`);
 	};
 
-	// Image placeholder component
+	// Placeholder component for missing images
 	const ImagePlaceholder = ({
 		className,
-		isMain = false,
+		isMain,
 		style,
 	}: {
-		className: string;
+		className?: string;
 		isMain?: boolean;
 		style?: React.CSSProperties;
 	}) => (
@@ -191,7 +181,7 @@ export default function MyFlatPage() {
 								</div>
 							</div>
 
-							{/* Thumbnail Gallery */}
+							{/* Thumbnail Gallery - REMOVED RED CROSSES */}
 							<div className="grid grid-cols-6 gap-2">
 								{flatImages.slice(1, 5).map((image, index) => (
 									<div key={index + 1} className="relative">
@@ -208,13 +198,7 @@ export default function MyFlatPage() {
 												}
 											}}
 										/>
-										<button
-											onClick={() => removeImage(index + 1)}
-											className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
-											style={{ fontSize: "10px", width: "18px", height: "18px" }}
-										>
-											<X className="h-2 w-2" />
-										</button>
+										{/* REMOVED: Red cross button that was here */}
 									</div>
 								))}
 
