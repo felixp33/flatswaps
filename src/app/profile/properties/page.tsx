@@ -2,6 +2,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation"; // Add this import
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import {
 	Edit3,
@@ -21,6 +22,8 @@ import {
 } from "lucide-react";
 
 export default function MyFlatPage() {
+	const router = useRouter(); // Add this hook
+
 	// Mock image data - in a real app, this would come from your property data
 	const [flatImages, setFlatImages] = useState([
 		"/images/flat/living-room-main.png",
@@ -111,6 +114,11 @@ export default function MyFlatPage() {
 		setFlatImages((prev) => prev.filter((_, index) => index !== indexToRemove));
 	};
 
+	// Add handler for View Public Listing button
+	const handleViewPublicListing = () => {
+		router.push(`/listing/${userFlat.id}`);
+	};
+
 	// Image placeholder component
 	const ImagePlaceholder = ({
 		className,
@@ -171,66 +179,47 @@ export default function MyFlatPage() {
 										isMain={true}
 										style={{ display: flatImages.length > 0 ? "none" : "flex" }}
 									/>
-
-									{/* Status badges */}
-									<div className="absolute top-4 left-4 flex gap-2">
-										{userFlat.verified && (
-											<span className="bg-green-600 text-white text-xs font-semibold px-3 py-1 rounded-full flex items-center">
-												<Shield className="h-3 w-3 mr-1" />
-												Verified
-											</span>
-										)}
-									</div>
-
-									{/* Image count overlay */}
-									{flatImages.length > 1 && (
-										<div className="absolute bottom-4 right-4 bg-black bg-opacity-70 text-white px-3 py-1 rounded-full text-sm">
-											1 / {flatImages.length}
+									{userFlat.verified && (
+										<div className="absolute top-4 left-4 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-md flex items-center">
+											<Shield className="h-3 w-3 mr-1" />
+											Verified
 										</div>
 									)}
+									<div className="absolute bottom-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
+										1 / {flatImages.length}
+									</div>
 								</div>
 							</div>
 
-							{/* Thumbnail Grid */}
-							<div className="grid grid-cols-4 gap-2">
+							{/* Thumbnail Gallery */}
+							<div className="grid grid-cols-6 gap-2">
 								{flatImages.slice(1, 5).map((image, index) => (
-									<div
-										key={index + 1}
-										className="relative h-20 rounded-lg overflow-hidden cursor-pointer group"
-										onClick={() => openGallery(index + 1)}
-									>
+									<div key={index + 1} className="relative">
 										<img
 											src={image}
 											alt={`Flat view ${index + 2}`}
-											className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+											className="h-16 w-full object-cover rounded cursor-pointer hover:opacity-80 transition-opacity"
+											onClick={() => openGallery(index + 1)}
 											onError={(e) => {
 												const target = e.target as HTMLImageElement;
-												const nextSibling = target.nextSibling as HTMLElement;
-												target.style.display = "none";
-												if (nextSibling) {
-													nextSibling.style.display = "flex";
+												const parent = target.parentElement;
+												if (parent) {
+													parent.innerHTML = `<div class="h-16 w-full bg-gray-200 dark:bg-gray-700 rounded flex items-center justify-center"><svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>`;
 												}
 											}}
 										/>
-										<ImagePlaceholder className="absolute inset-0 rounded-lg" style={{ display: "none" }} />
+										<button
+											onClick={() => removeImage(index + 1)}
+											className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
+											style={{ fontSize: "10px", width: "18px", height: "18px" }}
+										>
+											<X className="h-2 w-2" />
+										</button>
 									</div>
 								))}
 
-								{/* Show more images button */}
-								{flatImages.length > 5 && (
-									<div
-										className="relative h-20 rounded-lg overflow-hidden cursor-pointer group bg-gray-800 bg-opacity-50 flex items-center justify-center"
-										onClick={() => openGallery(5)}
-									>
-										<div className="text-white text-center">
-											<Camera className="h-6 w-6 mx-auto mb-1" />
-											<span className="text-xs">+{flatImages.length - 5}</span>
-										</div>
-									</div>
-								)}
-
-								{/* Add images button */}
-								<label className="relative h-20 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 cursor-pointer group hover:border-blue-500 dark:hover:border-blue-400 transition-colors flex items-center justify-center">
+								{/* Add more images slot */}
+								<label className="h-16 w-full bg-gray-100 dark:bg-gray-700 rounded cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex flex-col items-center justify-center group">
 									<div className="text-center">
 										{isUploading ? (
 											<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
@@ -321,9 +310,12 @@ export default function MyFlatPage() {
 								</div>
 							</div>
 
-							{/* Action Button */}
+							{/* Action Button - Updated with onClick handler */}
 							<div className="flex justify-end">
-								<button className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+								<button
+									onClick={handleViewPublicListing}
+									className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+								>
 									<Eye className="h-4 w-4 mr-2" />
 									View Public Listing
 								</button>
@@ -340,18 +332,12 @@ export default function MyFlatPage() {
 
 					{/* General Information */}
 					<div className="mb-6">
-						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center">
-							<Home className="h-4 w-4 mr-2 text-blue-600 dark:text-blue-400" />
-							General Information
-						</h4>
-						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">General</h4>
+						<div className="grid grid-cols-2 md:grid-cols-3 gap-2">
 							{userFlat.amenities.general.map((amenity, index) => (
-								<div
-									key={index}
-									className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
-								>
-									<div className="w-2 h-2 bg-blue-500 rounded-full mr-3 flex-shrink-0"></div>
-									<span className="text-sm text-gray-900 dark:text-white">{amenity}</span>
+								<div key={index} className="flex items-center text-gray-600 dark:text-gray-300">
+									<span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+									{amenity}
 								</div>
 							))}
 						</div>
@@ -359,179 +345,149 @@ export default function MyFlatPage() {
 
 					{/* Accessibility */}
 					<div className="mb-6">
-						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center">
-							<Users className="h-4 w-4 mr-2 text-green-600 dark:text-green-400" />
-							Accessibility
-						</h4>
-						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Accessibility</h4>
+						<div className="grid grid-cols-2 md:grid-cols-3 gap-2">
 							{userFlat.amenities.accessibility.map((amenity, index) => (
-								<div
-									key={index}
-									className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
-								>
-									<div className="w-2 h-2 bg-green-500 rounded-full mr-3 flex-shrink-0"></div>
-									<span className="text-sm text-gray-900 dark:text-white">{amenity}</span>
+								<div key={index} className="flex items-center text-gray-600 dark:text-gray-300">
+									<span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+									{amenity}
 								</div>
 							))}
 						</div>
 					</div>
 
-					{/* Interior Features */}
+					{/* Interior */}
 					<div className="mb-6">
-						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center">
-							<Bed className="h-4 w-4 mr-2 text-purple-600 dark:text-purple-400" />
-							Interior Features
-						</h4>
-						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Interior</h4>
+						<div className="grid grid-cols-2 md:grid-cols-3 gap-2">
 							{userFlat.amenities.interior.map((amenity, index) => (
-								<div
-									key={index}
-									className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
-								>
-									<div className="w-2 h-2 bg-purple-500 rounded-full mr-3 flex-shrink-0"></div>
-									<span className="text-sm text-gray-900 dark:text-white">{amenity}</span>
+								<div key={index} className="flex items-center text-gray-600 dark:text-gray-300">
+									<span className="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>
+									{amenity}
 								</div>
 							))}
 						</div>
 					</div>
 
-					{/* Exterior Features */}
+					{/* Exterior */}
 					<div className="mb-6">
-						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center">
-							<MapPin className="h-4 w-4 mr-2 text-orange-600 dark:text-orange-400" />
-							Exterior Features
-						</h4>
-						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Exterior</h4>
+						<div className="grid grid-cols-2 md:grid-cols-3 gap-2">
 							{userFlat.amenities.exterior.map((amenity, index) => (
-								<div
-									key={index}
-									className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
-								>
-									<div className="w-2 h-2 bg-orange-500 rounded-full mr-3 flex-shrink-0"></div>
-									<span className="text-sm text-gray-900 dark:text-white">{amenity}</span>
+								<div key={index} className="flex items-center text-gray-600 dark:text-gray-300">
+									<span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
+									{amenity}
 								</div>
 							))}
 						</div>
 					</div>
 
-					{/* Equipment & Technology */}
+					{/* Equipment */}
 					<div>
-						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center">
-							<Star className="h-4 w-4 mr-2 text-indigo-600 dark:text-indigo-400" />
-							Equipment & Technology
-						</h4>
-						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Equipment</h4>
+						<div className="grid grid-cols-2 md:grid-cols-3 gap-2">
 							{userFlat.amenities.equipment.map((amenity, index) => (
-								<div
-									key={index}
-									className="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"
-								>
-									<div className="w-2 h-2 bg-indigo-500 rounded-full mr-3 flex-shrink-0"></div>
-									<span className="text-sm text-gray-900 dark:text-white">{amenity}</span>
+								<div key={index} className="flex items-center text-gray-600 dark:text-gray-300">
+									<span className="w-2 h-2 bg-pink-500 rounded-full mr-3"></span>
+									{amenity}
 								</div>
 							))}
 						</div>
 					</div>
 				</div>
 
-				{/* Gallery Modal */}
-				{isGalleryOpen && (
-					<div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
-						<div className="relative w-full h-full flex items-center justify-center p-4">
-							{/* Close button */}
-							<button
-								onClick={closeGallery}
-								className="absolute top-4 right-4 z-50 p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-70 transition-colors"
-							>
-								<X className="h-6 w-6" />
-							</button>
+				{/* Availability & Status */}
+				<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+					<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Availability & Status</h3>
 
-							{/* Previous button */}
-							{flatImages.length > 1 && (
-								<button
-									onClick={() => navigateGallery("prev")}
-									className="absolute left-4 z-50 p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-70 transition-colors"
-								>
-									<ChevronLeft className="h-6 w-6" />
-								</button>
-							)}
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+						<div>
+							<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-2">Availability</h4>
+							<p className="text-gray-600 dark:text-gray-300 mb-2">
+								Next available: <span className="font-medium">{userFlat.availability.nextAvailable}</span>
+							</p>
+							<p className="text-gray-600 dark:text-gray-300 mb-2">
+								Preferred duration:{" "}
+								<span className="font-medium">{userFlat.availability.preferredDuration}</span>
+							</p>
+							<p className="text-gray-600 dark:text-gray-300">
+								Restrictions: <span className="font-medium">{userFlat.availability.restrictions}</span>
+							</p>
+						</div>
 
-							{/* Main image */}
-							<div className="max-w-4xl max-h-full">
-								<img
-									src={flatImages[selectedImageIndex]}
-									alt={`Flat view ${selectedImageIndex + 1}`}
-									className="max-w-full max-h-full object-contain"
-									onError={(e) => {
-										const target = e.target as HTMLImageElement;
-										const nextSibling = target.nextSibling as HTMLElement;
-										target.style.display = "none";
-										if (nextSibling) {
-											nextSibling.style.display = "flex";
-										}
-									}}
-								/>
-								<div
-									className="w-96 h-96 bg-gray-700 flex items-center justify-center rounded-lg"
-									style={{ display: "none" }}
-								>
-									<Camera className="h-16 w-16 text-gray-400" />
-								</div>
-							</div>
-
-							{/* Next button */}
-							{flatImages.length > 1 && (
-								<button
-									onClick={() => navigateGallery("next")}
-									className="absolute right-4 z-50 p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-70 transition-colors"
-								>
-									<ChevronRight className="h-6 w-6" />
-								</button>
-							)}
-
-							{/* Image counter */}
-							<div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full">
-								{selectedImageIndex + 1} / {flatImages.length}
-							</div>
-
-							{/* Thumbnail strip */}
-							<div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex space-x-2 max-w-full overflow-x-auto">
-								{flatImages.map((image, index) => (
-									<button
-										key={index}
-										onClick={() => setSelectedImageIndex(index)}
-										className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-colors ${
-											index === selectedImageIndex
-												? "border-white"
-												: "border-transparent opacity-70 hover:opacity-100"
+						<div>
+							<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-2">Property Status</h4>
+							<div className="space-y-2">
+								<div className="flex items-center">
+									<span
+										className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+											userFlat.isActive
+												? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+												: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
 										}`}
 									>
-										<img
-											src={image}
-											alt={`Thumbnail ${index + 1}`}
-											className="w-full h-full object-cover"
-											onError={(e) => {
-												const target = e.target as HTMLImageElement;
-												const nextSibling = target.nextSibling as HTMLElement;
-												target.style.display = "none";
-												if (nextSibling) {
-													nextSibling.style.display = "flex";
-												}
-											}}
-										/>
-										<div
-											className="w-full h-full bg-gray-600 flex items-center justify-center"
-											style={{ display: "none" }}
-										>
-											<Camera className="h-4 w-4 text-gray-400" />
-										</div>
-									</button>
-								))}
+										{userFlat.isActive ? "Active" : "Inactive"}
+									</span>
+								</div>
+								<div className="flex items-center">
+									<span
+										className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+											userFlat.isSwapAvailable
+												? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+												: "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200"
+										}`}
+									>
+										{userFlat.isSwapAvailable ? "Available for Swap" : "Not Available for Swap"}
+									</span>
+								</div>
 							</div>
+							<p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
+								Last updated: {userFlat.lastUpdated}
+							</p>
 						</div>
 					</div>
-				)}
+				</div>
 			</div>
+
+			{/* Full Screen Image Gallery Modal */}
+			{isGalleryOpen && (
+				<div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center">
+					<button
+						onClick={closeGallery}
+						className="absolute top-4 right-4 text-white p-2 hover:bg-white hover:bg-opacity-10 rounded-full transition-colors"
+					>
+						<X className="h-6 w-6" />
+					</button>
+
+					<button
+						onClick={() => navigateGallery("prev")}
+						className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white p-2 hover:bg-white hover:bg-opacity-10 rounded-full transition-colors"
+					>
+						<ChevronLeft className="h-8 w-8" />
+					</button>
+
+					<button
+						onClick={() => navigateGallery("next")}
+						className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white p-2 hover:bg-white hover:bg-opacity-10 rounded-full transition-colors"
+					>
+						<ChevronRight className="h-8 w-8" />
+					</button>
+
+					<img
+						src={flatImages[selectedImageIndex]}
+						alt={`Flat view ${selectedImageIndex + 1}`}
+						className="max-h-full max-w-full object-contain"
+						onError={(e) => {
+							const target = e.target as HTMLImageElement;
+							target.src = "/images/placeholder-flat.jpg"; // Fallback image
+						}}
+					/>
+
+					<div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-lg">
+						{selectedImageIndex + 1} / {flatImages.length}
+					</div>
+				</div>
+			)}
 		</ProfileLayout>
 	);
 }
