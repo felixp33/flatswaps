@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import ProfileLayout from "@/components/profile/ProfileLayout";
-import { Edit, Save, X, Shield, Star, MapPin, Calendar } from "lucide-react";
+import { Edit, Save, X, Shield, Star, MapPin, Calendar, Camera } from "lucide-react";
 
 export default function ProfileOverview() {
 	const [isEditing, setIsEditing] = useState(false);
@@ -136,13 +136,39 @@ export default function ProfileOverview() {
 					<div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
 						{/* Avatar */}
 						<div className="relative">
-							<div className="h-24 w-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-2xl">
-								{formData.firstName[0]}
-								{formData.lastName[0]}
+							<div className="h-24 w-24 rounded-full overflow-hidden border-2 border-gray-200 dark:border-gray-600">
+								{/* Replace with actual user image URL when available */}
+								<img
+									src="/images/profile/markus-schmidt.png" // Replace with actual image path
+									alt={`${formData.firstName} ${formData.lastName}`}
+									className="h-full w-full object-cover"
+									onError={(e) => {
+										// Fallback to initials if image fails to load
+										const target = e.target as HTMLImageElement;
+										target.style.display = "none";
+										const fallback = target.nextElementSibling as HTMLElement;
+										if (fallback) fallback.style.display = "flex";
+									}}
+								/>
+								{/* Fallback initials circle - hidden by default, shown when image fails */}
+								<div
+									className="h-full w-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-2xl"
+									style={{ display: "none" }}
+								>
+									{formData.firstName[0]}
+									{formData.lastName[0]}
+								</div>
 							</div>
-							<div className="absolute -bottom-1 -right-1 h-8 w-8 bg-green-500 rounded-full flex items-center justify-center">
+							{/* Verified badge on avatar */}
+							<div className="absolute -bottom-1 -right-1 h-8 w-8 bg-green-500 rounded-full flex items-center justify-center border-2 border-white dark:border-gray-800">
 								<Shield className="h-4 w-4 text-white" />
 							</div>
+							{/* Camera icon for editing profile picture */}
+							{isEditing && (
+								<div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center cursor-pointer hover:bg-opacity-60 transition-colors">
+									<Camera className="h-6 w-6 text-white" />
+								</div>
+							)}
 						</div>
 
 						{/* User Info */}
@@ -322,7 +348,6 @@ export default function ProfileOverview() {
 									value={formData.workLocation}
 									onChange={(e) => handleInputChange("workLocation", e.target.value)}
 									className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-									placeholder="City, Country"
 								/>
 							) : (
 								<p className="text-gray-900 dark:text-white">{formData.workLocation}</p>
@@ -335,14 +360,14 @@ export default function ProfileOverview() {
 				<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
 					<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Languages</h3>
 					{isEditing ? (
-						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
 							{availableLanguages.map((language) => (
 								<label key={language} className="flex items-center space-x-2 cursor-pointer">
 									<input
 										type="checkbox"
 										checked={formData.languages.includes(language)}
 										onChange={() => handleLanguageToggle(language)}
-										className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+										className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
 									/>
 									<span className="text-sm text-gray-700 dark:text-gray-300">{language}</span>
 								</label>
@@ -353,7 +378,7 @@ export default function ProfileOverview() {
 							{formData.languages.map((language, index) => (
 								<span
 									key={index}
-									className="inline-flex items-center px-2 py-1 rounded text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+									className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
 								>
 									{language}
 								</span>
@@ -361,22 +386,6 @@ export default function ProfileOverview() {
 						</div>
 					)}
 				</div>
-
-				{/* Save reminder for editing mode */}
-				{isEditing && (
-					<div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-						<div className="flex items-center">
-							<div className="flex-shrink-0">
-								<Edit className="h-5 w-5 text-blue-400" />
-							</div>
-							<div className="ml-3">
-								<p className="text-sm text-blue-700 dark:text-blue-300">
-									You are currently editing your profile. Don't forget to save your changes when you're done.
-								</p>
-							</div>
-						</div>
-					</div>
-				)}
 			</div>
 		</ProfileLayout>
 	);

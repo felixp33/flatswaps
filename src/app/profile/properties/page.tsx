@@ -13,7 +13,6 @@ import {
 	Bed,
 	Bath,
 	Home,
-	Shield,
 	Camera,
 	X,
 	ChevronLeft,
@@ -58,11 +57,6 @@ export default function MyFlatPage() {
 			interior: ["Fitted Kitchen", "Shower", "Separate WC", "WiFi", "Heating", "Dishwasher"],
 			exterior: ["Balcony", "Garden access", "Bike storage", "Parking space"],
 			equipment: ["Washing machine", "Dryer", "Iron", "Hair dryer", "First aid kit"],
-		},
-		availability: {
-			nextAvailable: "April 15, 2024",
-			preferredDuration: "1-3 months",
-			restrictions: "No smoking, quiet hours 10 PM - 8 AM",
 		},
 		rating: 4.8,
 		reviews: 23,
@@ -152,58 +146,52 @@ export default function MyFlatPage() {
 										<img
 											src={flatImages[0]}
 											alt="Main flat view"
-											className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+											className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
 											onClick={() => openGallery(0)}
 											onError={(e) => {
 												const target = e.target as HTMLImageElement;
-												const nextSibling = target.nextSibling as HTMLElement;
 												target.style.display = "none";
-												if (nextSibling) {
-													nextSibling.style.display = "flex";
-												}
+												const placeholder = target.nextElementSibling as HTMLElement;
+												if (placeholder) placeholder.style.display = "flex";
 											}}
 										/>
-									) : null}
-									<ImagePlaceholder
-										className="absolute inset-0 rounded-lg"
-										isMain={true}
-										style={{ display: flatImages.length > 0 ? "none" : "flex" }}
-									/>
-									{userFlat.verified && (
-										<div className="absolute top-4 left-4 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-md flex items-center">
-											<Shield className="h-3 w-3 mr-1" />
-											Verified
-										</div>
+									) : (
+										<ImagePlaceholder className="w-full h-full rounded-lg" isMain />
 									)}
-									<div className="absolute bottom-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
-										1 / {flatImages.length}
+									<div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center">
+										<Camera className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
 									</div>
 								</div>
 							</div>
 
-							{/* Thumbnail Gallery - REMOVED RED CROSSES */}
-							<div className="grid grid-cols-6 gap-2">
+							{/* Thumbnail Grid */}
+							<div className="grid grid-cols-4 gap-2 mb-4">
 								{flatImages.slice(1, 5).map((image, index) => (
-									<div key={index + 1} className="relative">
+									<div
+										key={index + 1}
+										className="relative h-20 rounded-lg overflow-hidden cursor-pointer group"
+										onClick={() => openGallery(index + 1)}
+									>
 										<img
 											src={image}
 											alt={`Flat view ${index + 2}`}
-											className="h-16 w-full object-cover rounded cursor-pointer hover:opacity-80 transition-opacity"
-											onClick={() => openGallery(index + 1)}
+											className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-200"
 											onError={(e) => {
 												const target = e.target as HTMLImageElement;
-												const parent = target.parentElement;
-												if (parent) {
-													parent.innerHTML = `<div class="h-16 w-full bg-gray-200 dark:bg-gray-700 rounded flex items-center justify-center"><svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>`;
-												}
+												target.style.display = "none";
+												const placeholder = target.nextElementSibling as HTMLElement;
+												if (placeholder) placeholder.style.display = "flex";
 											}}
 										/>
-										{/* REMOVED: Red cross button that was here */}
+										<ImagePlaceholder
+											className="w-full h-full absolute inset-0"
+											style={{ display: "none" }}
+										/>
 									</div>
 								))}
 
-								{/* Add more images slot */}
-								<label className="h-16 w-full bg-gray-100 dark:bg-gray-700 rounded cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex flex-col items-center justify-center group">
+								{/* Upload new images */}
+								<label className="h-20 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-gray-400 dark:hover:border-gray-500 transition-colors group">
 									<div className="text-center">
 										{isUploading ? (
 											<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
@@ -376,58 +364,6 @@ export default function MyFlatPage() {
 									{amenity}
 								</div>
 							))}
-						</div>
-					</div>
-				</div>
-
-				{/* Availability & Status */}
-				<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-					<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Availability & Status</h3>
-
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-						<div>
-							<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-2">Availability</h4>
-							<p className="text-gray-600 dark:text-gray-300 mb-2">
-								Next available: <span className="font-medium">{userFlat.availability.nextAvailable}</span>
-							</p>
-							<p className="text-gray-600 dark:text-gray-300 mb-2">
-								Preferred duration:{" "}
-								<span className="font-medium">{userFlat.availability.preferredDuration}</span>
-							</p>
-							<p className="text-gray-600 dark:text-gray-300">
-								Restrictions: <span className="font-medium">{userFlat.availability.restrictions}</span>
-							</p>
-						</div>
-
-						<div>
-							<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-2">Property Status</h4>
-							<div className="space-y-2">
-								<div className="flex items-center">
-									<span
-										className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-											userFlat.isActive
-												? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
-												: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
-										}`}
-									>
-										{userFlat.isActive ? "Active" : "Inactive"}
-									</span>
-								</div>
-								<div className="flex items-center">
-									<span
-										className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-											userFlat.isSwapAvailable
-												? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
-												: "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200"
-										}`}
-									>
-										{userFlat.isSwapAvailable ? "Available for Swap" : "Not Available for Swap"}
-									</span>
-								</div>
-							</div>
-							<p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
-								Last updated: {userFlat.lastUpdated}
-							</p>
 						</div>
 					</div>
 				</div>

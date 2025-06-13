@@ -18,7 +18,7 @@ export default function MessagesPage() {
 		{
 			id: "1",
 			user: {
-				name: "Sarah Johnson",
+				name: "Carlos Gomez",
 				location: "Barcelona, Spain",
 				avatar: "/images/avatar-1.png",
 				online: true,
@@ -86,13 +86,13 @@ export default function MessagesPage() {
 		"1": [
 			{
 				id: "1",
-				text: "Hi! I'm interested in your Manhattan loft for a potential swap.",
+				text: "Hi! I'm interested in your Berlin loft for a potential swap.",
 				timestamp: "10:30 AM",
 				fromMe: false,
 			},
 			{
 				id: "2",
-				text: "Hello Sarah! Thanks for reaching out. I'd love to learn more about your place in Barcelona.",
+				text: "Hello Carlos! Thanks for reaching out. I'd love to learn more about your place in Barcelona.",
 				timestamp: "10:45 AM",
 				fromMe: true,
 			},
@@ -248,7 +248,7 @@ export default function MessagesPage() {
 						author: "John Smith",
 						rating: 5,
 						date: "2 weeks ago",
-						text: "Sarah was an amazing host! Her place was exactly as described and the location was perfect.",
+						text: "Carlos was an amazing host! Her place was exactly as described and the location was perfect.",
 					},
 					{
 						id: "2",

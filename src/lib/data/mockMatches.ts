@@ -12,7 +12,7 @@ export const mockMatches = [
 		participants: [
 			{
 				id: "user1",
-				name: "Sarah Johnson",
+				name: "Carlos Gomez",
 				location: "Barcelona, Spain",
 				rating: 4.8,
 				reviews: 34,
@@ -27,7 +27,7 @@ export const mockMatches = [
 				},
 				swapDates: "Mar 15-25, 2024",
 				contactInfo: {
-					email: "sarah.j@email.com",
+					email: "carlos.g@email.com",
 					phone: "+34 123 456 789",
 				},
 			},

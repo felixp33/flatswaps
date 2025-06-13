@@ -25,7 +25,7 @@ export default function Header() {
 	// Simulate logged-in state - In real app, this would come from your auth context/state
 	const isLoggedIn = true; // Changed to true to show profile for testing
 	const user = {
-		name: "Felix Pasewaldt",
+		name: "John Doe",
 		email: "john.doe@example.com",
 		avatar:
 			"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2787&q=80",
@@ -90,6 +90,12 @@ export default function Header() {
 						{/* Authentication Options or Profile */}
 						<div className="flex items-center space-x-3">
 							{/* Test Login Link - TEMPORARY */}
+							<Link
+								href="/auth/onboarding/step-1"
+								className="hidden sm:inline-flex items-center px-3 py-2 text-sm font-medium text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 rounded-md hover:bg-orange-100 dark:hover:bg-orange-900/30 border border-orange-200 dark:border-orange-800 transition-colors"
+							>
+								🧪 Test Onboarding
+							</Link>
 
 							{/* Profile Button - Always visible for testing */}
 							<Link
@@ -105,6 +111,21 @@ export default function Header() {
 								<span className="hidden md:block text-sm font-medium text-gray-700 dark:text-gray-300">
 									{user.name.split(" ")[0]}
 								</span>
+							</Link>
+
+							{/* Sign In/Up buttons - Always visible for testing auth flow */}
+							<Link
+								href="/auth/signin"
+								className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+							>
+								Sign In
+							</Link>
+
+							<Link
+								href="/auth/signup"
+								className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+							>
+								Sign Up
 							</Link>
 						</div>
 

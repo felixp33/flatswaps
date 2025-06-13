@@ -85,7 +85,7 @@ export default function MatchCard({ match, onAccept, onReject }: MatchCardProps)
 
 	return (
 		<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-			{/* Header - Fixed overlap issue */}
+			{/* Header */}
 			<div className="p-6 border-b border-gray-200 dark:border-gray-700">
 				<div className="flex flex-col gap-4">
 					{/* Top row with match info and search name */}
@@ -199,14 +199,14 @@ export default function MatchCard({ match, onAccept, onReject }: MatchCardProps)
 								</div>
 							)}
 
-							{/* Property Info - Updated to match mock data structure */}
+							{/* Property Info - UPDATED: Changed link to use /listing/[id] for public profiles */}
 							<div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 mb-4">
 								<div className="flex items-center justify-between mb-2">
 									<h4 className="font-medium text-gray-900 dark:text-white">
 										{participant.property?.title || "Property"}
 									</h4>
 									<Link
-										href={`/properties/${participant.property?.id || match.id}`}
+										href={`/listing/${participant.property?.id || participant.id}`}
 										className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium"
 									>
 										<Eye className="h-4 w-4 inline mr-1" />
@@ -287,7 +287,7 @@ export default function MatchCard({ match, onAccept, onReject }: MatchCardProps)
 					)}
 				</div>
 
-				{/* Accept/Reject buttons for new matches - Updated styling */}
+				{/* Accept/Reject buttons for new matches */}
 				{match.status === "new" && (
 					<div className="flex space-x-3">
 						<button
