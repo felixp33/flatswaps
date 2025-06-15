@@ -12,7 +12,6 @@ import {
 	MapPin,
 	Calendar,
 	MoreVertical,
-	Eye,
 	Edit3,
 	Play,
 	Pause,
