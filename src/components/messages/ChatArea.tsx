@@ -1,10 +1,9 @@
 // src/components/messages/ChatArea.tsx
 import { MoreVertical, MapPin, FileText } from "lucide-react";
-import { useState } from "react";
+import Link from "next/link";
 import { Conversation, Message } from "@/types/messages";
 import MessageBubble from "./MessageBubble";
 import MessageInput from "./MessageInput";
-import ContractTemplate from "./ContractTemplate";
 
 interface ChatAreaProps {
 	conversation: Conversation;
@@ -14,8 +13,6 @@ interface ChatAreaProps {
 }
 
 export default function ChatArea({ conversation, messages, onShowUserProfile, onSendMessage }: ChatAreaProps) {
-	const [showContractModal, setShowContractModal] = useState(false);
-
 	return (
 		<div className="flex-1 flex flex-col bg-white dark:bg-gray-800">
 			{/* Chat Header */}
@@ -54,14 +51,13 @@ export default function ChatArea({ conversation, messages, onShowUserProfile, on
 						</div>
 					</div>
 					<div className="flex items-center space-x-2">
-						{/* Contract Template Button */}
-						<button
-							onClick={() => setShowContractModal(true)}
-							className="flex items-center px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
-						>
-							<FileText className="h-4 w-4 mr-2" />
-							Contract
-						</button>
+						{/* Contract Template Button - Now links to contract page */}
+						<Link href={`/contract/${conversation.id}`}>
+							<button className="flex items-center px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
+								<FileText className="h-4 w-4 mr-2" />
+								Contract
+							</button>
+						</Link>
 						<button className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
 							<MoreVertical className="h-5 w-5" />
 						</button>
@@ -78,13 +74,6 @@ export default function ChatArea({ conversation, messages, onShowUserProfile, on
 
 			{/* Message Input */}
 			<MessageInput onSendMessage={onSendMessage} />
-
-			{/* Contract Template Modal */}
-			<ContractTemplate
-				isOpen={showContractModal}
-				onClose={() => setShowContractModal(false)}
-				userName={conversation.user.name}
-			/>
 		</div>
 	);
 }
