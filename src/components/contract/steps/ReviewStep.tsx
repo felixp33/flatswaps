@@ -3,8 +3,8 @@
 
 import React from "react";
 import { FileText, Download } from "lucide-react";
-import { downloadContract } from "@/lib/contract/contractGenerator";
 import { ContractFormData } from "@/types/contract";
+import { downloadContract } from "@/lib/contract/contractGenerator";
 
 interface ReviewStepProps {
 	formData: ContractFormData;

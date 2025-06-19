@@ -5,7 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { User, Home, Search, MessageCircle, Heart, Settings, Star, MapPin, ArrowLeftRight } from "lucide-react";
+import { Home, Search, MessageCircle, Heart, Settings } from "lucide-react";
 
 interface ProfileLayoutProps {
 	children: React.ReactNode;
@@ -15,16 +15,11 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const pathname = usePathname();
 
-	// Updated navigation items with Searches replacing Bookings & Swaps
+	// Updated navigation items - Profile and My Flat consolidated into Home
 	const navigationItems = [
 		{
-			name: "Profile",
+			name: "Home",
 			href: "/profile",
-			icon: User,
-		},
-		{
-			name: "My Flat",
-			href: "/profile/properties",
 			icon: Home,
 		},
 		{

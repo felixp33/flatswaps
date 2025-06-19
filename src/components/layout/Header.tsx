@@ -25,7 +25,7 @@ export default function Header() {
 	// Simulate logged-in state - In real app, this would come from your auth context/state
 	const isLoggedIn = true; // Changed to true to show profile for testing
 	const user = {
-		name: "Felix Pasewaldt",
+		name: "Emma Meier",
 		email: "john.doe@example.com",
 		avatar:
 			"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2787&q=80",
