@@ -12,7 +12,7 @@ export default function ProfileDetails() {
 		// Basic Information
 		firstName: "Emma",
 		lastName: "Maier",
-		email: "emma.meier@example.com",
+		email: "emma .meier@example.com",
 		phone: "+49 (30) 123-45678",
 		bio: "Software engineer and travel enthusiast. Love exploring new cities and experiencing different cultures through authentic local stays. My modern loft in Berlin is perfect for professionals or couples wanting to experience the vibrant startup scene and rich history of the city.",
 
