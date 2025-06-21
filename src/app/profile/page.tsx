@@ -4,6 +4,7 @@
 import { useState } from "react";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import { ProfileSummary, PropertySummary, ExchangeChecklist, ContractsCard } from "@/components/dashboard";
+import SearchesSummary from "@/components/dashboard/SearchesSummary";
 
 export default function ProfileDashboard() {
 	// State for checklist progress (in real app, this would come from context/API)
@@ -40,6 +41,34 @@ export default function ProfileDashboard() {
 		isActive: true,
 	};
 
+	// Mock searches data - in real app this would come from API
+	const userSearches = [
+		{
+			id: "1",
+			name: "Summer in Barcelona",
+			location: "Barcelona, Spain",
+			isActive: true,
+			newMatches: 3,
+			matchCount: 12,
+		},
+		{
+			id: "2",
+			name: "Tokyo Adventure",
+			location: "Tokyo, Japan",
+			isActive: false,
+			newMatches: 0,
+			matchCount: 8,
+		},
+		{
+			id: "3",
+			name: "London Business Trip",
+			location: "London, UK",
+			isActive: true,
+			newMatches: 2,
+			matchCount: 15,
+		},
+	];
+
 	// Mock contracts data - empty for now to show placeholder
 	const recentContracts: Array<{
 		id: string;
@@ -74,16 +103,21 @@ export default function ProfileDashboard() {
 					<p className="text-gray-600 dark:text-gray-300">Here's an overview of your FlatSwaps activity</p>
 				</div>
 
-				{/* Main Grid - Profile and Property */}
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+				{/* Top Grid - Profile and Property */}
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
 					<ProfileSummary user={user} />
 					<PropertySummary property={userProperty} />
 				</div>
 
-				{/* Secondary Grid - Checklist and Contracts */}
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-					<ExchangeChecklist completedItems={completedChecklistItems} />
+				{/* Middle Grid - Searches and Contracts */}
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+					<SearchesSummary searches={userSearches} />
 					<ContractsCard contracts={recentContracts} />
+				</div>
+
+				{/* Bottom Grid - Exchange Checklist (full width) */}
+				<div className="grid grid-cols-1 gap-6">
+					<ExchangeChecklist completedItems={completedChecklistItems} />
 				</div>
 			</div>
 		</ProfileLayout>

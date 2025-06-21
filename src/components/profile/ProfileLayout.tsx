@@ -22,11 +22,7 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 			href: "/profile",
 			icon: Home,
 		},
-		{
-			name: "Searches",
-			href: "/profile/searches",
-			icon: Search,
-		},
+
 		{
 			name: "Messages",
 			href: "/profile/messages",
