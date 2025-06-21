@@ -8,20 +8,24 @@ export interface ChecklistItem {
 	description?: string;
 }
 
+export type IconType = "FileText" | "BookOpen" | "MapPin" | "CreditCard" | "Globe" | "Plane";
+export type ColorType = "blue" | "purple" | "green" | "orange" | "indigo" | "teal";
+export type UrgencyType = "high" | "medium" | "low";
+
 export interface ChecklistSection {
 	title: string;
-	icon: string;
-	color: "blue" | "purple" | "green" | "orange" | "indigo" | "teal";
-	urgency: "high" | "medium" | "low";
+	icon: IconType;
+	color: ColorType;
+	urgency: UrgencyType;
 	items: ChecklistItem[];
 }
 
-export const checklistSections: ChecklistSection[] = [
+export const checklistSections = [
 	{
 		title: "Legal & Documentation",
-		icon: "FileText",
-		color: "blue",
-		urgency: "high",
+		icon: "FileText" as const,
+		color: "blue" as const,
+		urgency: "high" as const,
 		items: [
 			{
 				id: "visa",
@@ -318,7 +322,7 @@ export const checklistSections: ChecklistSection[] = [
 			},
 		],
 	},
-];
+] as const;
 
 // Helper functions for working with checklist data
 export const getUrgentItems = (): ChecklistItem[] => {
@@ -342,13 +346,3 @@ export const getSectionProgress = (sectionTitle: string, completedItems: Set<str
 	const completedInSection = section.items.filter((item) => completedItems.has(item.id)).length;
 	return section.items.length > 0 ? (completedInSection / section.items.length) * 100 : 0;
 };
-
-// Icon mapping for components (since we can't import Lucide icons in data files)
-export const iconMap = {
-	FileText: "FileText",
-	BookOpen: "BookOpen",
-	MapPin: "MapPin",
-	CreditCard: "CreditCard",
-	Globe: "Globe",
-	Plane: "Plane",
-} as const;
