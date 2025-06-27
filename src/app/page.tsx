@@ -20,6 +20,7 @@ export default function HomePage() {
 				<HowItWorks />
 				<PopularDestinations />
 				<Testimonials testimonials={testimonials} />
+				<PricingSection />
 				<FAQSection />
 				<CtaSection />
 			</main>
