@@ -1,7 +1,6 @@
 // src/components/landing/FAQSection.tsx
 "use client";
-
-import { useState } from "react";
+import React, { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 
 export default function FAQSection() {
@@ -11,32 +10,44 @@ export default function FAQSection() {
 		{
 			question: "How does home swapping work?",
 			answer:
-				"Home swapping allows you to exchange homes with another member for an agreed period. You stay in their home while they stay in yours, or arrange a non-simultaneous swap. FlatSwaps handles all the verification, communication, and agreement processes to make it seamless.",
+				"Home swapping allows you to exchange homes with another member for an agreed period. You stay in their home while they stay in yours. FlatSwaps handles all the verification, communication, and agreement processes to make it seamless.",
+		},
+		{
+			question: "Is FlatSwaps really free to use?",
+			answer:
+				"Yes! Creating a profile, browsing properties, messaging other members, and completing home swaps is completely free. There are no hidden fees, subscription costs, or service charges for using our platform.",
+		},
+		{
+			question: "What is SwapSecure and do I need it?",
+			answer:
+				"SwapSecure is our optional insurance package that provides rent insurance and property damage protection. You don't need it to use FlatSwaps - it's only offered when you've found a match and want extra peace of mind. Pricing starts at €12.99/month and varies based on property value.",
+		},
+
+		{
+			question: "What does the rent insurance in SwapSecure cover?",
+			answer:
+				"If your swap partner suddenly stops paying rent on your original property, SwapSecure will cover those costs so you're not left with financial responsibility. This protects you from the biggest financial risk in home swapping.",
 		},
 		{
 			question: "Is home swapping safe?",
 			answer:
-				"Yes, FlatSwaps prioritizes safety through verified profiles, secure messaging, detailed agreements, and reviews. All members undergo ID verification, and properties are verified through virtual or in-person checks. We also provide insurance options specifically designed for home exchanges.",
+				"Yes, FlatSwaps prioritizes safety through verified profiles, secure messaging, detailed agreements, and reviews. All members undergo ID verification.",
 		},
 		{
 			question: "What if I only want to swap during specific dates?",
 			answer:
 				"You have complete control over your availability calendar. Set the dates when your home is available for swapping, and you'll only receive requests for those periods. You can also specify preferred swap durations and update your availability at any time.",
 		},
-		{
-			question: "Can I rent my property instead of swapping?",
-			answer:
-				"Absolutely! FlatSwaps allows you to list your property for both swapping and traditional rentals. You can choose one or both options, and set different availability and rates for each. This gives you maximum flexibility to utilize your property however works best for you.",
-		},
-		{
-			question: "What costs are involved?",
-			answer:
-				"Creating a profile and browsing properties is completely free. We only charge a small service fee when you successfully complete a booking or swap. Premium memberships are available with additional features like priority support and enhanced visibility for your listings.",
-		},
+
 		{
 			question: "How do I verify other members?",
 			answer:
 				"All members go through our verification process including ID verification, phone number confirmation, and property verification. You can view verification badges on profiles, read reviews from other members, and communicate through our secure messaging system before making any commitments.",
+		},
+		{
+			question: "What happens if there's a problem during my swap?",
+			answer:
+				"Our community support team is available to help resolve issues. If you have SwapSecure protection, you'll also have access to 24/7 priority support and coverage for rent and property damage issues.",
 		},
 	];
 
