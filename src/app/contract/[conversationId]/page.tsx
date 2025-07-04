@@ -6,14 +6,16 @@ import { ArrowLeft } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import ContractWizard from "@/components/contract/ContractWizard";
 import { ContractFormData } from "@/types/contract";
 import { getConversationData } from "@/lib/contract/contractData";
 
 const ContractPage: React.FC = () => {
-	const params = useParams();
-	const conversationId = params.conversationId as string;
+        const params = useParams();
+        const searchParams = useSearchParams();
+        const conversationId = params.conversationId as string;
+        const from = searchParams.get("from");
 
 	const [formData, setFormData] = useState<ContractFormData>({
 		tenant1Name: "",
@@ -77,15 +79,15 @@ const ContractPage: React.FC = () => {
 				<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 					{/* Header */}
 					<div className="mb-8">
-						<div className="flex items-center mb-4">
-							<Link
-								href={`/profile/messages`}
-								className="flex items-center text-blue-600 hover:text-blue-700 transition-colors mr-4"
-							>
-								<ArrowLeft className="h-4 w-4 mr-1" />
-								Back to Messages
-							</Link>
-						</div>
+                                                <div className="flex items-center mb-4">
+                                                        <Link
+                                                                href={from === "profile" ? "/profile" : "/profile/messages"}
+                                                                className="flex items-center text-blue-600 hover:text-blue-700 transition-colors mr-4"
+                                                        >
+                                                                <ArrowLeft className="h-4 w-4 mr-1" />
+                                                                {from === "profile" ? "Back to Dashboard" : "Back to Messages"}
+                                                        </Link>
+                                                </div>
 						<div className="text-center">
 							<h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Flat Swap Contract</h1>
 							<p className="text-lg text-gray-600 dark:text-gray-400">

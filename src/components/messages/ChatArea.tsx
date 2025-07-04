@@ -52,7 +52,7 @@ export default function ChatArea({ conversation, messages, onShowUserProfile, on
 					</div>
 					<div className="flex items-center space-x-2">
 						{/* Contract Template Button - Now links to contract page */}
-						<Link href={`/contract/${conversation.id}`}>
+                                                <Link href={`/contract/${conversation.id}?from=chat`}>
 							<button className="flex items-center px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
 								<FileText className="h-4 w-4 mr-2" />
 								Contract
