@@ -1,7 +1,7 @@
 // src/components/dashboard/ContractsCard.tsx
 
 import Link from "next/link";
-import { FileText, Clock, CheckCircle, AlertCircle, Eye, Plus } from "lucide-react";
+import { FileText, Clock, CheckCircle, AlertCircle, Plus } from "lucide-react";
 
 interface Contract {
 	id: string;
@@ -119,12 +119,17 @@ export default function ContractsCard({ contracts = [] }: ContractsCardProps) {
 						const StatusIcon = statusConfig.icon;
 
 						return (
-							<div
-								key={contract.id}
-								className="p-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-							>
-								<div className="flex items-center justify-between">
-									<div className="flex-1">
+                                                        <Link
+                                                                key={contract.id}
+                                                                href={
+                                                                        contract.conversationId
+                                                                                ? `/contract/${contract.conversationId}?from=profile`
+                                                                                : `/profile/contracts/${contract.id}`
+                                                                }
+                                                                className="block p-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                                                        >
+                                                                <div className="flex items-center justify-between">
+                                                                        <div className="flex-1">
 										<div className="flex items-center justify-between mb-1">
 											<h4 className="text-sm font-medium text-gray-900 dark:text-white truncate">
 												{contract.title}
@@ -148,21 +153,11 @@ export default function ContractsCard({ contracts = [] }: ContractsCardProps) {
 												</>
 											)}
 										</div>
-									</div>
-									<Link
-										href={
-											contract.conversationId
-												? `/contract/${contract.conversationId}`
-												: `/profile/contracts/${contract.id}`
-										}
-										className="ml-3 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-									>
-										<Eye className="h-4 w-4" />
-									</Link>
-								</div>
-							</div>
-						);
-					})}
+                                                                        </div>
+                                                                </div>
+                                                        </Link>
+                                                );
+                                        })}
 				</div>
 
 				{/* Quick Actions */}
