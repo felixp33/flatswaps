@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 import { FileText, Download, Pencil, Check } from "lucide-react";
 import { ContractFormData } from "@/types/contract";
-import { downloadContract } from "@/lib/contract/contractGenerator";
+import { downloadContract, downloadContractPdf } from "@/lib/contract/contractGenerator";
 
 interface ReviewStepProps {
 	formData: ContractFormData;
@@ -15,6 +15,10 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ formData }) => {
 
         const handleDownload = () => {
                 downloadContract(formData);
+        };
+
+        const handleDownloadPdf = () => {
+                downloadContractPdf(formData);
         };
 
         const handleSign = () => {
@@ -81,6 +85,13 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ formData }) => {
                                         >
                                                 <Download className="h-5 w-5 mr-2" />
                                                 Download Contract
+                                        </button>
+                                        <button
+                                                onClick={handleDownloadPdf}
+                                                className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold ml-4"
+                                        >
+                                                <Download className="h-5 w-5 mr-2" />
+                                                Download PDF
                                         </button>
                                         {!signed ? (
                                                 <button

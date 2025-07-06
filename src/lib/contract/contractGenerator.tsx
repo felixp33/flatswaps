@@ -149,8 +149,8 @@ for legal compliance or enforceability. Users proceed at their own discretion.`;
 };
 
 export const downloadContract = (formData: ContractFormData): void => {
-	const contract = generateContract(formData);
-	const blob = new Blob([contract], { type: "text/plain" });
+        const contract = generateContract(formData);
+        const blob = new Blob([contract], { type: "text/plain" });
 	const url = URL.createObjectURL(blob);
 	const a = document.createElement("a");
 	a.href = url;
@@ -159,6 +159,57 @@ export const downloadContract = (formData: ContractFormData): void => {
 		.toLowerCase()}-${new Date().toISOString().split("T")[0]}.txt`;
 	document.body.appendChild(a);
 	a.click();
-	document.body.removeChild(a);
-	URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+};
+
+const escapePdfText = (text: string) =>
+        text.replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
+
+export const downloadContractPdf = (formData: ContractFormData): void => {
+        const contract = generateContract(formData);
+        const lines = contract.split("\n").map(escapePdfText);
+        const textContent = lines
+                .map((line) => `(${line}) Tj\n0 -14 Td`)
+                .join("\n");
+        const stream = `BT\n/F1 12 Tf\n72 720 Td\n${textContent}\nET`;
+
+        const objects = [
+                "1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n",
+                "2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n",
+                `3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>\nendobj\n`,
+                `4 0 obj\n<< /Length ${stream.length} >>\nstream\n${stream}\nendstream\nendobj\n`,
+                "5 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>\nendobj\n",
+        ];
+
+        const header = "%PDF-1.3\n";
+        let offset = header.length;
+        const offsets = objects.map((obj) => {
+                const current = offset;
+                offset += obj.length;
+                return current;
+        });
+        const xrefOffset = offset;
+        const xrefEntries = offsets
+                .map((o) => o.toString().padStart(10, "0") + " 00000 n ")
+                .join("\n");
+        const xref = `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n${xrefEntries}\n`;
+        const trailer = `trailer\n<< /Root 1 0 R /Size ${
+                objects.length + 1
+        } >>\nstartxref\n${xrefOffset}\n%%EOF\n`;
+
+        const pdf = header + objects.join("") + xref + trailer;
+        const blob = new Blob([pdf], { type: "application/pdf" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `flat-swap-contract-${formData.tenant1Name
+                .replace(/\s+/g, "-")
+                .toLowerCase()}-${formData.tenant2Name
+                .replace(/\s+/g, "-")
+                .toLowerCase()}-${new Date().toISOString().split("T")[0]}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
 };
