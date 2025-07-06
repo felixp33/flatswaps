@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { Check } from "lucide-react";
 
 interface SignSliderProps {
   signed: boolean;
@@ -41,11 +42,11 @@ const SignSlider: React.FC<SignSliderProps> = ({ signed, onSign }) => {
         onChange={handleChange}
         onMouseUp={handleEnd}
         onTouchEnd={handleEnd}
-        className={`w-full h-12 rounded-full slider ${signed ? "bg-green-600" : "bg-gray-200"}`}
+        className={`w-full h-12 rounded-full slider transition-all duration-300 ${signed ? "bg-green-600" : "bg-gray-200"}`}
         disabled={signed}
       />
-      <span className="absolute inset-0 flex items-center justify-center pointer-events-none font-medium text-gray-700">
-        {signed ? "Signed" : "Slide to Sign"}
+      <span className={`absolute inset-0 flex items-center justify-center pointer-events-none font-medium ${signed ? "text-white" : "text-gray-700"}`}>
+        {signed ? <Check className="h-5 w-5 animate-bounce" /> : "Slide to Sign"}
       </span>
     </div>
   );

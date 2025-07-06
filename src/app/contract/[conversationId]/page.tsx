@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import MinimalFooter from "@/components/layout/MinimalFooter";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import ContractWizard from "@/components/contract/ContractWizard";
@@ -100,9 +100,9 @@ const ContractPage: React.FC = () => {
 					<ContractWizard formData={formData} onFormDataChange={handleFormDataChange} />
 				</div>
 			</main>
-			<Footer />
-		</>
-	);
+                        <MinimalFooter />
+                </>
+        );
 };
 
 export default ContractPage;
