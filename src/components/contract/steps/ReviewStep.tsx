@@ -2,9 +2,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { FileText, Download, Pencil, Check } from "lucide-react";
+import { FileText, Download, Check } from "lucide-react";
 import { ContractFormData } from "@/types/contract";
-import { downloadContract, downloadContractPdf } from "@/lib/contract/contractGenerator";
+import { downloadContractPdf } from "@/lib/contract/contractGenerator";
+import SignSlider from "../SignSlider";
 
 interface ReviewStepProps {
 	formData: ContractFormData;
@@ -12,10 +13,6 @@ interface ReviewStepProps {
 
 const ReviewStep: React.FC<ReviewStepProps> = ({ formData }) => {
         const [signed, setSigned] = useState(false);
-
-        const handleDownload = () => {
-                downloadContract(formData);
-        };
 
         const handleDownloadPdf = () => {
                 downloadContractPdf(formData);
@@ -80,29 +77,18 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ formData }) => {
 
                                 <div className="text-center">
                                         <button
-                                                onClick={handleDownload}
-                                                className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold"
-                                        >
-                                                <Download className="h-5 w-5 mr-2" />
-                                                Download Contract
-                                        </button>
-                                        <button
                                                 onClick={handleDownloadPdf}
-                                                className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold ml-4"
+                                                className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold"
                                         >
                                                 <Download className="h-5 w-5 mr-2" />
                                                 Download PDF
                                         </button>
                                         {!signed ? (
-                                                <button
-                                                        onClick={handleSign}
-                                                        className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold ml-4"
-                                                >
-                                                        <Pencil className="h-5 w-5 mr-2" />
-                                                        Sign Contract
-                                                </button>
+                                                <div className="inline-block ml-4">
+                                                        <SignSlider signed={signed} onSign={handleSign} />
+                                                </div>
                                         ) : (
-                                                <span className="inline-flex items-center px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-lg ml-4">
+                                                <span className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg ml-4">
                                                         <Check className="h-5 w-5 mr-2" />
                                                         Signed
                                                 </span>
