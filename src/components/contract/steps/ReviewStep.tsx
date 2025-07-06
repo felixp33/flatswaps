@@ -1,8 +1,8 @@
 // src/components/contract/steps/ReviewStep.tsx
 "use client";
 
-import React from "react";
-import { FileText, Download } from "lucide-react";
+import React, { useState } from "react";
+import { FileText, Download, Pencil, Check } from "lucide-react";
 import { ContractFormData } from "@/types/contract";
 import { downloadContract } from "@/lib/contract/contractGenerator";
 
@@ -11,9 +11,15 @@ interface ReviewStepProps {
 }
 
 const ReviewStep: React.FC<ReviewStepProps> = ({ formData }) => {
-	const handleDownload = () => {
-		downloadContract(formData);
-	};
+        const [signed, setSigned] = useState(false);
+
+        const handleDownload = () => {
+                downloadContract(formData);
+        };
+
+        const handleSign = () => {
+                setSigned(true);
+        };
 
 	return (
 		<div className="space-y-8">
@@ -68,18 +74,32 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ formData }) => {
 					</div>
 				</div>
 
-				<div className="text-center">
-					<button
-						onClick={handleDownload}
-						className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold"
-					>
-						<Download className="h-5 w-5 mr-2" />
-						Download Contract
-					</button>
-					<p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-						Professional contract template - ready for signatures
-					</p>
-				</div>
+                                <div className="text-center">
+                                        <button
+                                                onClick={handleDownload}
+                                                className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold"
+                                        >
+                                                <Download className="h-5 w-5 mr-2" />
+                                                Download Contract
+                                        </button>
+                                        {!signed ? (
+                                                <button
+                                                        onClick={handleSign}
+                                                        className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold ml-4"
+                                                >
+                                                        <Pencil className="h-5 w-5 mr-2" />
+                                                        Sign Contract
+                                                </button>
+                                        ) : (
+                                                <span className="inline-flex items-center px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-lg ml-4">
+                                                        <Check className="h-5 w-5 mr-2" />
+                                                        Signed
+                                                </span>
+                                        )}
+                                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                                                Professional contract template - ready for signatures
+                                        </p>
+                                </div>
 			</div>
 		</div>
 	);
