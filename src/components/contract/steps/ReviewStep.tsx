@@ -58,7 +58,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ formData }) => {
 					</div>
 
 					<div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-						<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 							<div>
 								<h4 className="font-medium text-gray-900 dark:text-white mb-1">Start Date</h4>
 								<p className="text-sm text-gray-600 dark:text-gray-400">{formData.startDate}</p>
@@ -71,24 +71,26 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ formData }) => {
 								<h4 className="font-medium text-gray-900 dark:text-white mb-1">Duration</h4>
 								<p className="text-sm text-gray-600 dark:text-gray-400">{formData.duration}</p>
 							</div>
-						</div>
-					</div>
-				</div>
+                                                </div>
+                                                <div className="mt-6 text-center">
+                                                        <button
+                                                                onClick={handleDownloadPdf}
+                                                                className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold"
+                                                        >
+                                                                <Download className="h-5 w-5 mr-2" />
+                                                                Download PDF
+                                                        </button>
+                                                </div>
+                                        </div>
+                                </div>
 
-                                <div className="text-center">
-                                        <button
-                                                onClick={handleDownloadPdf}
-                                                className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold"
-                                        >
-                                                <Download className="h-5 w-5 mr-2" />
-                                                Download PDF
-                                        </button>
+                                <div className="text-center mt-8">
                                         {!signed ? (
-                                                <div className="inline-block ml-4">
+                                                <div className="inline-block">
                                                         <SignSlider signed={signed} onSign={handleSign} />
                                                 </div>
                                         ) : (
-                                                <span className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg ml-4">
+                                                <span className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg">
                                                         <Check className="h-5 w-5 mr-2" />
                                                         Signed
                                                 </span>
