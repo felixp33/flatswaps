@@ -14,30 +14,30 @@ export default function PricingSection() {
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				{/* Header */}
 				<div className="text-center mb-16">
-					<div className="inline-flex items-center px-4 py-2 bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-sm font-medium rounded-full mb-4">
-						<Heart className="w-4 h-4 mr-2" />
-						Free Forever - No Hidden Costs
-					</div>
-					<h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-tight mb-6">
-						Start Swapping for <span className="text-green-600">Free</span>
-					</h2>
-					<p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-						Find your perfect home swap completely free. When you've found your match, you can optionally add
-						SwapSecure protection for ultimate peace of mind.
-					</p>
+                                        <div className="inline-flex items-center px-4 py-2 bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-sm font-medium rounded-full mb-4">
+                                                <Heart className="w-4 h-4 mr-2" />
+                                                Free to Start – Pay Only When You Swap
+                                        </div>
+                                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-tight mb-6">
+                                                Start Swapping for <span className="text-green-600">Free</span>
+                                        </h2>
+                                        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                                                Create your profile, list your home and connect with members at no charge. You only pay once you’ve
+                                                agreed to a swap, with optional SwapSecure protection for complete peace of mind.
+                                        </p>
 				</div>
 
 				{/* Pricing Cards */}
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
 					{/* Free Plan */}
 					<div className="relative bg-white dark:bg-gray-800 rounded-3xl shadow-lg border-2 border-gray-200 dark:border-gray-700 p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-						<div className="text-center mb-8">
-							<h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Free Forever</h3>
-							<div className="mb-4">
-								<span className="text-5xl font-bold text-gray-900 dark:text-white">€0</span>
-								<span className="text-gray-500 dark:text-gray-400 ml-2">always</span>
-							</div>
-							<p className="text-gray-600 dark:text-gray-300">Everything you need to start swapping homes</p>
+                                                <div className="text-center mb-8">
+                                                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Free to Start</h3>
+                                                        <div className="mb-4">
+                                                                <span className="text-5xl font-bold text-gray-900 dark:text-white">€0</span>
+                                                                <span className="text-gray-500 dark:text-gray-400 ml-2">until you swap</span>
+                                                        </div>
+                                                        <p className="text-gray-600 dark:text-gray-300">Everything you need to find and arrange your first swap</p>
 						</div>
 
 						<div className="space-y-4 mb-8">
@@ -150,11 +150,11 @@ export default function PricingSection() {
 							<Zap className="w-6 h-6 text-blue-600 mr-2" />
 							<h3 className="text-xl font-bold text-gray-900 dark:text-white">Why Choose SwapSecure?</h3>
 						</div>
-						<p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-							Home swapping is built on trust, and our free service connects you with verified members. When
-							you've found your perfect match and are ready to proceed, SwapSecure offers comprehensive
-							protection for those who want complete peace of mind during their swap.
-						</p>
+                                                <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                                                        Home swapping is built on trust, and it’s completely free to explore and connect. Once you’ve
+                                                        found and confirmed a swap, you can choose to add SwapSecure for extra protection and peace of
+                                                        mind.
+                                                </p>
 					</div>
 				</div>
 			</div>
