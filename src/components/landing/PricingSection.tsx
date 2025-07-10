@@ -75,8 +75,8 @@ export default function PricingSection() {
 					{/* Pay When You Swap */}
 					<div className="relative bg-gradient-to-br from-blue-600 to-purple-700 rounded-3xl shadow-2xl border-2 border-blue-500 p-8 text-white transform hover:scale-105 transition-all duration-300">
 						<div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-							<div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-4 py-2 rounded-full text-sm font-bold">
-								🛡️ FULL PROTECTION INCLUDED
+							<div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-8 py-2 rounded-full text-base font-bold">
+								FULL PROTECTION
 							</div>
 						</div>
 
