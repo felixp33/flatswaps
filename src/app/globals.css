@@ -80,3 +80,32 @@ body {
 		background-position: -200% 0;
 	}
 }
+
+/* Slider to sign styles */
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 48px;
+  width: 48px;
+  border-radius: 9999px;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.slider::-moz-range-thumb {
+  height: 48px;
+  width: 48px;
+  border-radius: 9999px;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.slider::-moz-range-track {
+  background: transparent;
+}

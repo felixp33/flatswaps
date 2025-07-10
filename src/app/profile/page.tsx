@@ -4,6 +4,7 @@
 import { useState } from "react";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import { ProfileSummary, PropertySummary, ExchangeChecklist, ContractsCard } from "@/components/dashboard";
+import { mockContracts } from "@/lib/data/mockContracts";
 import SearchesSummary from "@/components/dashboard/SearchesSummary";
 
 export default function ProfileDashboard() {
@@ -69,28 +70,8 @@ export default function ProfileDashboard() {
 		},
 	];
 
-	// Mock contracts data - empty for now to show placeholder
-	const recentContracts: Array<{
-		id: string;
-		title: string;
-		otherParty: string;
-		status: "draft" | "pending" | "signed" | "active" | "completed" | "cancelled";
-		createdDate: string;
-		startDate?: string;
-		endDate?: string;
-		conversationId?: string;
-	}> = [
-		// Uncomment to test with data:
-		// {
-		//   id: "1",
-		//   title: "Berlin ↔ Barcelona Swap",
-		//   otherParty: "Carlos Martinez",
-		//   status: "pending" as const,
-		//   createdDate: "2 days ago",
-		//   startDate: "March 15",
-		//   conversationId: "1"
-		// }
-	];
+        // Mock contracts data
+        const recentContracts = mockContracts;
 
 	return (
 		<ProfileLayout>
