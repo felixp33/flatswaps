@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://flatswaps.com
+
+# Sitemaps
+Sitemap: https://flatswaps.com/sitemap.xml
