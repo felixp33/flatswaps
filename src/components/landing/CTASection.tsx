@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 const rotatingPhrases = [
-	"your FlatSwap?",
+	"your Flatswap?",
 	"a new chapter?",
 	"living like a local?",
 	"your adventure?",
