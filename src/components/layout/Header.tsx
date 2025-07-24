@@ -41,7 +41,7 @@ export default function Header() {
 					<div className="flex-shrink-0 flex items-center">
 						<Link href="/" className="flex items-center space-x-2 text-2xl font-bold text-blue-600">
 							<Image src="/favicon-256x256.png" alt="flatswaps" width={256} height={256} className="h-8 w-8" />{" "}
-							<span>flatswaps</span>
+							<span>Flatswaps</span>
 						</Link>
 					</div>
 					{/* Right side - Auth or Profile */}
