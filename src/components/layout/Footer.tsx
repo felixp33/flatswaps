@@ -167,7 +167,7 @@ export default function Footer() {
 
 				{/* Bottom section */}
 				<div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-					<div className="text-gray-400 text-sm mb-4 md:mb-0">© 2025 FlatSwaps. All rights reserved.</div>
+					<div className="text-gray-400 text-sm mb-4 md:mb-0">© 2025 flatswaps. All rights reserved.</div>
 					<div className="text-gray-400 text-sm">
 						<span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-medium">
 							Demo Website

@@ -67,7 +67,7 @@ export default function HelpSupportPage() {
 				"Click 'List Your Property' in the header, then follow our step-by-step guide. You'll need to add photos, write a description, set your availability, and complete the verification process. The whole process takes about 15-20 minutes.",
 		},
 		{
-			question: "Is FlatSwaps free to use?",
+			question: "Is flatswaps free to use?",
 			answer:
 				"Yes! Creating an account, browsing properties, and arranging direct home exchanges is completely free. We only charge a small service fee (3-5%) for bookings that involve rental payments, not for traditional home swaps.",
 		},

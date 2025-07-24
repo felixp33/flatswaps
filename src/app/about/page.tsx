@@ -78,7 +78,7 @@ export default function AboutPage() {
 								<span className="text-blue-600 dark:text-blue-400 block">Travels Together</span>
 							</h1>
 							<p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-								FlatSwaps connects global travelers through authentic home exchanges, making meaningful travel
+								flatswaps connects global travelers through authentic home exchanges, making meaningful travel
 								accessible while building bridges between cultures.
 							</p>
 						</div>
@@ -98,7 +98,7 @@ export default function AboutPage() {
 									Making Travel More Human
 								</h2>
 								<p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-6">
-									We believe travel should be about connection, not just consumption. FlatSwaps was born from
+									We believe travel should be about connection, not just consumption. flatswaps was born from
 									the idea that the best way to experience a new place is to live like a local, and the best
 									way to do that is by swapping homes with someone who calls it home.
 								</p>
@@ -113,7 +113,7 @@ export default function AboutPage() {
 									<Home className="h-16 w-16 mb-6 opacity-80" />
 									<h3 className="text-2xl font-bold mb-4">Founded in 2023</h3>
 									<p className="text-blue-100 leading-relaxed">
-										Started by two friends who met through a home exchange in Barcelona, FlatSwaps grew from a
+										Started by two friends who met through a home exchange in Barcelona, flatswaps grew from a
 										simple idea: what if we could make authentic travel accessible to everyone, not just those
 										who could afford luxury?
 									</p>
@@ -226,7 +226,7 @@ export default function AboutPage() {
 				<section className="py-8 bg-gray-100 dark:bg-gray-800">
 					<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 						<p className="text-sm text-gray-600 dark:text-gray-400">
-							<strong>Note:</strong> This is a demonstration website. FlatSwaps is a fictional company created
+							<strong>Note:</strong> This is a demonstration website. flatswaps is a fictional company created
 							for illustrative purposes only.
 						</p>
 					</div>

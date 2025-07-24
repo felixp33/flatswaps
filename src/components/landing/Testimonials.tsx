@@ -13,7 +13,7 @@ export default function Testimonials({ testimonials }: TestimonialsProps) {
 			id: "1",
 			name: "Emma Thompson",
 			location: "University of Edinburgh → Barcelona",
-			text: "During my semester abroad in Barcelona, FlatSwaps was a lifesaver! I swapped my Edinburgh flat with a local student and got to experience authentic Spanish living. It saved me thousands compared to student housing and I made a lifelong friend.",
+			text: "During my semester abroad in Barcelona, flatswaps was a lifesaver! I swapped my Edinburgh flat with a local student and got to experience authentic Spanish living. It saved me thousands compared to student housing and I made a lifelong friend.",
 			avatar: "/images/avatar-4.png",
 			program: "Erasmus Exchange",
 			duration: "Fall 2023",
@@ -22,7 +22,7 @@ export default function Testimonials({ testimonials }: TestimonialsProps) {
 			id: "2",
 			name: "James Rodriguez",
 			location: "UC Berkeley → Amsterdam",
-			text: "As a computer science student doing research at UvA, finding affordable housing in Amsterdam seemed impossible. Through FlatSwaps, I connected with another student and we both got authentic local experiences instead of expensive tourist accommodations.",
+			text: "As a computer science student doing research at UvA, finding affordable housing in Amsterdam seemed impossible. Through flatswaps, I connected with another student and we both got authentic local experiences instead of expensive tourist accommodations.",
 			avatar: "/images/avatar-5.png",
 			program: "Research Exchange",
 			duration: "Spring 2024",
@@ -31,7 +31,7 @@ export default function Testimonials({ testimonials }: TestimonialsProps) {
 			id: "3",
 			name: "Sophie Chen",
 			location: "NUS Singapore → Berlin",
-			text: "My year abroad studying at TU Berlin was incredible thanks to FlatSwaps. Living in a real Berlin apartment instead of a dorm gave me such a deeper cultural immersion. Plus, my exchange partner loved exploring Singapore from my place!",
+			text: "My year abroad studying at TU Berlin was incredible thanks to flatswaps. Living in a real Berlin apartment instead of a dorm gave me such a deeper cultural immersion. Plus, my exchange partner loved exploring Singapore from my place!",
 			avatar: "/images/avatar-6.png",
 			program: "Year Abroad Program",
 			duration: "Academic Year 2023-24",
@@ -49,7 +49,7 @@ export default function Testimonials({ testimonials }: TestimonialsProps) {
 						🎓 Student Stories
 					</div>
 					<h2 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight sm:text-4xl">
-						Exchange Students Love FlatSwaps
+						Exchange Students Love flatswaps
 					</h2>
 					<p className="mt-3 max-w-2xl mx-auto text-xl text-gray-600 dark:text-gray-300 sm:mt-4">
 						Real stories from students who transformed their study abroad experience

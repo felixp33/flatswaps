@@ -40,8 +40,8 @@ export default function Header() {
 					{/* Logo */}
 					<div className="flex-shrink-0 flex items-center">
 						<Link href="/" className="flex items-center space-x-2 text-2xl font-bold text-blue-600">
-							<Image src="/favicon-256x256.png" alt="FlatSwaps" width={256} height={256} className="h-8 w-8" />{" "}
-							<span>FlatSwaps</span>
+							<Image src="/favicon-256x256.png" alt="flatswaps" width={256} height={256} className="h-8 w-8" />{" "}
+							<span>flatswaps</span>
 						</Link>
 					</div>
 					{/* Right side - Auth or Profile */}

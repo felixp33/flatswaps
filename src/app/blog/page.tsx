@@ -60,7 +60,7 @@ export default function BlogPage() {
 			id: "4",
 			title: "Building Trust in the Home Exchange Community",
 			excerpt:
-				"Learn about our verification processes and how we maintain safety standards for all FlatSwaps members.",
+				"Learn about our verification processes and how we maintain safety standards for all flatswaps members.",
 			author: "Alex Kim",
 			date: "May 18, 2025",
 			readTime: "7 min read",
@@ -127,7 +127,7 @@ export default function BlogPage() {
 						<div className="text-center">
 							<div className="inline-flex items-center px-4 py-2 bg-blue-100 dark:bg-blue-900/30 rounded-full text-sm font-medium text-blue-800 dark:text-blue-200 mb-6">
 								<BookOpen className="h-4 w-4 mr-2" />
-								FlatSwaps Blog
+								flatswaps Blog
 							</div>
 							<h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
 								Stories, Tips & Guides for

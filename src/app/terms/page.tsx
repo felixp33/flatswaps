@@ -21,7 +21,7 @@ export default function TermsOfServicePage() {
 									1. Agreement to Terms
 								</h2>
 								<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-									By accessing and using FlatSwaps, you accept and agree to be bound by the terms and provision
+									By accessing and using flatswaps, you accept and agree to be bound by the terms and provision
 									of this agreement. If you do not agree to abide by the above, please do not use this service.
 								</p>
 							</section>
@@ -31,7 +31,7 @@ export default function TermsOfServicePage() {
 									2. Description of Service
 								</h2>
 								<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-									FlatSwaps is a platform that facilitates home exchanges and short-term rentals between
+									flatswaps is a platform that facilitates home exchanges and short-term rentals between
 									registered users. We provide the technology and services to help users connect, communicate,
 									and arrange accommodations.
 								</p>
@@ -42,7 +42,7 @@ export default function TermsOfServicePage() {
 									3. User Responsibilities
 								</h2>
 								<div className="text-gray-700 dark:text-gray-300 leading-relaxed space-y-3">
-									<p>As a user of FlatSwaps, you agree to:</p>
+									<p>As a user of flatswaps, you agree to:</p>
 									<ul className="list-disc list-inside space-y-2 ml-4">
 										<li>Provide accurate and truthful information in your profile and listings</li>
 										<li>Respect other users' properties and follow house rules</li>
@@ -58,7 +58,7 @@ export default function TermsOfServicePage() {
 									4. Account Registration
 								</h2>
 								<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-									To use certain features of FlatSwaps, you must register for an account. You are responsible
+									To use certain features of flatswaps, you must register for an account. You are responsible
 									for maintaining the confidentiality of your account credentials and for all activities that
 									occur under your account.
 								</p>
@@ -95,7 +95,7 @@ export default function TermsOfServicePage() {
 									7. Fees and Payments
 								</h2>
 								<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-									FlatSwaps may charge service fees for bookings processed through our platform. All fees are
+									flatswaps may charge service fees for bookings processed through our platform. All fees are
 									clearly disclosed before payment. For home exchanges, no service fees apply to the exchange
 									itself.
 								</p>
@@ -106,7 +106,7 @@ export default function TermsOfServicePage() {
 									8. Prohibited Uses
 								</h2>
 								<div className="text-gray-700 dark:text-gray-300 leading-relaxed space-y-3">
-									<p>You may not use FlatSwaps for:</p>
+									<p>You may not use flatswaps for:</p>
 									<ul className="list-disc list-inside space-y-2 ml-4">
 										<li>Any unlawful purpose or to solicit others to perform unlawful acts</li>
 										<li>Violating any international, federal, provincial, or state regulations or laws</li>
@@ -122,7 +122,7 @@ export default function TermsOfServicePage() {
 									9. Limitation of Liability
 								</h2>
 								<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-									FlatSwaps acts as a platform connecting users and is not responsible for the actual
+									flatswaps acts as a platform connecting users and is not responsible for the actual
 									accommodations or exchanges. We do not guarantee the accuracy of listings or the conduct of
 									users. Your use of the service is at your own risk.
 								</p>

@@ -19,28 +19,28 @@ export default function PressPage() {
 	const pressReleases = [
 		{
 			date: "May 15, 2025",
-			headline: "FlatSwaps Reaches 50,000 Successful Home Exchanges Worldwide",
+			headline: "flatswaps Reaches 50,000 Successful Home Exchanges Worldwide",
 			summary:
 				"Platform celebrates major milestone as global community of home swappers continues to grow, with new partnerships announced in Asia-Pacific region.",
 			type: "Company News",
 		},
 		{
 			date: "March 22, 2025",
-			headline: "FlatSwaps Launches Student Exchange Program with 50+ Universities",
+			headline: "flatswaps Launches Student Exchange Program with 50+ Universities",
 			summary:
 				"New initiative makes study abroad more affordable through verified student-to-student home exchanges across Europe, North America, and Australia.",
 			type: "Product Launch",
 		},
 		{
 			date: "January 10, 2025",
-			headline: "FlatSwaps Secures $15M Series A to Expand Global Operations",
+			headline: "flatswaps Secures $15M Series A to Expand Global Operations",
 			summary:
 				"Funding round led by Travel Ventures will accelerate international expansion and enhance platform safety features for home exchange community.",
 			type: "Funding",
 		},
 		{
 			date: "November 8, 2024",
-			headline: "FlatSwaps Named 'Best Travel Innovation' at Global Tourism Awards",
+			headline: "flatswaps Named 'Best Travel Innovation' at Global Tourism Awards",
 			summary:
 				"Platform recognized for pioneering approach to sustainable travel and cultural exchange through peer-to-peer home swapping technology.",
 			type: "Awards",
@@ -51,10 +51,10 @@ export default function PressPage() {
 		{
 			category: "Logos",
 			items: [
-				{ name: "FlatSwaps Logo (PNG)", size: "2.1 MB", format: "PNG" },
-				{ name: "FlatSwaps Logo (SVG)", size: "12 KB", format: "SVG" },
-				{ name: "FlatSwaps Logo (White)", size: "1.8 MB", format: "PNG" },
-				{ name: "FlatSwaps Icon Only", size: "456 KB", format: "PNG" },
+				{ name: "flatswaps Logo (PNG)", size: "2.1 MB", format: "PNG" },
+				{ name: "flatswaps Logo (SVG)", size: "12 KB", format: "SVG" },
+				{ name: "flatswaps Logo (White)", size: "1.8 MB", format: "PNG" },
+				{ name: "flatswaps Icon Only", size: "456 KB", format: "PNG" },
 			],
 		},
 		{
@@ -128,7 +128,7 @@ export default function PressPage() {
 							<div className="mb-6 lg:mb-0">
 								<h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Press Room</h1>
 								<p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl">
-									Media resources, press releases, and brand assets for FlatSwaps, the world's leading home
+									Media resources, press releases, and brand assets for flatswaps, the world's leading home
 									exchange platform.
 								</p>
 							</div>
@@ -156,15 +156,15 @@ export default function PressPage() {
 					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 						<div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 							<div className="lg:col-span-2">
-								<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">About FlatSwaps</h2>
+								<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">About flatswaps</h2>
 								<div className="prose prose-gray dark:prose-invert max-w-none">
 									<p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-										Founded in 2023, FlatSwaps is revolutionizing travel through authentic home exchanges. Our
+										Founded in 2023, flatswaps is revolutionizing travel through authentic home exchanges. Our
 										platform connects travelers worldwide, enabling them to swap homes and experience
 										destinations like locals while building meaningful cultural connections.
 									</p>
 									<p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-										With over 25,000 active members across 180 countries, FlatSwaps has facilitated more than
+										With over 25,000 active members across 180 countries, flatswaps has facilitated more than
 										50,000 successful home exchanges, saving travelers millions in accommodation costs while
 										promoting sustainable tourism practices.
 									</p>
@@ -354,7 +354,7 @@ export default function PressPage() {
 				<section className="py-8 bg-gray-100 dark:bg-gray-800">
 					<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 						<p className="text-sm text-gray-600 dark:text-gray-400">
-							<strong>Note:</strong> This is a demonstration website. FlatSwaps is a fictional company and all
+							<strong>Note:</strong> This is a demonstration website. flatswaps is a fictional company and all
 							press releases, awards, and media coverage are simulated for illustrative purposes.
 						</p>
 					</div>

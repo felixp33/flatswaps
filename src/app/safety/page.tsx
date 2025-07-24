@@ -100,7 +100,7 @@ export default function SafetyTrustPage() {
 	];
 
 	const trustIndicators = [
-		{ icon: Shield, label: "Verified Host", description: "ID and property verified by FlatSwaps" },
+		{ icon: Shield, label: "Verified Host", description: "ID and property verified by flatswaps" },
 		{ icon: Star, label: "Superhost", description: "Exceptional reviews and response rate" },
 		{ icon: Users, label: "Experienced", description: "Completed 5+ successful exchanges" },
 		{ icon: Eye, label: "Recently Active", description: "Active on platform within last 30 days" },
@@ -177,7 +177,7 @@ export default function SafetyTrustPage() {
 					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 						<div className="text-center mb-12">
 							<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-								How FlatSwaps Protects You
+								How flatswaps Protects You
 							</h2>
 							<p className="text-xl text-gray-600 dark:text-gray-300">
 								Multiple layers of verification and security measures keep our community safe

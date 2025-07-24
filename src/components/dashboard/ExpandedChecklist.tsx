@@ -338,7 +338,7 @@ export default function ExpandedChecklist({ completedItems, onToggleItem }: Expa
 				<div className="flex items-start">
 					<Globe className="h-5 w-5 text-blue-600 dark:text-blue-400 mr-2 mt-0.5" />
 					<div>
-						<h4 className="font-medium text-blue-800 dark:text-blue-200 mb-1">Pro Tip for FlatSwaps Users</h4>
+						<h4 className="font-medium text-blue-800 dark:text-blue-200 mb-1">Pro Tip for flatswaps Users</h4>
 						<p className="text-sm text-blue-700 dark:text-blue-300">
 							Connect with your swap partner early! They can provide insider tips about the local area, help with
 							banking recommendations, and even show you around when you arrive. Many of our best exchange

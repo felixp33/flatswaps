@@ -10,28 +10,18 @@ export default function FAQSection() {
 		{
 			question: "How does home swapping work?",
 			answer:
-				"Home swapping allows you to exchange homes with another member for an agreed period. You stay in their home while they stay in yours. FlatSwaps handles all the verification, communication, and agreement processes to make it seamless.",
-		},
-		{
-			question: "Is FlatSwaps really free to use?",
-			answer:
-				"Yes! Creating a profile, browsing properties, messaging other members, and completing home swaps is completely free. There are no hidden fees, subscription costs, or service charges for using our platform.",
-		},
-		{
-			question: "What is SwapSecure and do I need it?",
-			answer:
-				"SwapSecure is our optional insurance package that provides rent insurance and property damage protection. You don't need it to use FlatSwaps - it's only offered when you've found a match and want extra peace of mind. Pricing starts at €12.99/month and varies based on property value.",
+				"Home swapping allows you to exchange homes with another member for an agreed period. You stay in their home while they stay in yours. flatswaps handles all the verification, communication, and agreement processes to make it seamless.",
 		},
 
 		{
 			question: "What does the rent insurance in SwapSecure cover?",
 			answer:
-				"If your swap partner suddenly stops paying rent on your original property, SwapSecure will cover those costs so you're not left with financial responsibility. This protects you from the biggest financial risk in home swapping.",
+				"If your swap partner suddenly stops paying rent on your original property, SwapSecure will immediately cover those costs so you're not left with financial responsibility. This protects you from the biggest financial risk in home swapping.",
 		},
 		{
 			question: "Is home swapping safe?",
 			answer:
-				"Yes, FlatSwaps prioritizes safety through verified profiles, secure messaging, detailed agreements, and reviews. All members undergo ID verification.",
+				"Yes, flatswaps prioritizes safety through verified profiles, secure messaging, detailed agreements, and reviews. All members undergo ID verification.",
 		},
 		{
 			question: "What if I only want to swap during specific dates?",
@@ -47,7 +37,7 @@ export default function FAQSection() {
 		{
 			question: "What happens if there's a problem during my swap?",
 			answer:
-				"Our community support team is available to help resolve issues. If you have SwapSecure protection, you'll also have access to 24/7 priority support and coverage for rent and property damage issues.",
+				"Our community support team is available to help resolve issues. With SwapSecure, you have extensive legal and financial protection, including property damage coverage and rent insurance. We also encourage open communication between swap partners to address any concerns directly.",
 		},
 	];
 
@@ -63,7 +53,7 @@ export default function FAQSection() {
 						Frequently Asked Questions
 					</h2>
 					<p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-300 sm:mt-4">
-						Everything you need to know about home swapping with FlatSwaps
+						Everything you need to know about home swapping with flatswaps
 					</p>
 				</div>
 

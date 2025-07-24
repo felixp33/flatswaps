@@ -20,7 +20,7 @@ const lexend = Lexend({
 });
 
 export const metadata: Metadata = {
-	title: "FlatSwaps",
+	title: "flatswaps",
 	description: "Find your perfect stay or swap your home with other travelers around the world.",
 	keywords: "home swap, house exchange, exchange students, flatswaps",
 };

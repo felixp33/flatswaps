@@ -62,8 +62,8 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 					{/* Sidebar header */}
 					<div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
 						<Link href="/" className="flex items-center space-x-2 text-xl font-bold text-blue-600">
-							<Image src="/favicon-256x256.png" alt="FlatSwaps" width={256} height={256} className="h-8 w-8" />
-							<span>FlatSwaps</span>
+							<Image src="/favicon-256x256.png" alt="flatswaps" width={256} height={256} className="h-8 w-8" />
+							<span>flatswaps</span>
 						</Link>
 						<button
 							className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -129,7 +129,7 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
 									d="M10 19l-7-7m0 0l7-7m-7 7h18"
 								/>
 							</svg>
-							Back to FlatSwaps
+							Back to flatswaps
 						</Link>
 					</div>
 				</div>

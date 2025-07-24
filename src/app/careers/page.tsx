@@ -215,7 +215,7 @@ export default function CareersPage() {
 						</div>
 
 						<div className="mt-8 text-blue-100">
-							<p className="mb-2">Questions about working at FlatSwaps?</p>
+							<p className="mb-2">Questions about working at flatswaps?</p>
 							<a href="mailto:careers@flatswaps.com" className="text-white underline hover:no-underline">
 								careers@flatswaps.com
 							</a>
@@ -227,7 +227,7 @@ export default function CareersPage() {
 				<section className="py-8 bg-gray-100 dark:bg-gray-800">
 					<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 						<p className="text-sm text-gray-600 dark:text-gray-400">
-							<strong>Note:</strong> This is a demonstration website. FlatSwaps is a fictional company and these
+							<strong>Note:</strong> This is a demonstration website. flatswaps is a fictional company and these
 							are not real job opportunities.
 						</p>
 					</div>
