@@ -10,7 +10,7 @@ export default function FAQSection() {
 		{
 			question: "How does home swapping work?",
 			answer:
-				"Home swapping allows you to exchange homes with another member for an agreed period. You stay in their home while they stay in yours. flatswaps handles all the verification, communication, and agreement processes to make it seamless.",
+				"Home swapping allows you to exchange homes with another member for an agreed period. You stay in their home while they stay in yours. Flatswaps handles all the verification, communication, and agreement processes to make it seamless.",
 		},
 
 		{
@@ -21,7 +21,7 @@ export default function FAQSection() {
 		{
 			question: "Is home swapping safe?",
 			answer:
-				"Yes, flatswaps prioritizes safety through verified profiles, secure messaging, detailed agreements, and reviews. All members undergo ID verification.",
+				"Yes, Flatswaps prioritizes safety through verified profiles, secure messaging, detailed agreements, and reviews. All members undergo ID verification.",
 		},
 		{
 			question: "What if I only want to swap during specific dates?",
@@ -53,7 +53,7 @@ export default function FAQSection() {
 						Frequently Asked Questions
 					</h2>
 					<p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-300 sm:mt-4">
-						Everything you need to know about home swapping with flatswaps
+						Everything you need to know about home swapping with Flatswaps
 					</p>
 				</div>
 

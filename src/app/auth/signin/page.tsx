@@ -72,7 +72,7 @@ export default function SignInPage() {
 			<div className="sm:mx-auto sm:w-full sm:max-w-md">
 				{/* Logo */}
 				<Link href="/" className="flex justify-center">
-					<span className="text-3xl font-bold text-blue-600">flatswaps</span>
+					<span className="text-3xl font-bold text-blue-600">Flatswaps</span>
 				</Link>
 
 				{/* Header */}

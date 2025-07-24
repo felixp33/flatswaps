@@ -20,9 +20,9 @@ const lexend = Lexend({
 });
 
 export const metadata: Metadata = {
-	title: "flatswaps",
+	title: "Flatswaps",
 	description: "Find your perfect stay or swap your home with other travelers around the world.",
-	keywords: "home swap, house exchange, exchange students, flatswaps",
+	keywords: "home swap, house exchange, exchange students, Flatswaps",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

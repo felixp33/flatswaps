@@ -36,7 +36,7 @@ export default function PrivacyPolicyPage() {
 
 									<h3 className="text-lg font-medium text-gray-900 dark:text-white">Device Information</h3>
 									<p>
-										We collect information about the devices you use to access flatswaps, including IP
+										We collect information about the devices you use to access Flatswaps, including IP
 										address, browser type, operating system, and mobile device identifiers.
 									</p>
 								</div>
@@ -141,7 +141,7 @@ export default function PrivacyPolicyPage() {
 									8. International Data Transfers
 								</h2>
 								<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-									flatswaps operates globally, and your information may be transferred to and processed in
+									Flatswaps operates globally, and your information may be transferred to and processed in
 									countries other than your own. We ensure appropriate safeguards are in place to protect your
 									information in accordance with this privacy policy.
 								</p>
@@ -179,10 +179,10 @@ export default function PrivacyPolicyPage() {
 									</p>
 									<div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
 										<p>
-											<strong>Email:</strong> privacy@flatswaps.com
+											<strong>Email:</strong> privacy@Flatswaps.com
 										</p>
 										<p>
-											<strong>Address:</strong> flatswaps Privacy Team
+											<strong>Address:</strong> Flatswaps Privacy Team
 											<br />
 											123 Exchange Street
 											<br />

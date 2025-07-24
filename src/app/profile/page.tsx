@@ -81,7 +81,7 @@ export default function ProfileDashboard() {
 					<h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
 						Welcome back, {user.name.split(" ")[0]}!
 					</h1>
-					<p className="text-gray-600 dark:text-gray-300">Here's an overview of your flatswaps activity</p>
+					<p className="text-gray-600 dark:text-gray-300">Here's an overview of your Flatswaps activity</p>
 				</div>
 
 				{/* Top Grid - Profile and Property */}

@@ -98,7 +98,7 @@ export default function SignUpPage() {
 			<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
 				<div className="sm:mx-auto sm:w-full sm:max-w-md">
 					<Link href="/" className="flex justify-center">
-						<span className="text-3xl font-bold text-blue-600">flatswaps</span>
+						<span className="text-3xl font-bold text-blue-600">Flatswaps</span>
 					</Link>
 
 					<div className="mt-6 text-center">
@@ -139,7 +139,7 @@ export default function SignUpPage() {
 			<div className="sm:mx-auto sm:w-full sm:max-w-md">
 				{/* Logo */}
 				<Link href="/" className="flex justify-center">
-					<span className="text-3xl font-bold text-blue-600">flatswaps</span>
+					<span className="text-3xl font-bold text-blue-600">Flatswaps</span>
 				</Link>
 
 				{/* Header */}

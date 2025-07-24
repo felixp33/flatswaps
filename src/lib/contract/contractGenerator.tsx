@@ -8,7 +8,7 @@ export const generateContract = (formData: ContractFormData): string => {
 	return `FLAT SWAP AGREEMENT
 Contract ID: ${contractId}
 Agreement Date: ${currentDate}
-Platform: flatswaps (www.flatswaps.com)
+Platform: Flatswaps (www.Flatswaps.com)
 
 ═══════════════════════════════════════════════════════════════
 
@@ -92,7 +92,7 @@ TERMS AND CONDITIONS:
    - Both parties agree to maintain open and respectful communication
    - Property issues should be reported promptly to avoid complications
    - Contact information must remain current throughout swap period
-   - flatswaps platform available for mediation if needed
+   - Flatswaps platform available for mediation if needed
 
 9. COMPLIANCE & LEGAL:
    - Both parties responsible for compliance with local housing laws
@@ -132,10 +132,10 @@ Phone: ________________________________
 ═══════════════════════════════════════════════════════════════
 
 CONTRACT DETAILS:
-Generated via: flatswaps Platform (www.flatswaps.com)
+Generated via: Flatswaps Platform (www.Flatswaps.com)
 Contract ID: ${contractId}
 Generation Date: ${currentDate}
-Support Email: support@flatswaps.com
+Support Email: support@Flatswaps.com
 
 DISCLAIMER: This is a template agreement created to facilitate flat swaps between users. 
 Both parties are strongly advised to:
@@ -144,7 +144,7 @@ Both parties are strongly advised to:
 - Obtain necessary permissions from landlords where required
 - Review and understand all terms before proceeding
 
-flatswaps provides this template as a convenience but accepts no responsibility 
+Flatswaps provides this template as a convenience but accepts no responsibility 
 for legal compliance or enforceability. Users proceed at their own discretion.`;
 };
 

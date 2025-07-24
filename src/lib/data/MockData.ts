@@ -80,14 +80,14 @@ export const testimonials: Testimonial[] = [
 		id: "1",
 		name: "Emma Thompson",
 		location: "London, UK",
-		text: "flatswaps made it so easy to exchange my London apartment for a beautiful beach house in Barcelona. The process was smooth, and I saved thousands on accommodation costs.",
+		text: "Flatswaps made it so easy to exchange my London apartment for a beautiful beach house in Barcelona. The process was smooth, and I saved thousands on accommodation costs.",
 		avatar: "/images/avatar-1.png",
 	},
 	{
 		id: "2",
 		name: "James Rodriguez",
 		location: "Madrid, Spain",
-		text: "As someone who travels frequently for work, flatswaps has been a game-changer. I've stayed in amazing homes and met wonderful people all over the world.",
+		text: "As someone who travels frequently for work, Flatswaps has been a game-changer. I've stayed in amazing homes and met wonderful people all over the world.",
 		avatar: "/images/avatar-2.png",
 	},
 	{
@@ -120,12 +120,12 @@ export const faqs = [
 	{
 		question: "How does home swapping work?",
 		answer:
-			"Home swapping allows you to exchange homes with another member for an agreed period. You stay in their home while they stay in yours, or arrange a non-simultaneous swap. flatswaps handles all the verification, communication, and agreement processes to make it seamless.",
+			"Home swapping allows you to exchange homes with another member for an agreed period. You stay in their home while they stay in yours, or arrange a non-simultaneous swap. Flatswaps handles all the verification, communication, and agreement processes to make it seamless.",
 	},
 	{
 		question: "Is home swapping safe?",
 		answer:
-			"Yes, flatswaps prioritizes safety through verified profiles, secure messaging, detailed agreements, and reviews. All members undergo ID verification, and properties are verified through virtual or in-person checks. We also provide insurance options specifically designed for home exchanges.",
+			"Yes, Flatswaps prioritizes safety through verified profiles, secure messaging, detailed agreements, and reviews. All members undergo ID verification, and properties are verified through virtual or in-person checks. We also provide insurance options specifically designed for home exchanges.",
 	},
 	{
 		question: "What if I only want to swap during specific dates?",
@@ -135,6 +135,6 @@ export const faqs = [
 	{
 		question: "Can I rent my property instead of swapping?",
 		answer:
-			"Absolutely! flatswaps allows you to list your property for both swapping and traditional rentals. You can choose one or both options, and set different availability and rates for each. This gives you maximum flexibility to utilize your property however works best for you.",
+			"Absolutely! Flatswaps allows you to list your property for both swapping and traditional rentals. You can choose one or both options, and set different availability and rates for each. This gives you maximum flexibility to utilize your property however works best for you.",
 	},
 ];

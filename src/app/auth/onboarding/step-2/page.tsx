@@ -170,7 +170,7 @@ export default function OnboardingStep2() {
 			completedSteps={completedSteps}
 			stepLabels={stepLabels}
 			title="Verify Your Account"
-			subtitle="Help us keep flatswaps safe and secure for everyone"
+			subtitle="Help us keep Flatswaps safe and secure for everyone"
 			onBack={handleBack}
 		>
 			<div className="max-w-2xl mx-auto">

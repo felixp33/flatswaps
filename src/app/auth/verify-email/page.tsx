@@ -196,7 +196,7 @@ export default function VerifyEmailPage() {
 			<div className="sm:mx-auto sm:w-full sm:max-w-md">
 				{/* Logo */}
 				<Link href="/" className="flex justify-center mb-8">
-					<span className="text-3xl font-bold text-blue-600">flatswaps</span>
+					<span className="text-3xl font-bold text-blue-600">Flatswaps</span>
 				</Link>
 
 				<div className="bg-white dark:bg-gray-800 py-8 px-4 shadow-xl rounded-lg sm:px-10 border border-gray-200 dark:border-gray-700">

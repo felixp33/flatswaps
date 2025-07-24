@@ -104,7 +104,7 @@ export default function Footer() {
 						<h3 className="text-lg font-semibold mb-4">Connect</h3>
 						<div className="flex space-x-4 mb-4">
 							<a
-								href="https://facebook.com/flatswaps"
+								href="https://facebook.com/Flatswaps"
 								className="text-gray-300 hover:text-white transition-colors"
 								aria-label="Facebook"
 								target="_blank"
@@ -113,7 +113,7 @@ export default function Footer() {
 								<FacebookIcon className="h-5 w-5" />
 							</a>
 							<a
-								href="https://twitter.com/flatswaps"
+								href="https://twitter.com/Flatswaps"
 								className="text-gray-300 hover:text-white transition-colors"
 								aria-label="Twitter"
 								target="_blank"
@@ -122,7 +122,7 @@ export default function Footer() {
 								<TwitterIcon className="h-5 w-5" />
 							</a>
 							<a
-								href="https://instagram.com/flatswaps"
+								href="https://instagram.com/Flatswaps"
 								className="text-gray-300 hover:text-white transition-colors"
 								aria-label="Instagram"
 								target="_blank"
@@ -131,7 +131,7 @@ export default function Footer() {
 								<InstagramIcon className="h-5 w-5" />
 							</a>
 							<a
-								href="https://tiktok.com/@flatswaps"
+								href="https://tiktok.com/@Flatswaps"
 								className="text-gray-300 hover:text-white transition-colors"
 								aria-label="TikTok"
 								target="_blank"
@@ -140,7 +140,7 @@ export default function Footer() {
 								<TikTokIcon className="h-5 w-5" />
 							</a>
 							<a
-								href="https://linkedin.com/company/flatswaps"
+								href="https://linkedin.com/company/Flatswaps"
 								className="text-gray-300 hover:text-white transition-colors"
 								aria-label="LinkedIn"
 								target="_blank"
@@ -167,7 +167,7 @@ export default function Footer() {
 
 				{/* Bottom section */}
 				<div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-					<div className="text-gray-400 text-sm mb-4 md:mb-0">© 2025 flatswaps. All rights reserved.</div>
+					<div className="text-gray-400 text-sm mb-4 md:mb-0">© 2025 Flatswaps. All rights reserved.</div>
 					<div className="text-gray-400 text-sm">
 						<span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-medium">
 							Demo Website

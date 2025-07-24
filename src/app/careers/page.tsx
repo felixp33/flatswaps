@@ -200,7 +200,7 @@ export default function CareersPage() {
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4 justify-center">
 							<a
-								href="mailto:careers@flatswaps.com"
+								href="mailto:careers@Flatswaps.com"
 								className="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors"
 							>
 								<Mail className="h-5 w-5 mr-2" />
@@ -215,9 +215,9 @@ export default function CareersPage() {
 						</div>
 
 						<div className="mt-8 text-blue-100">
-							<p className="mb-2">Questions about working at flatswaps?</p>
-							<a href="mailto:careers@flatswaps.com" className="text-white underline hover:no-underline">
-								careers@flatswaps.com
+							<p className="mb-2">Questions about working at Flatswaps?</p>
+							<a href="mailto:careers@Flatswaps.com" className="text-white underline hover:no-underline">
+								careers@Flatswaps.com
 							</a>
 						</div>
 					</div>
@@ -227,7 +227,7 @@ export default function CareersPage() {
 				<section className="py-8 bg-gray-100 dark:bg-gray-800">
 					<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
 						<p className="text-sm text-gray-600 dark:text-gray-400">
-							<strong>Note:</strong> This is a demonstration website. flatswaps is a fictional company and these
+							<strong>Note:</strong> This is a demonstration website. Flatswaps is a fictional company and these
 							are not real job opportunities.
 						</p>
 					</div>

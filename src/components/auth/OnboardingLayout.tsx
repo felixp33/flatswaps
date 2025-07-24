@@ -46,7 +46,7 @@ export default function OnboardingLayout({
 								</button>
 							)}
 							<Link href="/" className="text-2xl font-bold text-blue-600">
-								flatswaps
+								Flatswaps
 							</Link>
 						</div>
 

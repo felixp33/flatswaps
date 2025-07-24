@@ -130,7 +130,7 @@ export const checklistSections = [
 		items: [
 			{
 				id: "housing",
-				text: "Secure housing through flatswaps",
+				text: "Secure housing through Flatswaps",
 				urgent: false,
 				timeframe: "2-4 months before",
 				description: "Connect with other exchange students for authentic local living experiences.",
