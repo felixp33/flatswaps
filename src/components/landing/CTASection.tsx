@@ -54,7 +54,7 @@ export default function CtaSection() {
 						href="/auth/signup"
 						className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
 					>
-						Start Your FlatSwap Now
+						Start Your Flatswap Now
 					</a>
 				</div>
 			</div>
