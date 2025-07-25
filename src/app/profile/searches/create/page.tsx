@@ -29,8 +29,7 @@ interface SearchFormData {
 	};
 	criteria: {
 		propertyTypes: string[];
-		bedrooms: number;
-		bathrooms: number;
+		rooms: number; // Changed from bedrooms and bathrooms
 		minSize?: number;
 		maxSize?: number;
 		maxBudget?: number;
@@ -65,8 +64,7 @@ export default function CreateSearchPage() {
 		},
 		criteria: {
 			propertyTypes: [],
-			bedrooms: 1,
-			bathrooms: 1,
+			rooms: 1, // Changed from bedrooms: 1, bathrooms: 1
 		},
 		amenities: [],
 	});
@@ -92,24 +90,25 @@ export default function CreateSearchPage() {
 		},
 	];
 
-	const availableAmenities = [
-		"WiFi",
-		"Kitchen Access",
-		"Washing Machine",
-		"Air Conditioning",
-		"Heating",
-		"Parking",
-		"Balcony/Terrace",
-		"Garden",
-		"Elevator",
-		"Pet Friendly",
-		"Gym Access",
-		"Swimming Pool",
-		"Dishwasher",
-		"TV",
-		"Workspace/Desk",
-		"Near Public Transport",
-	];
+	// Updated categorized amenities matching your mobile app structure
+	const amenityCategories = {
+		essentials: {
+			title: "Essentials",
+			amenities: ["WiFi", "Heating", "Air Conditioning", "Parking", "Kitchen Access"],
+		},
+		appliances: {
+			title: "Appliances",
+			amenities: ["Washer", "Dryer", "Dishwasher", "Microwave", "Refrigerator"],
+		},
+		accessibility: {
+			title: "Accessibility",
+			amenities: ["Wheelchair Access", "Elevator", "Ground Floor Access"],
+		},
+		others: {
+			title: "Policies",
+			amenities: ["Pets Allowed", "Smoking Allowed", "Non-Smoking Only"],
+		},
+	};
 
 	const durationUnits = [
 		{ value: "days", label: "days" },
@@ -578,37 +577,20 @@ export default function CreateSearchPage() {
 							<p className="text-sm text-red-600 dark:text-red-400 mb-4">{errors.propertyTypes}</p>
 						)}
 
-						{/* Property Size & Rooms */}
-						<div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+						{/* Property Size & Rooms - Updated to use single rooms field */}
+						<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 							<div>
 								<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-									Min Bedrooms
+									Number of Rooms
 								</label>
 								<select
-									value={formData.criteria.bedrooms}
-									onChange={(e) => handleInputChange("criteria.bedrooms", parseInt(e.target.value))}
+									value={formData.criteria.rooms}
+									onChange={(e) => handleInputChange("criteria.rooms", parseInt(e.target.value))}
 									className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
 								>
-									{[1, 2, 3, 4, 5, 6].map((num) => (
+									{[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
 										<option key={num} value={num}>
-											{num}+
-										</option>
-									))}
-								</select>
-							</div>
-
-							<div>
-								<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-									Min Bathrooms
-								</label>
-								<select
-									value={formData.criteria.bathrooms}
-									onChange={(e) => handleInputChange("criteria.bathrooms", parseInt(e.target.value))}
-									className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-								>
-									{[1, 2, 3, 4, 5].map((num) => (
-										<option key={num} value={num}>
-											{num}+
+											{num} {num === 1 ? "Room" : "Rooms"}
 										</option>
 									))}
 								</select>
@@ -634,21 +616,28 @@ export default function CreateSearchPage() {
 						</div>
 					</div>
 
-					{/* Amenities */}
+					{/* Amenities - Updated with categorized structure */}
 					<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6">
 						<h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Preferred Amenities</h2>
 
-						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-							{availableAmenities.map((amenity) => (
-								<label key={amenity} className="flex items-center space-x-2 cursor-pointer">
-									<input
-										type="checkbox"
-										checked={formData.amenities.includes(amenity)}
-										onChange={() => handleAmenityToggle(amenity)}
-										className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-									/>
-									<span className="text-sm text-gray-700 dark:text-gray-300">{amenity}</span>
-								</label>
+						<div className="space-y-6">
+							{Object.entries(amenityCategories).map(([categoryKey, category]) => (
+								<div key={categoryKey}>
+									<h3 className="text-sm font-medium text-gray-900 dark:text-white mb-3">{category.title}</h3>
+									<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+										{category.amenities.map((amenity) => (
+											<label key={amenity} className="flex items-center space-x-2 cursor-pointer">
+												<input
+													type="checkbox"
+													checked={formData.amenities.includes(amenity)}
+													onChange={() => handleAmenityToggle(amenity)}
+													className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+												/>
+												<span className="text-sm text-gray-700 dark:text-gray-300">{amenity}</span>
+											</label>
+										))}
+									</div>
+								</div>
 							))}
 						</div>
 					</div>

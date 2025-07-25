@@ -46,16 +46,6 @@ function SearchDropdownMenu({ search, onDeleteClick }: DropdownMenuProps) {
 					{/* Dropdown Menu */}
 					<div className="absolute right-0 top-full mt-1 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 z-20">
 						<div className="py-1">
-							{/* View Results - Remove since it's now the matches button */}
-							{/* <Link
-                href={`/profile/matches?search=${search.id}`}
-                className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                <Eye className="h-4 w-4 mr-3" />
-                View Results ({search.matchCount})
-              </Link> */}
-
 							{/* Edit Search */}
 							<Link
 								href={`/profile/searches/${search.id}/edit`}
@@ -111,7 +101,10 @@ export default function SearchesPage() {
 		searchName: "",
 	});
 
-	// Mock data - replace with your actual data
+	// LOCATION: Inside the SearchesPage component, around line 85-130
+	// This replaces the existing searches array in your searches/page.tsx
+
+	// Updated mock data with rooms and categorized amenities
 	const searches = [
 		{
 			id: "1",
@@ -124,10 +117,11 @@ export default function SearchesPage() {
 			lastUpdated: "2025-06-10",
 			criteria: {
 				dateRange: "Oct 1 2025 - Mar 30 2026",
-				bedrooms: "2-3",
+				rooms: 3, // ✅ CHANGED: Was bedrooms: "2-3"
 				budget: "€800-1200/month",
 				propertyType: "Apartment",
 			},
+			amenities: ["WiFi", "Kitchen Access", "Parking", "Washer"], // ✅ NEW: Added amenities array
 		},
 		{
 			id: "2",
@@ -140,10 +134,11 @@ export default function SearchesPage() {
 			lastUpdated: "2025-06-08",
 			criteria: {
 				dateRange: "Aug 1 - Sep 30, 2025",
-				bedrooms: "1",
+				rooms: 1, // ✅ CHANGED: Was bedrooms: "1"
 				budget: "€600-900/month",
 				propertyType: "Studio",
 			},
+			amenities: ["WiFi", "Heating", "Elevator"], // ✅ NEW: Added amenities array
 		},
 	];
 
@@ -250,7 +245,7 @@ export default function SearchesPage() {
 
 										{/* Search Criteria Boxes */}
 										<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-											{/* Property Requirements */}
+											{/* Property Requirements - Updated to use rooms */}
 											<div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
 												<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center">
 													<Search className="h-4 w-4 mr-2" />
@@ -259,9 +254,8 @@ export default function SearchesPage() {
 												<div className="space-y-2">
 													<div className="flex items-center text-sm">
 														<span className="text-gray-500 dark:text-gray-400 mr-2">
-															🛏️ {search.criteria.bedrooms} bed
+															🏠 {search.criteria.rooms} {search.criteria.rooms === 1 ? "room" : "rooms"}
 														</span>
-														<span className="text-gray-500 dark:text-gray-400 mr-2">🚿 1 bath</span>
 													</div>
 													<div className="text-sm text-gray-600 dark:text-gray-300">
 														{search.criteria.propertyType} • 1 month
@@ -269,21 +263,20 @@ export default function SearchesPage() {
 												</div>
 											</div>
 
-											{/* Preferred Amenities */}
+											{/* Preferred Amenities - Updated to use categorized amenities */}
 											<div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
 												<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">
 													Preferred Amenities
 												</h4>
 												<div className="flex flex-wrap gap-2">
-													<span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-md">
-														WiFi
-													</span>
-													<span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-md">
-														Kitchen
-													</span>
-													<span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-md">
-														Balcony
-													</span>
+													{search.amenities?.map((amenity, index) => (
+														<span
+															key={index}
+															className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-md"
+														>
+															{amenity}
+														</span>
+													))}
 												</div>
 											</div>
 										</div>
