@@ -1,20 +1,6 @@
 // src/components/matches/MatchCard.tsx
 import Link from "next/link";
-import {
-	Heart,
-	MapPin,
-	Star,
-	MessageCircle,
-	Eye,
-	Users,
-	Shield,
-	Phone,
-	Mail,
-	Calendar,
-	Clock,
-	CheckCircle,
-	XCircle,
-} from "lucide-react";
+import { MapPin, MessageCircle, Eye, Users, Shield, Calendar, Clock, CheckCircle, XCircle } from "lucide-react";
 
 interface MatchCardProps {
 	match: any;
@@ -58,12 +44,6 @@ export default function MatchCard({ match, onAccept, onReject }: MatchCardProps)
 		}
 	};
 
-	const getMatchScoreColor = (score: number) => {
-		if (score >= 90) return "text-green-600";
-		if (score >= 75) return "text-yellow-600";
-		return "text-orange-600";
-	};
-
 	const getParticipantStatus = (participant: any) => {
 		if (participant.id === "currentUser") return null;
 		if (match.status === "new") return "waiting";
@@ -96,10 +76,6 @@ export default function MatchCard({ match, onAccept, onReject }: MatchCardProps)
 							>
 								{statusInfo.label}
 							</span>
-							<div className={`flex items-center text-sm font-semibold ${getMatchScoreColor(match.matchScore)}`}>
-								<Heart className="h-4 w-4 mr-1" />
-								{match.matchScore}% match
-							</div>
 						</div>
 						<div className="text-sm text-gray-500 dark:text-gray-400 text-right">
 							<div className="font-medium">{match.searchName}</div>
@@ -140,12 +116,6 @@ export default function MatchCard({ match, onAccept, onReject }: MatchCardProps)
 												<MapPin className="h-4 w-4 mr-1" />
 												{participant.location}
 											</div>
-											{participant.rating && (
-												<div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-													<Star className="h-4 w-4 text-yellow-400 mr-1" />
-													{participant.rating} ({participant.reviews} reviews)
-												</div>
-											)}
 										</div>
 									</div>
 									{participantStatus && (
@@ -199,7 +169,7 @@ export default function MatchCard({ match, onAccept, onReject }: MatchCardProps)
 								</div>
 							)}
 
-							{/* Property Info - UPDATED: Changed link to use /listing/[id] for public profiles */}
+							{/* Property Info */}
 							<div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 mb-4">
 								<div className="flex items-center justify-between mb-2">
 									<h4 className="font-medium text-gray-900 dark:text-white">
@@ -231,27 +201,6 @@ export default function MatchCard({ match, onAccept, onReject }: MatchCardProps)
 									</div>
 								)}
 							</div>
-
-							{/* Contact Info for accepted matches */}
-							{canShowContactInfo(match) && participant.contactInfo && (
-								<div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 mb-4">
-									<h5 className="font-medium text-green-900 dark:text-green-200 mb-2">Contact Information</h5>
-									<div className="space-y-1">
-										<div className="flex items-center text-sm text-green-800 dark:text-green-300">
-											<Mail className="h-4 w-4 mr-2" />
-											<a href={`mailto:${participant.contactInfo.email}`} className="hover:underline">
-												{participant.contactInfo.email}
-											</a>
-										</div>
-										<div className="flex items-center text-sm text-green-800 dark:text-green-300">
-											<Phone className="h-4 w-4 mr-2" />
-											<a href={`tel:${participant.contactInfo.phone}`} className="hover:underline">
-												{participant.contactInfo.phone}
-											</a>
-										</div>
-									</div>
-								</div>
-							)}
 						</div>
 					);
 				})}
