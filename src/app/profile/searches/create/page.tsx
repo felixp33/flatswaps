@@ -31,7 +31,7 @@ interface SearchFormData {
 		propertyTypes: string[];
 		rooms: number; // Changed from bedrooms and bathrooms
 		minSize?: number;
-		maxSize?: number;
+		maxPrice?: number;
 		maxBudget?: number;
 	};
 	amenities: string[];
@@ -106,7 +106,7 @@ export default function CreateSearchPage() {
 		},
 		others: {
 			title: "Policies",
-			amenities: ["Pets Allowed", "Smoking Allowed", "Non-Smoking Only"],
+			amenities: ["Pets Allowed", "Smoking Allowed"],
 		},
 	};
 
@@ -606,11 +606,13 @@ export default function CreateSearchPage() {
 							/>
 
 							<FormField
-								label="Max Size (m²)"
-								name="criteria.maxSize"
+								label="Max Price (€/month)"
+								name="criteria.maxPrice"
 								type="number"
-								value={formData.criteria.maxSize?.toString() || ""}
-								onChange={(value) => handleInputChange("criteria.maxSize", value ? parseInt(value) : undefined)}
+								value={formData.criteria.maxPrice?.toString() || ""}
+								onChange={(value) =>
+									handleInputChange("criteria.maxPrice", value ? parseInt(value) : undefined)
+								}
 								placeholder="Optional"
 							/>
 						</div>
@@ -618,7 +620,7 @@ export default function CreateSearchPage() {
 
 					{/* Amenities - Updated with categorized structure */}
 					<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6">
-						<h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Preferred Amenities</h2>
+						<h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Required Amenities</h2>
 
 						<div className="space-y-6">
 							{Object.entries(amenityCategories).map(([categoryKey, category]) => (
