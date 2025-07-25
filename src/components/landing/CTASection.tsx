@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -33,11 +32,10 @@ export default function CtaSection() {
 	return (
 		<section className="py-16 md:py-24 bg-blue-600">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-				<h2 className="text-3xl font-bold text-white tracking-tight sm:text-4xl flex justify-center items-baseline">
-					<span className="inline-block">Ready to start</span>
-					<span className="inline-block" style={{ width: "10px" }}></span>
+				<h2 className="text-3xl font-bold text-white tracking-tight sm:text-4xl flex flex-col sm:flex-row justify-center items-center sm:items-baseline">
+					<span className="inline-block whitespace-nowrap">Ready to start</span>
 					<span
-						className={`inline-block text-left transition-opacity duration-500 ease-in-out ${
+						className={`inline-block text-center sm:text-left transition-opacity duration-500 ease-in-out sm:ml-2 ${
 							isVisible ? "opacity-100" : "opacity-0"
 						}`}
 					>
