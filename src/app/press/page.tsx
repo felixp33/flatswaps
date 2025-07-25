@@ -13,107 +13,112 @@ import {
 	Users,
 	Globe,
 	TrendingUp,
+	GraduationCap,
+	BookOpen,
 } from "lucide-react";
 
 export default function PressPage() {
 	const pressReleases = [
 		{
-			date: "May 15, 2025",
-			headline: "Flatswaps Reaches 50,000 Successful Home Exchanges Worldwide",
+			date: "December 15, 2026",
+			headline: "Flatswaps Expands to 10 Cities, Reaches 6,000 Active Students",
 			summary:
-				"Platform celebrates major milestone as global community of home swappers continues to grow, with new partnerships announced in Asia-Pacific region.",
+				"Platform celebrates successful expansion phase with €125k in monthly revenue as student apartment swap network grows across major European university cities including new markets in Scandinavia and Eastern Europe.",
 			type: "Company News",
 		},
 		{
-			date: "March 22, 2025",
-			headline: "Flatswaps Launches Student Exchange Program with 50+ Universities",
+			date: "September 20, 2026",
+			headline: "Flatswaps Launches Mobile Apps for iOS and Android",
 			summary:
-				"New initiative makes study abroad more affordable through verified student-to-student home exchanges across Europe, North America, and Australia.",
+				"New mobile applications make student apartment swapping more accessible, with enhanced matching algorithms and real-time chat functionality designed specifically for the mobile-first student generation.",
 			type: "Product Launch",
 		},
 		{
-			date: "January 10, 2025",
-			headline: "Flatswaps Secures $15M Series A to Expand Global Operations",
+			date: "June 10, 2026",
+			headline: "Flatswaps Secures Seed Investment to Scale Operations",
 			summary:
-				"Funding round led by Travel Ventures will accelerate international expansion and enhance platform safety features for home exchange community.",
+				"Following successful pilot program in 4 cities (Berlin, Enschede, Warsaw, Trondheim) with 4,000 users and €73k monthly revenue, investors back platform's expansion to serve growing European student community.",
 			type: "Funding",
 		},
 		{
-			date: "November 8, 2024",
-			headline: "Flatswaps Named 'Best Travel Innovation' at Global Tourism Awards",
+			date: "January 15, 2026",
+			headline: "Flatswaps Completes Desktop and Mobile Platform Development",
 			summary:
-				"Platform recognized for pioneering approach to sustainable travel and cultural exchange through peer-to-peer home swapping technology.",
-			type: "Awards",
+				"After successful MVP launch and product iteration phase, platform now offers complete desktop and mobile experience with improved matchmaking algorithms and enhanced safety features for student housing exchanges.",
+			type: "Product Launch",
 		},
 	];
 
 	const mediaAssets = [
 		{
-			category: "Logos",
+			category: "Logos & Brand",
 			items: [
 				{ name: "Flatswaps Logo (PNG)", size: "2.1 MB", format: "PNG" },
 				{ name: "Flatswaps Logo (SVG)", size: "12 KB", format: "SVG" },
 				{ name: "Flatswaps Logo (White)", size: "1.8 MB", format: "PNG" },
 				{ name: "Flatswaps Icon Only", size: "456 KB", format: "PNG" },
-			],
-		},
-		{
-			category: "Executive Photos",
-			items: [
-				{ name: "Sarah Chen, CEO", size: "3.2 MB", format: "JPG" },
-				{ name: "Marcus Rodriguez, CTO", size: "2.9 MB", format: "JPG" },
-				{ name: "Executive Team Group", size: "4.1 MB", format: "JPG" },
-			],
-		},
-		{
-			category: "Product Screenshots",
-			items: [
-				{ name: "Platform Overview", size: "1.8 MB", format: "PNG" },
-				{ name: "Mobile App Interface", size: "2.3 MB", format: "PNG" },
-				{ name: "Property Listings", size: "2.1 MB", format: "PNG" },
-			],
-		},
-		{
-			category: "Brand Guidelines",
-			items: [
 				{ name: "Brand Style Guide", size: "5.2 MB", format: "PDF" },
-				{ name: "Logo Usage Guidelines", size: "1.9 MB", format: "PDF" },
+			],
+		},
+		{
+			category: "Platform Screenshots",
+			items: [
+				{ name: "Student Dashboard", size: "1.8 MB", format: "PNG" },
+				{ name: "Apartment Listings", size: "2.3 MB", format: "PNG" },
+				{ name: "Mobile App Interface", size: "2.1 MB", format: "PNG" },
+				{ name: "University Verification", size: "1.9 MB", format: "PNG" },
+			],
+		},
+		{
+			category: "Founder Photos",
+			items: [
+				{ name: "Emma Larsson, CEO", size: "3.2 MB", format: "JPG" },
+				{ name: "Thomas Mueller, CTO", size: "2.9 MB", format: "JPG" },
+				{ name: "Founder Team Photo", size: "4.1 MB", format: "JPG" },
+			],
+		},
+		{
+			category: "Student Stories",
+			items: [
+				{ name: "Barcelona Exchange", size: "2.8 MB", format: "JPG" },
+				{ name: "Berlin Student Life", size: "3.1 MB", format: "JPG" },
+				{ name: "Amsterdam Study Abroad", size: "2.6 MB", format: "JPG" },
 			],
 		},
 	];
 
 	const mediaLogos = [
-		"TechCrunch",
-		"Forbes",
-		"Travel + Leisure",
-		"Skift",
-		"The Guardian",
-		"Wall Street Journal",
-		"CNN Travel",
-		"BBC",
-		"Fast Company",
-		"Wired",
+		"The PIE News",
+		"Study International",
+		"Times Higher Education",
+		"Erasmus Student Network",
+		"Study.EU",
+		"Study in Europe",
+		"EdTech Hub",
+		"Campus France",
+		"DAAD",
+		"Nuffic",
 	];
 
 	const keyStats = [
-		{ number: "25,000+", label: "Active Members" },
-		{ number: "50,000+", label: "Successful Swaps" },
-		{ number: "180", label: "Countries" },
-		{ number: "4.9/5", label: "Average Rating" },
+		{ number: "6,000+", label: "Active Students" },
+		{ number: "10", label: "European Cities" },
+		{ number: "€125k", label: "Monthly Revenue" },
+		{ number: "4.8★", label: "Average Rating" },
 	];
 
 	const executiveTeam = [
 		{
-			name: "Sarah Chen",
+			name: "Emma Larsson",
 			title: "Co-Founder & CEO",
-			bio: "Former Airbnb Product Manager with 8+ years in travel technology. MBA from Stanford, passionate about sustainable tourism and cultural exchange.",
-			email: "sarah@Flatswaps.com",
+			bio: "Former Erasmus student who experienced firsthand the challenges of finding affordable housing abroad. MBA from INSEAD, passionate about making study abroad accessible to all students regardless of financial background.",
+			email: "emma@flatswaps.com",
 		},
 		{
-			name: "Marcus Rodriguez",
+			name: "Thomas Mueller",
 			title: "Co-Founder & CTO",
-			bio: "Ex-Google Senior Software Engineer specializing in marketplace platforms. Computer Science PhD from MIT, advocate for ethical technology.",
-			email: "marcus@Flatswaps.com",
+			bio: "Computer Science graduate from TU Munich who built the first version of Flatswaps during his exchange semester in Barcelona. Former software engineer at N26, specializing in secure peer-to-peer platforms.",
+			email: "thomas@flatswaps.com",
 		},
 	];
 
@@ -128,8 +133,8 @@ export default function PressPage() {
 							<div className="mb-6 lg:mb-0">
 								<h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Press Room</h1>
 								<p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl">
-									Media resources, press releases, and brand assets for Flatswaps, the world's leading home
-									exchange platform.
+									Media resources, press releases, and brand assets for Flatswaps, Europe's leading student
+									apartment exchange platform.
 								</p>
 							</div>
 							<div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600">
@@ -137,13 +142,13 @@ export default function PressPage() {
 								<div className="space-y-3">
 									<div className="flex items-center text-gray-600 dark:text-gray-300">
 										<Mail className="h-4 w-4 mr-3" />
-										<a href="mailto:press@Flatswaps.com" className="hover:text-blue-600">
-											press@Flatswaps.com
+										<a href="mailto:press@flatswaps.com" className="hover:text-blue-600">
+											press@flatswaps.com
 										</a>
 									</div>
 									<div className="flex items-center text-gray-600 dark:text-gray-300">
 										<Phone className="h-4 w-4 mr-3" />
-										<span>+1 (555) 123-PRESS</span>
+										<span>+49 30 1234-PRESS</span>
 									</div>
 								</div>
 							</div>
@@ -159,18 +164,20 @@ export default function PressPage() {
 								<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">About Flatswaps</h2>
 								<div className="prose prose-gray dark:prose-invert max-w-none">
 									<p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-										Founded in 2023, Flatswaps is revolutionizing travel through authentic home exchanges. Our
-										platform connects travelers worldwide, enabling them to swap homes and experience
-										destinations like locals while building meaningful cultural connections.
+										Founded in 2025, Flatswaps is revolutionizing student housing across Europe through secure
+										apartment exchanges. Our platform connects students studying abroad, enabling them to swap
+										apartments and experience authentic local living while dramatically reducing accommodation
+										costs.
 									</p>
 									<p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
-										With over 25,000 active members across 180 countries, Flatswaps has facilitated more than
-										50,000 successful home exchanges, saving travelers millions in accommodation costs while
-										promoting sustainable tourism practices.
+										With over 8,500 verified student members across 15 European countries, Flatswaps has
+										facilitated more than 5,000 successful apartment exchanges, saving students collectively
+										over €15 million in accommodation costs while fostering meaningful cultural connections.
 									</p>
 									<p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-										The company is headquartered in San Francisco with team members distributed globally,
-										reflecting our commitment to remote-first culture and diversity.
+										The company is headquartered in Berlin with a distributed team across Europe, reflecting
+										our commitment to supporting the diverse European student community and making study
+										abroad accessible regardless of financial background.
 									</p>
 								</div>
 							</div>
@@ -270,7 +277,7 @@ export default function PressPage() {
 				{/* Executive Team */}
 				<section className="py-12 bg-gray-50 dark:bg-gray-800">
 					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-						<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Executive Team</h2>
+						<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Founding Team</h2>
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 							{executiveTeam.map((exec, index) => (
 								<div
@@ -326,25 +333,50 @@ export default function PressPage() {
 						<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Awards & Recognition</h2>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 							<div className="bg-white dark:bg-gray-700 p-6 rounded-lg text-center">
-								<Award className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
+								<GraduationCap className="h-12 w-12 text-blue-500 mx-auto mb-4" />
 								<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-									Best Travel Innovation 2024
+									Best EdTech Innovation 2026
 								</h3>
-								<p className="text-gray-600 dark:text-gray-300">Global Tourism Awards</p>
+								<p className="text-gray-600 dark:text-gray-300">European EdTech Awards</p>
 							</div>
 							<div className="bg-white dark:bg-gray-700 p-6 rounded-lg text-center">
-								<TrendingUp className="h-12 w-12 text-green-500 mx-auto mb-4" />
+								<Users className="h-12 w-12 text-green-500 mx-auto mb-4" />
 								<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-									Fastest Growing Startup
+									Student Choice Award
 								</h3>
-								<p className="text-gray-600 dark:text-gray-300">TechCrunch Awards 2024</p>
+								<p className="text-gray-600 dark:text-gray-300">Erasmus Student Network 2026</p>
 							</div>
 							<div className="bg-white dark:bg-gray-700 p-6 rounded-lg text-center">
-								<Users className="h-12 w-12 text-blue-500 mx-auto mb-4" />
+								<TrendingUp className="h-12 w-12 text-purple-500 mx-auto mb-4" />
 								<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-									Community Choice Award
+									Rising Startup of the Year
 								</h3>
-								<p className="text-gray-600 dark:text-gray-300">Travel Weekly 2024</p>
+								<p className="text-gray-600 dark:text-gray-300">Berlin Startup Awards 2026</p>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				{/* Student Impact Section */}
+				<section className="py-12">
+					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+						<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">Student Impact</h2>
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+							<div className="text-center p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+								<div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">€15M+</div>
+								<div className="text-gray-600 dark:text-gray-300">Total Student Savings</div>
+							</div>
+							<div className="text-center p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+								<div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">€3,000</div>
+								<div className="text-gray-600 dark:text-gray-300">Average Savings per Exchange</div>
+							</div>
+							<div className="text-center p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+								<div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">4.8★</div>
+								<div className="text-gray-600 dark:text-gray-300">Average Student Rating</div>
+							</div>
+							<div className="text-center p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+								<div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">92%</div>
+								<div className="text-gray-600 dark:text-gray-300">Would Recommend to Friends</div>
 							</div>
 						</div>
 					</div>
