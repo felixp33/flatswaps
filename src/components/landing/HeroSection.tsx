@@ -70,7 +70,7 @@ export default function ImprovedHeroSection() {
 	return (
 		<section className="relative py-20">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
 					{/* Left Content */}
 					<div className="pt-8">
 						<h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-6">
@@ -113,35 +113,35 @@ export default function ImprovedHeroSection() {
 					</div>
 
 					{/* Right Content - Property Images */}
-					<div className="relative h-[500px] w-full flex justify-center items-center">
-						<div className="relative flex items-center gap-4 max-w-full px-4">
+					<div className="relative h-[350px] sm:h-[400px] lg:h-[500px] w-full flex justify-center items-center">
+						<div className="relative flex items-center gap-2 sm:gap-4 w-full max-w-[280px] sm:max-w-[400px] lg:max-w-none px-2 sm:px-4">
 							{selectedProperties.length === 2 && (
 								<>
-									<div className="relative w-full max-w-[256px] min-w-[150px] -translate-y-8">
+									<div className="relative w-full max-w-[120px] sm:max-w-[180px] lg:max-w-[256px] min-w-[100px] -translate-y-4 sm:-translate-y-6 lg:-translate-y-8">
 										<img
 											src={selectedProperties[0].image}
 											alt={selectedProperties[0].alt}
-											className="rounded-xl shadow-lg w-full aspect-[3/4] object-cover border-4 border-white"
+											className="rounded-xl shadow-lg w-full aspect-[3/4] object-cover border-2 sm:border-4 border-white"
 										/>
-										<div className="absolute top-4 left-4">
-											<span className="inline-flex items-center px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-sm shadow-sm font-medium text-gray-800">
+										<div className="absolute top-2 sm:top-4 left-2 sm:left-4">
+											<span className="inline-flex items-center px-2 sm:px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs sm:text-sm shadow-sm font-medium text-gray-800">
 												{selectedProperties[0].flag} {selectedProperties[0].country}
 											</span>
 										</div>
 									</div>
 
-									<div className="bg-white dark:bg-gray-800 rounded-full p-3 shadow-lg z-30 shrink-0 border border-gray-200 dark:border-gray-700">
-										<ArrowLeftRight className="w-6 h-6 text-blue-500" />
+									<div className="bg-white dark:bg-gray-800 rounded-full p-2 sm:p-3 shadow-lg z-30 shrink-0 border border-gray-200 dark:border-gray-700">
+										<ArrowLeftRight className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500" />
 									</div>
 
-									<div className="relative w-full max-w-[256px] min-w-[150px]">
+									<div className="relative w-full max-w-[120px] sm:max-w-[180px] lg:max-w-[256px] min-w-[100px] translate-y-2 sm:translate-y-3 lg:translate-y-0">
 										<img
 											src={selectedProperties[1].image}
 											alt={selectedProperties[1].alt}
-											className="rounded-xl shadow-lg w-full aspect-[3/4] object-cover border-4 border-white"
+											className="rounded-xl shadow-lg w-full aspect-[3/4] object-cover border-2 sm:border-4 border-white"
 										/>
-										<div className="absolute top-4 left-4">
-											<span className="inline-flex items-center px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-sm shadow-sm font-medium text-gray-800">
+										<div className="absolute top-2 sm:top-4 left-2 sm:left-4">
+											<span className="inline-flex items-center px-2 sm:px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs sm:text-sm shadow-sm font-medium text-gray-800">
 												{selectedProperties[1].flag} {selectedProperties[1].country}
 											</span>
 										</div>
