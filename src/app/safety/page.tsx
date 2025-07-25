@@ -220,36 +220,6 @@ export default function SafetyTrustPage() {
 					</div>
 				</section>
 
-				{/* Trust Indicators */}
-				<section className="py-16 bg-gray-50 dark:bg-gray-800">
-					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-						<div className="text-center mb-12">
-							<h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-								Trust Indicators to Look For
-							</h2>
-							<p className="text-xl text-gray-600 dark:text-gray-300">
-								These badges help you identify reliable and experienced hosts
-							</p>
-						</div>
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-							{trustIndicators.map((indicator, index) => {
-								const Icon = indicator.icon;
-								return (
-									<div key={index} className="bg-white dark:bg-gray-700 p-6 rounded-xl text-center">
-										<div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-full w-fit mx-auto mb-4">
-											<Icon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-										</div>
-										<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-											{indicator.label}
-										</h3>
-										<p className="text-gray-600 dark:text-gray-300 text-sm">{indicator.description}</p>
-									</div>
-								);
-							})}
-						</div>
-					</div>
-				</section>
-
 				{/* Safety Tips */}
 				<section className="py-16">
 					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

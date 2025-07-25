@@ -133,13 +133,6 @@ export default function ImprovedHowItWorks() {
 											{step.description}
 										</p>
 									</div>
-
-									{/* Success Indicator */}
-									<div className="mt-4 inline-flex items-center px-3 py-1 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm font-medium rounded-full">
-										{index === 0 && "2min setup"}
-										{index === 1 && "AI-powered matching"}
-										{index === 2 && "Secure agreements"}
-									</div>
 								</div>
 							);
 						})}

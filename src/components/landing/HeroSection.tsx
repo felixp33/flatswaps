@@ -113,17 +113,17 @@ export default function ImprovedHeroSection() {
 					</div>
 
 					{/* Right Content - Property Images */}
-					<div className="relative h-[350px] sm:h-[400px] lg:h-[500px] w-full flex justify-center items-center">
-						<div className="relative flex items-center gap-2 sm:gap-4 w-full max-w-[280px] sm:max-w-[400px] lg:max-w-none px-2 sm:px-4">
+					<div className="relative h-[300px] lg:h-[500px] w-full flex justify-center items-center">
+						<div className="relative flex items-center gap-3 sm:gap-4 w-full max-w-[400px] lg:max-w-none px-4">
 							{selectedProperties.length === 2 && (
 								<>
-									<div className="relative w-full max-w-[120px] sm:max-w-[180px] lg:max-w-[256px] min-w-[100px] -translate-y-4 sm:-translate-y-6 lg:-translate-y-8">
+									<div className="relative w-full max-w-[160px] sm:max-w-[180px] lg:max-w-[256px] min-w-[140px] xs:min-w-[100px] -translate-y-4 lg:-translate-y-8">
 										<img
 											src={selectedProperties[0].image}
 											alt={selectedProperties[0].alt}
-											className="rounded-xl shadow-lg w-full aspect-[3/4] object-cover border-2 sm:border-4 border-white"
+											className="rounded-xl shadow-lg w-full aspect-[3/4] object-cover border-4 border-white"
 										/>
-										<div className="absolute top-2 sm:top-4 left-2 sm:left-4">
+										<div className="absolute top-3 left-3 lg:top-4 lg:left-4">
 											<span className="inline-flex items-center px-2 sm:px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs sm:text-sm shadow-sm font-medium text-gray-800">
 												{selectedProperties[0].flag} {selectedProperties[0].country}
 											</span>
@@ -131,16 +131,16 @@ export default function ImprovedHeroSection() {
 									</div>
 
 									<div className="bg-white dark:bg-gray-800 rounded-full p-2 sm:p-3 shadow-lg z-30 shrink-0 border border-gray-200 dark:border-gray-700">
-										<ArrowLeftRight className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500" />
+										<ArrowLeftRight className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
 									</div>
 
-									<div className="relative w-full max-w-[120px] sm:max-w-[180px] lg:max-w-[256px] min-w-[100px] translate-y-2 sm:translate-y-3 lg:translate-y-0">
+									<div className="relative w-full max-w-[160px] sm:max-w-[180px] lg:max-w-[256px] min-w-[140px] xs:min-w-[100px] translate-y-2 lg:translate-y-0">
 										<img
 											src={selectedProperties[1].image}
 											alt={selectedProperties[1].alt}
-											className="rounded-xl shadow-lg w-full aspect-[3/4] object-cover border-2 sm:border-4 border-white"
+											className="rounded-xl shadow-lg w-full aspect-[3/4] object-cover border-4 border-white"
 										/>
-										<div className="absolute top-2 sm:top-4 left-2 sm:left-4">
+										<div className="absolute top-3 left-3 lg:top-4 lg:left-4">
 											<span className="inline-flex items-center px-2 sm:px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs sm:text-sm shadow-sm font-medium text-gray-800">
 												{selectedProperties[1].flag} {selectedProperties[1].country}
 											</span>
