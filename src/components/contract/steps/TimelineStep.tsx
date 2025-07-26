@@ -7,16 +7,41 @@ import { ContractFormData } from "@/types/contract";
 
 interface TimelineStepProps {
 	formData: ContractFormData;
-	onFormDataChange: (field: keyof ContractFormData, value: string) => void;
+	onFormDataChange: (field: keyof ContractFormData, value: string | number | boolean) => void;
 }
 
 const TimelineStep: React.FC<TimelineStepProps> = ({ formData, onFormDataChange }) => {
+	// Calculate duration in days and human readable format
+	const calculateDuration = () => {
+		if (!formData.startDate || !formData.endDate) return null;
+
+		const start = new Date(formData.startDate);
+		const end = new Date(formData.endDate);
+		const diffTime = Math.abs(end.getTime() - start.getTime());
+		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+		const months = Math.floor(diffDays / 30);
+		const remainingDays = diffDays % 30;
+
+		if (months === 0) {
+			return `${diffDays} days`;
+		} else if (remainingDays === 0) {
+			return `${months} ${months === 1 ? "month" : "months"}`;
+		} else {
+			return `${months} ${months === 1 ? "month" : "months"} and ${remainingDays} days`;
+		}
+	};
+
+	const duration = calculateDuration();
+	const isValidDateRange =
+		formData.startDate && formData.endDate && new Date(formData.startDate) < new Date(formData.endDate);
+
 	return (
 		<div className="space-y-8">
 			<div className="text-center">
 				<Calendar className="h-12 w-12 text-blue-600 mx-auto mb-4" />
 				<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Swap Timeline</h2>
-				<p className="text-gray-600 dark:text-gray-400">Set the dates and terms for your flat swap</p>
+				<p className="text-gray-600 dark:text-gray-400">Set the start and end dates for your flat swap</p>
 			</div>
 
 			<div className="max-w-2xl mx-auto">
@@ -29,7 +54,8 @@ const TimelineStep: React.FC<TimelineStepProps> = ({ formData, onFormDataChange 
 							type="date"
 							value={formData.startDate}
 							onChange={(e) => onFormDataChange("startDate", e.target.value)}
-							className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+							min={new Date().toISOString().split("T")[0]} // Can't start in the past
+							className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 							required
 						/>
 					</div>
@@ -39,40 +65,74 @@ const TimelineStep: React.FC<TimelineStepProps> = ({ formData, onFormDataChange 
 							type="date"
 							value={formData.endDate}
 							onChange={(e) => onFormDataChange("endDate", e.target.value)}
-							className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+							min={formData.startDate || new Date().toISOString().split("T")[0]} // End date must be after start date
+							className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 							required
 						/>
 					</div>
 				</div>
 
+				{/* Duration Display */}
+				{duration && isValidDateRange && (
+					<div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+						<div className="flex items-center justify-between">
+							<div>
+								<h4 className="font-medium text-blue-900 dark:text-blue-100">Swap Duration</h4>
+								<p className="text-blue-700 dark:text-blue-200 text-sm mt-1">Based on your selected dates</p>
+							</div>
+							<div className="text-right">
+								<span className="text-2xl font-bold text-blue-600 dark:text-blue-400">{duration}</span>
+							</div>
+						</div>
+					</div>
+				)}
+
+				{/* Date Validation Warning */}
+				{formData.startDate && formData.endDate && !isValidDateRange && (
+					<div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+						<div className="flex items-center">
+							<div className="flex-shrink-0">
+								<svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+									<path
+										fillRule="evenodd"
+										d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+										clipRule="evenodd"
+									/>
+								</svg>
+							</div>
+							<div className="ml-3">
+								<p className="text-sm text-red-800 dark:text-red-200">End date must be after the start date.</p>
+							</div>
+						</div>
+					</div>
+				)}
+
+				{/* Special Terms */}
 				<div className="mb-6">
 					<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-						Duration Preset
-					</label>
-					<select
-						value={formData.duration}
-						onChange={(e) => onFormDataChange("duration", e.target.value)}
-						className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-					>
-						<option value="1 month">1 month</option>
-						<option value="3 months">3 months</option>
-						<option value="6 months">6 months</option>
-						<option value="12 months">12 months</option>
-						<option value="custom">Custom duration</option>
-					</select>
-				</div>
-
-				<div>
-					<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-						Special Terms & Conditions (Optional)
+						Special Terms & Conditions
 					</label>
 					<textarea
-						placeholder="Add any special agreements, house rules, or additional terms..."
 						value={formData.specialTerms}
 						onChange={(e) => onFormDataChange("specialTerms", e.target.value)}
 						rows={4}
-						className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+						placeholder="Add any special terms, conditions, or arrangements for this swap..."
+						className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical"
 					/>
+					<p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+						Optional: Add any specific arrangements, house rules, or additional terms.
+					</p>
+				</div>
+
+				{/* Timeline Tips */}
+				<div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+					<h5 className="font-medium text-gray-900 dark:text-white mb-2">Timeline Tips</h5>
+					<ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+						<li>• Allow at least 2-3 days between agreement and start date for preparation</li>
+						<li>• Consider utility transfers and key exchange timing</li>
+						<li>• Coordinate with both landlords about the arrangement if required</li>
+						<li>• Plan for property inspections before and after the swap</li>
+					</ul>
 				</div>
 			</div>
 		</div>

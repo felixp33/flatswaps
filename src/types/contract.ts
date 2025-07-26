@@ -3,10 +3,10 @@
 export interface ContractFormData {
 	tenant1Name: string;
 	tenant1Email: string;
-	tenant1Phone: string;
+	// Removed tenant1Phone
 	tenant2Name: string;
 	tenant2Email: string;
-	tenant2Phone: string;
+	// Removed tenant2Phone
 	property1Address: string;
 	property1Rent: string;
 	property1Description: string;
@@ -15,8 +15,20 @@ export interface ContractFormData {
 	property2Description: string;
 	startDate: string;
 	endDate: string;
-	duration: string;
+	// Removed duration preset - calculated from dates
 	specialTerms: string;
+	// New fields for pricing and terms
+	platformFeePercentage: number; // 4.5%
+	hasReadTerms: boolean;
+}
+
+export interface PricingBreakdown {
+	property1Rent: number;
+	property1PlatformFee: number;
+	property1Total: number;
+	property2Rent: number;
+	property2PlatformFee: number;
+	property2Total: number;
 }
 
 export interface UserProperty {

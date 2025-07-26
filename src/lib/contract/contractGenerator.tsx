@@ -1,9 +1,49 @@
 // src/lib/contract/contractGenerator.ts
-import { ContractFormData } from "@/types/contract";
+import { ContractFormData, PricingBreakdown } from "@/types/contract";
+
+export const calculatePricing = (formData: ContractFormData): PricingBreakdown => {
+	const property1Rent = parseFloat(formData.property1Rent) || 0;
+	const property2Rent = parseFloat(formData.property2Rent) || 0;
+	const feePercentage = formData.platformFeePercentage || 4.5;
+
+	const property1PlatformFee = (property1Rent * feePercentage) / 100;
+	const property2PlatformFee = (property2Rent * feePercentage) / 100;
+
+	return {
+		property1Rent,
+		property1PlatformFee,
+		property1Total: property1Rent + property1PlatformFee,
+		property2Rent,
+		property2PlatformFee,
+		property2Total: property2Rent + property2PlatformFee,
+	};
+};
+
+export const calculateDuration = (startDate: string, endDate: string): string => {
+	if (!startDate || !endDate) return "";
+
+	const start = new Date(startDate);
+	const end = new Date(endDate);
+	const diffTime = Math.abs(end.getTime() - start.getTime());
+	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+	const months = Math.floor(diffDays / 30);
+	const remainingDays = diffDays % 30;
+
+	if (months === 0) {
+		return `${diffDays} days`;
+	} else if (remainingDays === 0) {
+		return `${months} ${months === 1 ? "month" : "months"}`;
+	} else {
+		return `${months} ${months === 1 ? "month" : "months"} and ${remainingDays} days`;
+	}
+};
 
 export const generateContract = (formData: ContractFormData): string => {
 	const currentDate = new Date().toLocaleDateString("en-GB");
 	const contractId = `FS-${Date.now().toString().slice(-6)}`;
+	const pricing = calculatePricing(formData);
+	const duration = calculateDuration(formData.startDate, formData.endDate);
 
 	return `FLAT SWAP AGREEMENT
 Contract ID: ${contractId}
@@ -15,99 +55,121 @@ Platform: Flatswaps (www.Flatswaps.com)
 PARTY A (INITIATING TENANT):
 Full Name: ${formData.tenant1Name}
 Email Address: ${formData.tenant1Email}
-Phone Number: ${formData.tenant1Phone}
 
 Property Details:
 Address: ${formData.property1Address}
 Description: ${formData.property1Description}
-Monthly Rent: €${formData.property1Rent}
+Base Monthly Rent: €${pricing.property1Rent.toFixed(2)}
+Platform Fee (${formData.platformFeePercentage || 4.5}%): €${pricing.property1PlatformFee.toFixed(2)}
+Total Monthly Cost: €${pricing.property1Total.toFixed(2)}
 
 ═══════════════════════════════════════════════════════════════
 
 PARTY B (RESPONDING TENANT):
 Full Name: ${formData.tenant2Name}
 Email Address: ${formData.tenant2Email}
-Phone Number: ${formData.tenant2Phone}
 
 Property Details:
 Address: ${formData.property2Address}
 Description: ${formData.property2Description}
-Monthly Rent: €${formData.property2Rent}
+Base Monthly Rent: €${pricing.property2Rent.toFixed(2)}
+Platform Fee (${formData.platformFeePercentage || 4.5}%): €${pricing.property2PlatformFee.toFixed(2)}
+Total Monthly Cost: €${pricing.property2Total.toFixed(2)}
 
 ═══════════════════════════════════════════════════════════════
 
 SWAP ARRANGEMENT DETAILS:
 Start Date: ${formData.startDate}
 End Date: ${formData.endDate}
-Duration: ${formData.duration}
+Duration: ${duration}
 Arrangement Type: Temporary Flat Swap
+
+Payment Structure:
+- Party A (${formData.tenant1Name}) pays €${pricing.property2Total.toFixed(2)}/month for Party B's property
+- Party B (${formData.tenant2Name}) pays €${pricing.property1Total.toFixed(2)}/month for Party A's property
 
 ═══════════════════════════════════════════════════════════════
 
 TERMS AND CONDITIONS:
 
 1. RENTAL PAYMENT STRUCTURE:
-   - Party A will pay €${formData.property2Rent}/month for Party B's property
-   - Party B will pay €${formData.property1Rent}/month for Party A's property
+   - Party A will pay €${pricing.property2Total.toFixed(2)}/month (€${pricing.property2Rent.toFixed(
+		2
+	)} rent + €${pricing.property2PlatformFee.toFixed(2)} platform fee) for Party B's property
+   - Party B will pay €${pricing.property1Total.toFixed(2)}/month (€${pricing.property1Rent.toFixed(
+		2
+	)} rent + €${pricing.property1PlatformFee.toFixed(2)} platform fee) for Party A's property
    - Payments to be made directly to respective landlords or as arranged
+   - Platform fees to be paid to Flatswaps monthly
    - First payment due before move-in date
 
-2. PROPERTY CONDITION & CARE:
+2. PLATFORM FEE DETAILS:
+   - The ${
+		formData.platformFeePercentage || 4.5
+	}% platform fee covers secure payment processing, insurance coverage, customer support, and platform maintenance
+   - Platform fees are non-refundable and due monthly with rent payments
+   - Fees are calculated on base rent amount only
+
+3. PROPERTY CONDITION & CARE:
    - Both properties must be returned in original condition
    - Normal wear and tear is expected and acceptable
    - Both parties responsible for any damages beyond normal wear
    - Inventory check-in and check-out to be documented with photos
    - Any existing damages should be noted before swap begins
 
-3. UTILITIES & SERVICES:
+4. UTILITIES & SERVICES:
    - Each party responsible for utilities during their occupancy period
    - Includes: electricity, gas, water, internet, heating, and other services
    - Any existing utility contracts to be transferred or new arrangements made
    - Both parties to provide meter readings at start and end of swap
 
-4. KEYS & ACCESS:
+5. KEYS & ACCESS:
    - Key exchange to be coordinated between parties
    - Emergency contact information must be provided by both parties
    - Access codes, alarm systems, and special instructions to be shared
    - Spare keys location and neighbor contacts to be communicated
 
-5. DEPOSITS & SECURITY:
+6. DEPOSITS & SECURITY:
    - Original security deposits remain with respective landlords
    - Any additional security arrangements to be agreed upon separately
    - Both parties recommended to take photos of property condition
 
-6. INSURANCE & LIABILITY:
+7. INSURANCE & LIABILITY:
    - Each party responsible for their personal belongings and actions
    - Both parties advised to maintain appropriate insurance coverage
    - Neither party liable for issues arising from the other's property
    - Any accidents or damages to be reported immediately
 
-7. EARLY TERMINATION:
+8. EARLY TERMINATION:
    - 30-day written notice required for early termination
    - Both parties must agree to any changes to original terms
    - Properties must be vacated and returned promptly upon termination
-   - Any costs incurred due to early termination to be discussed
+   - Platform fees are non-refundable for completed months
 
-8. COMMUNICATION & SUPPORT:
+9. COMMUNICATION & SUPPORT:
    - Both parties agree to maintain open and respectful communication
    - Property issues should be reported promptly to avoid complications
    - Contact information must remain current throughout swap period
    - Flatswaps platform available for mediation if needed
 
-9. COMPLIANCE & LEGAL:
-   - Both parties responsible for compliance with local housing laws
-   - Any subletting restrictions to be respected and disclosed
-   - Landlord permissions obtained where required
-   - Local regulations and building rules to be followed
+10. COMPLIANCE & LEGAL:
+    - Both parties responsible for compliance with local housing laws
+    - Any subletting restrictions to be respected and disclosed
+    - Landlord permissions obtained where required
+    - Local regulations and building rules to be followed
 
-10. ADDITIONAL TERMS:
+11. ADDITIONAL TERMS:
 ${formData.specialTerms || "No additional terms specified."}
 
 ═══════════════════════════════════════════════════════════════
 
 ACKNOWLEDGMENT & SIGNATURES:
 
-By signing below, both parties acknowledge they have read, understood, and agree to be bound by the terms of this agreement.
+By signing below, both parties acknowledge they have read, understood, and agree to be bound by the terms of this agreement, including the pricing structure with platform fees.
+
+☐ I confirm that I have read and agreed to the Terms & Conditions
+☐ I understand the payment structure including platform fees
+☐ I acknowledge the duration and dates of this swap agreement
 
 Party A (${formData.tenant1Name}):
 Signature: _________________________________ 
@@ -119,25 +181,13 @@ Date: _____________
 
 ═══════════════════════════════════════════════════════════════
 
-EMERGENCY CONTACTS:
-
-Party A Emergency Contact: 
-Name: _________________________________
-Phone: ________________________________
-
-Party B Emergency Contact:
-Name: _________________________________
-Phone: ________________________________
-
-═══════════════════════════════════════════════════════════════
-
 CONTRACT DETAILS:
 Generated via: Flatswaps Platform (www.Flatswaps.com)
 Contract ID: ${contractId}
 Generation Date: ${currentDate}
 Support Email: support@Flatswaps.com
 
-DISCLAIMER: This is a template agreement created to facilitate flat swaps between users. 
+DISCLAIMER: This is a template agreement created to facilitate flat swaps between users.
 Both parties are strongly advised to:
 - Consult with legal professionals before signing
 - Ensure compliance with local housing laws and regulations

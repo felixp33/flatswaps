@@ -12,18 +12,18 @@ import { ContractFormData } from "@/types/contract";
 import { getConversationData } from "@/lib/contract/contractData";
 
 const ContractPage: React.FC = () => {
-        const params = useParams();
-        const searchParams = useSearchParams();
-        const conversationId = params.conversationId as string;
-        const from = searchParams.get("from");
+	const params = useParams();
+	const searchParams = useSearchParams();
+	const conversationId = params.conversationId as string;
+	const from = searchParams.get("from");
 
 	const [formData, setFormData] = useState<ContractFormData>({
 		tenant1Name: "",
 		tenant1Email: "",
-		tenant1Phone: "",
+		// Removed tenant1Phone
 		tenant2Name: "",
 		tenant2Email: "",
-		tenant2Phone: "",
+		// Removed tenant2Phone
 		property1Address: "",
 		property1Rent: "",
 		property1Description: "",
@@ -32,8 +32,11 @@ const ContractPage: React.FC = () => {
 		property2Description: "",
 		startDate: "",
 		endDate: "",
-		duration: "6 months",
+		// Removed duration preset
 		specialTerms: "",
+		// New fields
+		platformFeePercentage: 4.5,
+		hasReadTerms: false,
 	});
 
 	// Pre-populate form data when page loads
@@ -68,7 +71,7 @@ const ContractPage: React.FC = () => {
 		}
 	}, [conversationId]);
 
-	const handleFormDataChange = (field: keyof ContractFormData, value: string) => {
+	const handleFormDataChange = (field: keyof ContractFormData, value: string | number | boolean) => {
 		setFormData((prev) => ({ ...prev, [field]: value }));
 	};
 
@@ -79,19 +82,19 @@ const ContractPage: React.FC = () => {
 				<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 					{/* Header */}
 					<div className="mb-8">
-                                                <div className="flex items-center mb-4">
-                                                        <Link
-                                                                href={from === "profile" ? "/profile" : "/profile/messages"}
-                                                                className="flex items-center text-blue-600 hover:text-blue-700 transition-colors mr-4"
-                                                        >
-                                                                <ArrowLeft className="h-4 w-4 mr-1" />
-                                                                {from === "profile" ? "Back to Dashboard" : "Back to Messages"}
-                                                        </Link>
-                                                </div>
+						<div className="flex items-center mb-4">
+							<Link
+								href={from === "profile" ? "/profile" : "/profile/messages"}
+								className="flex items-center text-blue-600 hover:text-blue-700 transition-colors mr-4"
+							>
+								<ArrowLeft className="h-4 w-4 mr-1" />
+								{from === "profile" ? "Back to Dashboard" : "Back to Messages"}
+							</Link>
+						</div>
 						<div className="text-center">
 							<h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Flat Swap Contract</h1>
 							<p className="text-lg text-gray-600 dark:text-gray-400">
-								Create a legally binding agreement for your flat swap
+								Create a legally binding agreement for your flat swap with transparent pricing
 							</p>
 						</div>
 					</div>
@@ -100,9 +103,9 @@ const ContractPage: React.FC = () => {
 					<ContractWizard formData={formData} onFormDataChange={handleFormDataChange} />
 				</div>
 			</main>
-                        <MinimalFooter />
-                </>
-        );
+			<MinimalFooter />
+		</>
+	);
 };
 
 export default ContractPage;
