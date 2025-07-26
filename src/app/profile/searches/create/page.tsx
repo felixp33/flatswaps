@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import FormField from "@/components/auth/FormField";
 import { Search, MapPin, Calendar, Home, Users, Bed, Bath, Check, X, Clock, Plane, GraduationCap } from "lucide-react";
+import VisibilityPremiumBanner from "@/components/profile/VisibilityPremiumBanner";
 
 interface SearchFormData {
 	name?: string;
@@ -512,6 +513,7 @@ export default function CreateSearchPage() {
 					)}
 
 					{/* Property Types - Multiple Selection */}
+
 					<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6">
 						<h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
 							<Home className="h-5 w-5 mr-2" />
@@ -643,6 +645,7 @@ export default function CreateSearchPage() {
 							))}
 						</div>
 					</div>
+					<VisibilityPremiumBanner></VisibilityPremiumBanner>
 
 					{/* Action Buttons */}
 					<div className="flex justify-between mt-8">
