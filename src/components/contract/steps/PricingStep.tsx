@@ -36,7 +36,7 @@ const PricingStep: React.FC<PricingStepProps> = ({ formData, onFormDataChange })
 			<div className="text-center">
 				<Calculator className="h-12 w-12 text-blue-600 mx-auto mb-4" />
 				<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Pricing Breakdown</h2>
-				<p className="text-gray-600 dark:text-gray-400">Review the monthly costs including platform fees</p>
+                                <p className="text-gray-600 dark:text-gray-400">Review the monthly costs including the SwapSecure package</p>
 			</div>
 
 			<div className="max-w-4xl mx-auto">
@@ -59,9 +59,9 @@ const PricingStep: React.FC<PricingStepProps> = ({ formData, onFormDataChange })
 							</div>
 
 							<div className="flex justify-between items-center">
-								<span className="text-gray-600 dark:text-gray-400">
-									Platform Fee ({formData.platformFeePercentage || 4.5}%):
-								</span>
+                                                                <span className="text-gray-600 dark:text-gray-400">
+                                                                        SwapSecure Package ({formData.platformFeePercentage || 4.5}%):
+                                                                </span>
 								<span className="font-medium text-gray-900 dark:text-white">
 									€{pricing.property1PlatformFee.toFixed(2)}
 								</span>
@@ -102,9 +102,9 @@ const PricingStep: React.FC<PricingStepProps> = ({ formData, onFormDataChange })
 							</div>
 
 							<div className="flex justify-between items-center">
-								<span className="text-gray-600 dark:text-gray-400">
-									Platform Fee ({formData.platformFeePercentage || 4.5}%):
-								</span>
+                                                                <span className="text-gray-600 dark:text-gray-400">
+                                                                        SwapSecure Package ({formData.platformFeePercentage || 4.5}%):
+                                                                </span>
 								<span className="font-medium text-gray-900 dark:text-white">
 									€{pricing.property2PlatformFee.toFixed(2)}
 								</span>
@@ -138,7 +138,7 @@ const PricingStep: React.FC<PricingStepProps> = ({ formData, onFormDataChange })
 								/month
 							</p>
 							<p className="text-blue-600 dark:text-blue-300 mt-1">
-								(€{pricing.property2Rent.toFixed(2)} rent + €{pricing.property2PlatformFee.toFixed(2)} fee)
+                                                                (€{pricing.property2Rent.toFixed(2)} rent + €{pricing.property2PlatformFee.toFixed(2)} package)
 							</p>
 						</div>
 						<div>
@@ -147,21 +147,21 @@ const PricingStep: React.FC<PricingStepProps> = ({ formData, onFormDataChange })
 								/month
 							</p>
 							<p className="text-blue-600 dark:text-blue-300 mt-1">
-								(€{pricing.property1Rent.toFixed(2)} rent + €{pricing.property1PlatformFee.toFixed(2)} fee)
+                                                                (€{pricing.property1Rent.toFixed(2)} rent + €{pricing.property1PlatformFee.toFixed(2)} package)
 							</p>
 						</div>
 					</div>
 				</div>
 
-				{/* Fee Information */}
-				<div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-					<h5 className="font-medium text-gray-900 dark:text-white mb-2">About Platform Fees</h5>
-					<p className="text-sm text-gray-600 dark:text-gray-400">
-						The {formData.platformFeePercentage || 4.5}% platform fee covers secure payment processing, insurance
-						coverage, customer support, and platform maintenance. This fee is applied to the base rent of each
-						property and is paid monthly along with the rent.
-					</p>
-				</div>
+                                {/* Fee Information */}
+                                <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                        <h5 className="font-medium text-gray-900 dark:text-white mb-2">About the SwapSecure Package</h5>
+                                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                                                The {formData.platformFeePercentage || 4.5}% SwapSecure package covers secure payment processing, insurance
+                                                coverage, customer support and platform maintenance. This fee is applied to the base rent of each
+                                                property and is paid monthly along with the rent.
+                                        </p>
+                                </div>
 			</div>
 		</div>
 	);

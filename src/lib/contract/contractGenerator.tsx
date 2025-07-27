@@ -60,7 +60,7 @@ Property Details:
 Address: ${formData.property1Address}
 Description: ${formData.property1Description}
 Base Monthly Rent: €${pricing.property1Rent.toFixed(2)}
-Platform Fee (${formData.platformFeePercentage || 4.5}%): €${pricing.property1PlatformFee.toFixed(2)}
+SwapSecure Package (${formData.platformFeePercentage || 4.5}%): €${pricing.property1PlatformFee.toFixed(2)}
 Total Monthly Cost: €${pricing.property1Total.toFixed(2)}
 
 ═══════════════════════════════════════════════════════════════
@@ -73,7 +73,7 @@ Property Details:
 Address: ${formData.property2Address}
 Description: ${formData.property2Description}
 Base Monthly Rent: €${pricing.property2Rent.toFixed(2)}
-Platform Fee (${formData.platformFeePercentage || 4.5}%): €${pricing.property2PlatformFee.toFixed(2)}
+SwapSecure Package (${formData.platformFeePercentage || 4.5}%): €${pricing.property2PlatformFee.toFixed(2)}
 Total Monthly Cost: €${pricing.property2Total.toFixed(2)}
 
 ═══════════════════════════════════════════════════════════════
@@ -95,19 +95,19 @@ TERMS AND CONDITIONS:
 1. RENTAL PAYMENT STRUCTURE:
    - Party A will pay €${pricing.property2Total.toFixed(2)}/month (€${pricing.property2Rent.toFixed(
 		2
-	)} rent + €${pricing.property2PlatformFee.toFixed(2)} platform fee) for Party B's property
+        )} rent + €${pricing.property2PlatformFee.toFixed(2)} SwapSecure package) for Party B's property
    - Party B will pay €${pricing.property1Total.toFixed(2)}/month (€${pricing.property1Rent.toFixed(
-		2
-	)} rent + €${pricing.property1PlatformFee.toFixed(2)} platform fee) for Party A's property
+                2
+        )} rent + €${pricing.property1PlatformFee.toFixed(2)} SwapSecure package) for Party A's property
    - Payments to be made directly to respective landlords or as arranged
-   - Platform fees to be paid to Flatswaps monthly
+   - SwapSecure packages to be paid to Flatswaps monthly
    - First payment due before move-in date
 
-2. PLATFORM FEE DETAILS:
+2. SWAPSECURE PACKAGE DETAILS:
    - The ${
-		formData.platformFeePercentage || 4.5
-	}% platform fee covers secure payment processing, insurance coverage, customer support, and platform maintenance
-   - Platform fees are non-refundable and due monthly with rent payments
+                formData.platformFeePercentage || 4.5
+        }% SwapSecure package covers secure payment processing, insurance coverage, customer support, and platform maintenance
+   - SwapSecure packages are non-refundable and due monthly with rent payments
    - Fees are calculated on base rent amount only
 
 3. PROPERTY CONDITION & CARE:
@@ -144,7 +144,7 @@ TERMS AND CONDITIONS:
    - 30-day written notice required for early termination
    - Both parties must agree to any changes to original terms
    - Properties must be vacated and returned promptly upon termination
-   - Platform fees are non-refundable for completed months
+   - SwapSecure packages are non-refundable for completed months
 
 9. COMMUNICATION & SUPPORT:
    - Both parties agree to maintain open and respectful communication
@@ -165,10 +165,10 @@ ${formData.specialTerms || "No additional terms specified."}
 
 ACKNOWLEDGMENT & SIGNATURES:
 
-By signing below, both parties acknowledge they have read, understood, and agree to be bound by the terms of this agreement, including the pricing structure with platform fees.
+By signing below, both parties acknowledge they have read, understood, and agree to be bound by the terms of this agreement, including the pricing structure with the SwapSecure package.
 
 ☐ I confirm that I have read and agreed to the Terms & Conditions
-☐ I understand the payment structure including platform fees
+☐ I understand the payment structure including the SwapSecure package
 ☐ I acknowledge the duration and dates of this swap agreement
 
 Party A (${formData.tenant1Name}):

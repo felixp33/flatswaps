@@ -3,6 +3,7 @@
 
 import React, { useState } from "react";
 import { CheckCircle, Download, FileText, User, Home, Calendar, Euro } from "lucide-react";
+import SignSlider from "../SignSlider";
 import { ContractFormData } from "@/types/contract";
 import {
 	generateContract,
@@ -18,20 +19,14 @@ interface ReviewStepProps {
 }
 
 const ReviewStep: React.FC<ReviewStepProps> = ({ formData, onFormDataChange }) => {
-	const [isGenerating, setIsGenerating] = useState(false);
-	const [contractGenerated, setContractGenerated] = useState(false);
+        const [signed, setSigned] = useState(false);
 
 	const pricing = calculatePricing(formData);
 	const duration = calculateDuration(formData.startDate, formData.endDate);
 
-	const handleGenerateContract = () => {
-		setIsGenerating(true);
-		// Simulate contract generation delay
-		setTimeout(() => {
-			setIsGenerating(false);
-			setContractGenerated(true);
-		}, 1500);
-	};
+        const handleSign = () => {
+                setSigned(true);
+        };
 
 	const handleDownloadText = () => {
 		downloadContract(formData);
@@ -41,17 +36,17 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ formData, onFormDataChange }) =
 		downloadContractPdf(formData);
 	};
 
-	if (contractGenerated) {
+        if (signed) {
 		return (
 			<div className="space-y-8">
 				<div className="text-center">
 					<CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-4" />
-					<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-						Contract Generated Successfully!
-					</h2>
-					<p className="text-gray-600 dark:text-gray-400">
-						Your flat swap contract is ready for download and signing
-					</p>
+                                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                                                Contract Signed!
+                                        </h2>
+                                        <p className="text-gray-600 dark:text-gray-400">
+                                                Your flat swap contract is ready for download
+                                        </p>
 				</div>
 
 				<div className="max-w-2xl mx-auto">
@@ -99,9 +94,9 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ formData, onFormDataChange }) =
 			<div className="text-center">
 				<FileText className="h-12 w-12 text-blue-600 mx-auto mb-4" />
 				<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Review Contract Details</h2>
-				<p className="text-gray-600 dark:text-gray-400">
-					Please review all information before generating your contract
-				</p>
+                                <p className="text-gray-600 dark:text-gray-400">
+                                        Please review all information before signing your contract
+                                </p>
 			</div>
 
 			<div className="max-w-4xl mx-auto">
@@ -204,7 +199,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ formData, onFormDataChange }) =
 									<span>€{pricing.property2Rent.toFixed(2)}</span>
 								</div>
 								<div className="flex justify-between">
-									<span className="text-gray-600 dark:text-gray-400">Platform fee:</span>
+                                                                        <span className="text-gray-600 dark:text-gray-400">SwapSecure package:</span>
 									<span>€{pricing.property2PlatformFee.toFixed(2)}</span>
 								</div>
 								<div className="flex justify-between font-semibold text-gray-900 dark:text-white border-t border-gray-200 dark:border-gray-600 pt-1">
@@ -223,7 +218,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ formData, onFormDataChange }) =
 									<span>€{pricing.property1Rent.toFixed(2)}</span>
 								</div>
 								<div className="flex justify-between">
-									<span className="text-gray-600 dark:text-gray-400">Platform fee:</span>
+                                                                        <span className="text-gray-600 dark:text-gray-400">SwapSecure package:</span>
 									<span>€{pricing.property1PlatformFee.toFixed(2)}</span>
 								</div>
 								<div className="flex justify-between font-semibold text-gray-900 dark:text-white border-t border-gray-200 dark:border-gray-600 pt-1">
@@ -245,23 +240,10 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ formData, onFormDataChange }) =
 					</div>
 				</div>
 
-				{/* Generate Contract Button */}
-				<div className="text-center">
-					<button
-						onClick={handleGenerateContract}
-						disabled={isGenerating}
-						className="px-12 py-4 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-semibold text-lg"
-					>
-						{isGenerating ? (
-							<div className="flex items-center">
-								<div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3"></div>
-								Generating Contract...
-							</div>
-						) : (
-							"Generate Contract"
-						)}
-					</button>
-				</div>
+                                {/* Sign Slider */}
+                                <div className="text-center">
+                                        <SignSlider signed={signed} onSign={handleSign} />
+                                </div>
 			</div>
 		</div>
 	);
