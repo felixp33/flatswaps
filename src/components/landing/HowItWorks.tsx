@@ -147,7 +147,6 @@ export default function ImprovedHowItWorks() {
 						<span>Get Started Now</span>
 						<ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
 					</a>
-					<p className="mt-3 text-sm text-gray-500 dark:text-gray-400">No credit card required • Free to start</p>
 				</div>
 			</div>
 		</section>
