@@ -123,17 +123,6 @@ const TimelineStep: React.FC<TimelineStepProps> = ({ formData, onFormDataChange 
 						Optional: Add any specific arrangements, house rules, or additional terms.
 					</p>
 				</div>
-
-				{/* Timeline Tips */}
-				<div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
-					<h5 className="font-medium text-gray-900 dark:text-white mb-2">Timeline Tips</h5>
-					<ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-						<li>• Allow at least 2-3 days between agreement and start date for preparation</li>
-						<li>• Consider utility transfers and key exchange timing</li>
-						<li>• Coordinate with both landlords about the arrangement if required</li>
-						<li>• Plan for property inspections before and after the swap</li>
-					</ul>
-				</div>
 			</div>
 		</div>
 	);

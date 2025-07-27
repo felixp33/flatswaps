@@ -131,8 +131,6 @@ const ParticipantsStep: React.FC<ParticipantsStepProps> = ({ formData, onFormDat
 							<div className="mt-2 text-sm text-blue-700 dark:text-blue-300">
 								<p>• Both parties will receive a copy of the signed contract via email</p>
 								<p>• Email addresses will be used for contract notifications and updates</p>
-								<p>• Phone numbers are no longer required for contract generation</p>
-								<p>• Ensure all information is accurate before proceeding</p>
 							</div>
 						</div>
 					</div>
