@@ -2,14 +2,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { CheckCircle, FileText, User, Home, Calendar, Euro } from "lucide-react";
+import { CheckCircle, FileText, User, Home, Calendar, Euro, Download, ExternalLink } from "lucide-react";
 import SignSlider from "../SignSlider";
 import { ContractFormData } from "@/types/contract";
-import {
-        downloadContractPdf,
-        calculatePricing,
-        calculateDuration,
-} from "@/lib/contract/contractGenerator";
+import { downloadContractPdf, calculatePricing, calculateDuration } from "@/lib/contract/contractGenerator";
 
 interface ReviewStepProps {
 	formData: ContractFormData;
@@ -17,49 +13,48 @@ interface ReviewStepProps {
 }
 
 const ReviewStep: React.FC<ReviewStepProps> = ({ formData, onFormDataChange }) => {
-        const [signed, setSigned] = useState(false);
+	const [signed, setSigned] = useState(false);
 
 	const pricing = calculatePricing(formData);
 	const duration = calculateDuration(formData.startDate, formData.endDate);
 
-        const handleSign = () => {
-                setSigned(true);
-        };
+	const handleSign = () => {
+		setSigned(true);
+	};
 
-        const handleDownloadPdf = () => {
-                downloadContractPdf(formData);
-        };
+	const handleDownloadPdf = () => {
+		downloadContractPdf(formData);
+	};
 
-        if (signed) {
-                return (
-                        <div className="space-y-6 text-center">
-                                <CheckCircle className="h-16 w-16 text-green-600 mx-auto" />
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Contract Signed!</h2>
-                                <p className="text-gray-600 dark:text-gray-400">Your flat swap contract is ready for download.</p>
-                                <div>
-                                        <button
-                                                onClick={handleDownloadPdf}
-                                                className="flex items-center justify-center px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                                        >
-                                                <FileText className="h-4 w-4 mr-2" />
-                                                Download as PDF
-                                        </button>
-                                </div>
-                                <div className="mt-6">
-                                        <SignSlider signed={true} onSign={() => {}} />
-                                </div>
-                        </div>
-                );
-        }
+	if (signed) {
+		return (
+			<div className="space-y-6 text-center">
+				<CheckCircle className="h-16 w-16 text-green-600 mx-auto" />
+				<h2 className="text-2xl font-bold text-gray-900 dark:text-white">Contract Signed!</h2>
+				<p className="text-gray-600 dark:text-gray-400">
+					Your flat swap contract has been sent to both parties via email and is ready for download.
+				</p>
+				<div>
+					<button
+						onClick={handleDownloadPdf}
+						className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+					>
+						<Download className="h-4 w-4 mr-2" />
+						Download PDF
+					</button>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="space-y-8">
 			<div className="text-center">
 				<FileText className="h-12 w-12 text-blue-600 mx-auto mb-4" />
 				<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Review Contract Details</h2>
-                                <p className="text-gray-600 dark:text-gray-400">
-                                        Please review all information before signing your contract
-                                </p>
+				<p className="text-gray-600 dark:text-gray-400">
+					Please review all information before signing your contract
+				</p>
 			</div>
 
 			<div className="max-w-4xl mx-auto">
@@ -162,7 +157,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ formData, onFormDataChange }) =
 									<span>€{pricing.property2Rent.toFixed(2)}</span>
 								</div>
 								<div className="flex justify-between">
-                                                                        <span className="text-gray-600 dark:text-gray-400">SwapSecure package:</span>
+									<span className="text-gray-600 dark:text-gray-400">SwapSecure package:</span>
 									<span>€{pricing.property2PlatformFee.toFixed(2)}</span>
 								</div>
 								<div className="flex justify-between font-semibold text-gray-900 dark:text-white border-t border-gray-200 dark:border-gray-600 pt-1">
@@ -181,7 +176,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ formData, onFormDataChange }) =
 									<span>€{pricing.property1Rent.toFixed(2)}</span>
 								</div>
 								<div className="flex justify-between">
-                                                                        <span className="text-gray-600 dark:text-gray-400">SwapSecure package:</span>
+									<span className="text-gray-600 dark:text-gray-400">SwapSecure package:</span>
 									<span>€{pricing.property1PlatformFee.toFixed(2)}</span>
 								</div>
 								<div className="flex justify-between font-semibold text-gray-900 dark:text-white border-t border-gray-200 dark:border-gray-600 pt-1">
@@ -193,28 +188,28 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ formData, onFormDataChange }) =
 					</div>
 				</div>
 
-                                {/* Terms Confirmation */}
-                                <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 mb-6 border border-green-200 dark:border-green-800">
-                                        <div className="flex items-center">
-                                                <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
-                                                <span className="text-green-800 dark:text-green-200 font-medium">
-                                                        Terms & Conditions have been read and accepted
-                                                </span>
-                                        </div>
-                                        {formData.specialTerms && (
-                                                <div className="flex items-center mt-2">
-                                                        <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
-                                                        <span className="text-green-800 dark:text-green-200 font-medium">
-                                                                Additional terms have been accepted
-                                                        </span>
-                                                </div>
-                                        )}
-                                </div>
+				{/* Terms Confirmation */}
+				<div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 mb-6 border border-green-200 dark:border-green-800">
+					<div className="flex items-center">
+						<CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+						<span className="text-green-800 dark:text-green-200 font-medium">
+							Terms & Conditions have been read and accepted
+						</span>
+					</div>
+					{formData.specialTerms && (
+						<div className="flex items-center mt-2">
+							<CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+							<span className="text-green-800 dark:text-green-200 font-medium">
+								Additional terms have been accepted
+							</span>
+						</div>
+					)}
+				</div>
 
-                                {/* Sign Slider */}
-                                <div className="text-center">
-                                        <SignSlider signed={signed} onSign={handleSign} />
-                                </div>
+				{/* Sign Slider */}
+				<div className="text-center">
+					<SignSlider signed={signed} onSign={handleSign} />
+				</div>
 			</div>
 		</div>
 	);
