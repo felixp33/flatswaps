@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import {
 	Plane,
 	CheckCircle,
-	Clock,
 	AlertTriangle,
 	ChevronRight,
 	FileText,
@@ -100,59 +99,8 @@ export default function ExchangeChecklist({ completedItems = new Set() }: Exchan
 					</p>
 				</div>
 
-				{/* Quick Stats Grid */}
-				<div className="grid grid-cols-2 gap-4 mb-4">
-					<div className="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg border border-green-200 dark:border-green-800">
-						<div className="flex items-center">
-							<CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400 mr-2" />
-							<div>
-								<div className="text-sm font-semibold text-green-900 dark:text-green-100">
-									{completedCount} Done
-								</div>
-								<div className="text-xs text-green-700 dark:text-green-300">Tasks completed</div>
-							</div>
-						</div>
-					</div>
-
-					<div
-						className={`p-3 rounded-lg border ${
-							urgentCompleted === urgentItems
-								? "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800"
-								: "bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800"
-						}`}
-					>
-						<div className="flex items-center">
-							{urgentCompleted === urgentItems ? (
-								<CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400 mr-2" />
-							) : (
-								<AlertTriangle className="h-4 w-4 text-orange-600 dark:text-orange-400 mr-2" />
-							)}
-							<div>
-								<div
-									className={`text-sm font-semibold ${
-										urgentCompleted === urgentItems
-											? "text-green-900 dark:text-green-100"
-											: "text-orange-900 dark:text-orange-100"
-									}`}
-								>
-									{urgentCompleted}/{urgentItems} Urgent
-								</div>
-								<div
-									className={`text-xs ${
-										urgentCompleted === urgentItems
-											? "text-green-700 dark:text-green-300"
-											: "text-orange-700 dark:text-orange-300"
-									}`}
-								>
-									Priority items
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
 				{/* Category Progress */}
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 					{checklistSections.map((section) => {
 						const Icon = getIconComponent(section.icon);
 						const sectionProgress = getSectionProgress(section.title, completedItems);
@@ -184,37 +132,6 @@ export default function ExchangeChecklist({ completedItems = new Set() }: Exchan
 						);
 					})}
 				</div>
-
-				{/* Motivational Message */}
-				{progressPercentage >= 100 ? (
-					<div className="p-3 bg-green-100 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-						<div className="flex items-center text-green-800 dark:text-green-200">
-							<CheckCircle className="h-4 w-4 mr-2" />
-							<span className="text-sm font-medium">🎉 You're all set for your exchange!</span>
-						</div>
-					</div>
-				) : progressPercentage >= 75 ? (
-					<div className="p-3 bg-blue-100 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-						<div className="flex items-center text-blue-800 dark:text-blue-200">
-							<Clock className="h-4 w-4 mr-2" />
-							<span className="text-sm font-medium">Almost there! Just a few more steps to go.</span>
-						</div>
-					</div>
-				) : urgentCompleted < urgentItems ? (
-					<div className="p-3 bg-orange-100 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg">
-						<div className="flex items-center text-orange-800 dark:text-orange-200">
-							<AlertTriangle className="h-4 w-4 mr-2" />
-							<span className="text-sm font-medium">Focus on urgent tasks first to stay on track.</span>
-						</div>
-					</div>
-				) : (
-					<div className="p-3 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg">
-						<div className="flex items-center text-gray-800 dark:text-gray-200">
-							<Clock className="h-4 w-4 mr-2" />
-							<span className="text-sm font-medium">Great progress! Keep going with your preparation.</span>
-						</div>
-					</div>
-				)}
 			</div>
 		</div>
 	);
