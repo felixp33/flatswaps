@@ -333,20 +333,6 @@ export default function ExpandedChecklist({ completedItems, onToggleItem }: Expa
 				})}
 			</div>
 
-			{/* Footer Tips */}
-			<div className="mt-8 p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-				<div className="flex items-start">
-					<Globe className="h-5 w-5 text-blue-600 dark:text-blue-400 mr-2 mt-0.5" />
-					<div>
-						<h4 className="font-medium text-blue-800 dark:text-blue-200 mb-1">Pro Tip for Flatswaps Users</h4>
-						<p className="text-sm text-blue-700 dark:text-blue-300">
-							Connect with your swap partner early! They can provide insider tips about the local area, help with
-							banking recommendations, and even show you around when you arrive. Many of our best exchange
-							experiences start with great communication.
-						</p>
-					</div>
-				</div>
-			</div>
 		</div>
 	);
 }
