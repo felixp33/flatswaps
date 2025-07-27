@@ -13,11 +13,18 @@ interface TermsAgreementStepProps {
 const TermsAgreementStep: React.FC<TermsAgreementStepProps> = ({ formData, onFormDataChange }) => {
 	return (
 		<div className="space-y-8">
-			<div className="text-center">
-				<FileText className="h-12 w-12 text-blue-600 mx-auto mb-4" />
-				<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Terms & Conditions</h2>
-				<p className="text-gray-600 dark:text-gray-400">Please review and accept the terms before proceeding</p>
-			</div>
+                        <div className="text-center space-y-2">
+                                <FileText className="h-12 w-12 text-blue-600 mx-auto" />
+                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Terms & Conditions</h2>
+                                <p className="text-gray-600 dark:text-gray-400">Please review and accept the terms before proceeding</p>
+                                <a
+                                        href="/terms.pdf"
+                                        download
+                                        className="text-sm text-blue-600 hover:underline"
+                                >
+                                        Download PDF
+                                </a>
+                        </div>
 
 			<div className="max-w-4xl mx-auto">
 				{/* Terms Content */}
@@ -162,9 +169,33 @@ const TermsAgreementStep: React.FC<TermsAgreementStepProps> = ({ formData, onFor
 								terms and conditions.
 							</p>
 						</div>
-						{formData.hasReadTerms && <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-1" />}
-					</div>
-				</div>
+                                                {formData.hasReadTerms && <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-1" />}
+                                        </div>
+                                        {formData.specialTerms && (
+                                                <div className="flex items-start space-x-3 mt-4">
+                                                        <div className="flex-shrink-0 mt-1">
+                                                                <input
+                                                                        type="checkbox"
+                                                                        id="special-terms-agreement"
+                                                                        checked={formData.hasReadSpecialTerms}
+                                                                        onChange={(e) => onFormDataChange("hasReadSpecialTerms", e.target.checked)}
+                                                                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                                                />
+                                                        </div>
+                                                        <div className="flex-grow">
+                                                                <label
+                                                                        htmlFor="special-terms-agreement"
+                                                                        className="text-sm font-medium text-blue-900 dark:text-blue-100 cursor-pointer"
+                                                                >
+                                                                        I agree to the additional terms provided
+                                                                </label>
+                                                        </div>
+                                                        {formData.hasReadSpecialTerms && (
+                                                                <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-1" />
+                                                        )}
+                                                </div>
+                                        )}
+                                </div>
 			</div>
 		</div>
 	);

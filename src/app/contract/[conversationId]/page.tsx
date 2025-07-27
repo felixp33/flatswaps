@@ -35,9 +35,10 @@ const ContractPage: React.FC = () => {
 		// Removed duration preset
 		specialTerms: "",
 		// New fields
-		platformFeePercentage: 4.5,
-		hasReadTerms: false,
-	});
+                platformFeePercentage: 4.5,
+                hasReadTerms: false,
+                hasReadSpecialTerms: false,
+        });
 
 	// Pre-populate form data when page loads
 	useEffect(() => {

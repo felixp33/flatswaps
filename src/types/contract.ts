@@ -18,8 +18,9 @@ export interface ContractFormData {
 	// Removed duration preset - calculated from dates
 	specialTerms: string;
 	// New fields for pricing and terms
-	platformFeePercentage: number; // 4.5%
-	hasReadTerms: boolean;
+  platformFeePercentage: number; // 4.5%
+  hasReadTerms: boolean;
+  hasReadSpecialTerms: boolean;
 }
 
 export interface PricingBreakdown {

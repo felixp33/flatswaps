@@ -49,8 +49,11 @@ const ContractWizard: React.FC<ContractWizardProps> = ({ formData, onFormDataCha
 				);
 			case 4:
 				return !!(formData.property1Rent && formData.property2Rent);
-			case 5:
-				return formData.hasReadTerms;
+                        case 5:
+                                return (
+                                        formData.hasReadTerms &&
+                                        (!formData.specialTerms || formData.hasReadSpecialTerms)
+                                );
 			case 6:
 				return validateStep(1) && validateStep(2) && validateStep(3) && validateStep(4) && validateStep(5);
 			default:
@@ -172,24 +175,17 @@ const ContractWizard: React.FC<ContractWizardProps> = ({ formData, onFormDataCha
 					Previous
 				</button>
 
-				<div className="flex space-x-3">
-					{!isLastStep ? (
-						<button
-							onClick={handleNext}
-							disabled={!canProceedToNext}
-							className="px-8 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
-						>
-							Next
-						</button>
-					) : (
-						<button
-							disabled={!canProceedToNext}
-							className="px-8 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
-						>
-							Generate Contract
-						</button>
-					)}
-				</div>
+                                <div className="flex space-x-3">
+                                        {!isLastStep && (
+                                                <button
+                                                        onClick={handleNext}
+                                                        disabled={!canProceedToNext}
+                                                        className="px-8 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+                                                >
+                                                        Next
+                                                </button>
+                                        )}
+                                </div>
 			</div>
 		</div>
 	);
