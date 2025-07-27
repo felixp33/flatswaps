@@ -2,15 +2,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { CheckCircle, Download, FileText, User, Home, Calendar, Euro } from "lucide-react";
+import { CheckCircle, FileText, User, Home, Calendar, Euro } from "lucide-react";
 import SignSlider from "../SignSlider";
 import { ContractFormData } from "@/types/contract";
 import {
-	generateContract,
-	downloadContract,
-	downloadContractPdf,
-	calculatePricing,
-	calculateDuration,
+        downloadContractPdf,
+        calculatePricing,
+        calculateDuration,
 } from "@/lib/contract/contractGenerator";
 
 interface ReviewStepProps {
@@ -28,66 +26,31 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ formData, onFormDataChange }) =
                 setSigned(true);
         };
 
-	const handleDownloadText = () => {
-		downloadContract(formData);
-	};
-
-	const handleDownloadPdf = () => {
-		downloadContractPdf(formData);
-	};
+        const handleDownloadPdf = () => {
+                downloadContractPdf(formData);
+        };
 
         if (signed) {
-		return (
-			<div className="space-y-8">
-				<div className="text-center">
-					<CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-4" />
-                                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                                                Contract Signed!
-                                        </h2>
-                                        <p className="text-gray-600 dark:text-gray-400">
-                                                Your flat swap contract is ready for download
-                                        </p>
-				</div>
-
-				<div className="max-w-2xl mx-auto">
-					<div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-6 border border-green-200 dark:border-green-800">
-						<h3 className="text-lg font-semibold text-green-900 dark:text-green-100 mb-4">Next Steps</h3>
-						<ol className="list-decimal list-inside space-y-2 text-green-800 dark:text-green-200 text-sm">
-							<li>Download the contract using the buttons below</li>
-							<li>Both parties should review the contract carefully</li>
-							<li>Print the contract for physical signatures</li>
-							<li>Coordinate key exchange and move-in details</li>
-							<li>Keep a copy of the signed contract for your records</li>
-						</ol>
-					</div>
-
-					<div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-						<button
-							onClick={handleDownloadText}
-							className="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-						>
-							<Download className="h-4 w-4 mr-2" />
-							Download as Text
-						</button>
-						<button
-							onClick={handleDownloadPdf}
-							className="flex items-center justify-center px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-						>
-							<FileText className="h-4 w-4 mr-2" />
-							Download as PDF
-						</button>
-					</div>
-
-					<div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
-						<p className="text-sm text-yellow-800 dark:text-yellow-200">
-							<strong>Important:</strong> Both parties should sign the contract before the swap begins. Keep
-							signed copies for your records and ensure all terms are understood before proceeding.
-						</p>
-					</div>
-				</div>
-			</div>
-		);
-	}
+                return (
+                        <div className="space-y-6 text-center">
+                                <CheckCircle className="h-16 w-16 text-green-600 mx-auto" />
+                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Contract Signed!</h2>
+                                <p className="text-gray-600 dark:text-gray-400">Your flat swap contract is ready for download.</p>
+                                <div>
+                                        <button
+                                                onClick={handleDownloadPdf}
+                                                className="flex items-center justify-center px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                                        >
+                                                <FileText className="h-4 w-4 mr-2" />
+                                                Download as PDF
+                                        </button>
+                                </div>
+                                <div className="mt-6">
+                                        <SignSlider signed={true} onSign={() => {}} />
+                                </div>
+                        </div>
+                );
+        }
 
 	return (
 		<div className="space-y-8">
@@ -230,15 +193,23 @@ const ReviewStep: React.FC<ReviewStepProps> = ({ formData, onFormDataChange }) =
 					</div>
 				</div>
 
-				{/* Terms Confirmation */}
-				<div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 mb-6 border border-green-200 dark:border-green-800">
-					<div className="flex items-center">
-						<CheckCircle className="h-5 w-5 text-green-600 mr-2" />
-						<span className="text-green-800 dark:text-green-200 font-medium">
-							Terms & Conditions have been read and accepted
-						</span>
-					</div>
-				</div>
+                                {/* Terms Confirmation */}
+                                <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 mb-6 border border-green-200 dark:border-green-800">
+                                        <div className="flex items-center">
+                                                <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+                                                <span className="text-green-800 dark:text-green-200 font-medium">
+                                                        Terms & Conditions have been read and accepted
+                                                </span>
+                                        </div>
+                                        {formData.specialTerms && (
+                                                <div className="flex items-center mt-2">
+                                                        <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+                                                        <span className="text-green-800 dark:text-green-200 font-medium">
+                                                                Additional terms have been accepted
+                                                        </span>
+                                                </div>
+                                        )}
+                                </div>
 
                                 {/* Sign Slider */}
                                 <div className="text-center">
