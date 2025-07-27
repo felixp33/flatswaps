@@ -38,9 +38,9 @@ const TermsAgreementStep: React.FC<TermsAgreementStepProps> = ({ formData, onFor
 							</section>
 
 							<section>
-								<h4 className="font-medium text-gray-900 dark:text-white">2. Payment Terms</h4>
-								<p className="text-gray-600 dark:text-gray-400">
-									Each party will pay the monthly rent plus a 4.5% platform fee for the property they occupy.
+                                                                <h4 className="font-medium text-gray-900 dark:text-white">2. Payment Terms</h4>
+                                                                <p className="text-gray-600 dark:text-gray-400">
+                                                                        Each party will pay the monthly rent plus a 4.5% SwapSecure package for the property they occupy.
 									Payments are due monthly and must be made on time. Late payments may result in additional
 									fees or termination of the agreement.
 								</p>
@@ -83,11 +83,11 @@ const TermsAgreementStep: React.FC<TermsAgreementStepProps> = ({ formData, onFor
 							</section>
 
 							<section>
-								<h4 className="font-medium text-gray-900 dark:text-white">7. Platform Fees</h4>
-								<p className="text-gray-600 dark:text-gray-400">
-									The 4.5% platform fee covers secure payment processing, customer support, insurance
-									coordination, and platform maintenance. This fee is non-refundable and applies to each
-									monthly payment.
+                                                                <h4 className="font-medium text-gray-900 dark:text-white">7. SwapSecure Package</h4>
+                                                                <p className="text-gray-600 dark:text-gray-400">
+                                                                        The 4.5% SwapSecure package covers secure payment processing, customer support, insurance
+                                                                        coordination and platform maintenance. This fee is non-refundable and applies to each
+                                                                        monthly payment.
 								</p>
 							</section>
 
@@ -119,10 +119,27 @@ const TermsAgreementStep: React.FC<TermsAgreementStepProps> = ({ formData, onFor
 							</section>
 						</div>
 					</div>
-				</div>
+                                </div>
 
-				{/* Agreement Checkbox */}
-				<div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+                                {/* Additional Terms */}
+                                <div className="mb-6">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                                Extra Terms
+                                        </label>
+                                        <textarea
+                                                value={formData.specialTerms}
+                                                onChange={(e) => onFormDataChange("specialTerms", e.target.value)}
+                                                rows={4}
+                                                placeholder="Add any additional terms or agreements..."
+                                                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical"
+                                        />
+                                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                                                Optional: Specify any extra rules or arrangements for this swap.
+                                        </p>
+                                </div>
+
+                                {/* Agreement Checkbox */}
+                                <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
 					<div className="flex items-start space-x-3">
 						<div className="flex-shrink-0 mt-1">
 							<input

@@ -107,22 +107,6 @@ const TimelineStep: React.FC<TimelineStepProps> = ({ formData, onFormDataChange 
 					</div>
 				)}
 
-				{/* Special Terms */}
-				<div className="mb-6">
-					<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-						Special Terms & Conditions
-					</label>
-					<textarea
-						value={formData.specialTerms}
-						onChange={(e) => onFormDataChange("specialTerms", e.target.value)}
-						rows={4}
-						placeholder="Add any special terms, conditions, or arrangements for this swap..."
-						className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical"
-					/>
-					<p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-						Optional: Add any specific arrangements, house rules, or additional terms.
-					</p>
-				</div>
 			</div>
 		</div>
 	);

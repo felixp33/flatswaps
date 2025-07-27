@@ -6,23 +6,23 @@ import { User, Mail } from "lucide-react";
 import { ContractFormData } from "@/types/contract";
 
 interface ParticipantsStepProps {
-	formData: ContractFormData;
-	onFormDataChange: (field: keyof ContractFormData, value: string | number | boolean) => void;
+        formData: ContractFormData;
+        onFormDataChange: (field: keyof ContractFormData, value: string | number | boolean) => void;
 }
 
-const ParticipantsStep: React.FC<ParticipantsStepProps> = ({ formData, onFormDataChange }) => {
-	return (
-		<div className="space-y-8">
+const ParticipantsStep: React.FC<ParticipantsStepProps> = ({ formData }) => {
+        return (
+                <div className="space-y-8">
 			<div className="text-center">
 				<User className="h-12 w-12 text-blue-600 mx-auto mb-4" />
 				<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Contract Participants</h2>
-				<p className="text-gray-600 dark:text-gray-400">Enter the details for both parties in the flat swap</p>
-			</div>
+                                <p className="text-gray-600 dark:text-gray-400">Review the participants for this flat swap</p>
+                        </div>
 
-			<div className="max-w-4xl mx-auto">
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-					{/* Tenant A */}
-					<div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+                        <div className="max-w-4xl mx-auto">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                        {/* Tenant A */}
+                                        <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
 						<div className="flex items-center mb-6">
 							<div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mr-3">
 								<span className="text-blue-600 dark:text-blue-400 font-semibold text-sm">A</span>
@@ -30,45 +30,18 @@ const ParticipantsStep: React.FC<ParticipantsStepProps> = ({ formData, onFormDat
 							<h3 className="text-lg font-semibold text-gray-900 dark:text-white">Tenant A (Initiating)</h3>
 						</div>
 
-						<div className="space-y-4">
-							<div>
-								<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-									Full Name *
-								</label>
-								<div className="relative">
-									<User className="h-4 w-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
-									<input
-										type="text"
-										value={formData.tenant1Name}
-										onChange={(e) => onFormDataChange("tenant1Name", e.target.value)}
-										placeholder="Enter full name"
-										className="w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-										required
-									/>
-								</div>
-							</div>
+                                                <div className="space-y-2 text-sm">
+                                                        <p className="text-gray-600 dark:text-gray-400">
+                                                                <span className="font-medium text-gray-900 dark:text-white">Name:</span> {formData.tenant1Name}
+                                                        </p>
+                                                        <p className="text-gray-600 dark:text-gray-400">
+                                                                <span className="font-medium text-gray-900 dark:text-white">Email:</span> {formData.tenant1Email}
+                                                        </p>
+                                                </div>
+                                        </div>
 
-							<div>
-								<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-									Email Address *
-								</label>
-								<div className="relative">
-									<Mail className="h-4 w-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
-									<input
-										type="email"
-										value={formData.tenant1Email}
-										onChange={(e) => onFormDataChange("tenant1Email", e.target.value)}
-										placeholder="email@example.com"
-										className="w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-										required
-									/>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					{/* Tenant B */}
-					<div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+                                        {/* Tenant B */}
+                                        <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
 						<div className="flex items-center mb-6">
 							<div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mr-3">
 								<span className="text-green-600 dark:text-green-400 font-semibold text-sm">B</span>
@@ -76,43 +49,16 @@ const ParticipantsStep: React.FC<ParticipantsStepProps> = ({ formData, onFormDat
 							<h3 className="text-lg font-semibold text-gray-900 dark:text-white">Tenant B (Responding)</h3>
 						</div>
 
-						<div className="space-y-4">
-							<div>
-								<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-									Full Name *
-								</label>
-								<div className="relative">
-									<User className="h-4 w-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
-									<input
-										type="text"
-										value={formData.tenant2Name}
-										onChange={(e) => onFormDataChange("tenant2Name", e.target.value)}
-										placeholder="Enter full name"
-										className="w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-										required
-									/>
-								</div>
-							</div>
-
-							<div>
-								<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-									Email Address *
-								</label>
-								<div className="relative">
-									<Mail className="h-4 w-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
-									<input
-										type="email"
-										value={formData.tenant2Email}
-										onChange={(e) => onFormDataChange("tenant2Email", e.target.value)}
-										placeholder="email@example.com"
-										className="w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-										required
-									/>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+                                                <div className="space-y-2 text-sm">
+                                                        <p className="text-gray-600 dark:text-gray-400">
+                                                                <span className="font-medium text-gray-900 dark:text-white">Name:</span> {formData.tenant2Name}
+                                                        </p>
+                                                        <p className="text-gray-600 dark:text-gray-400">
+                                                                <span className="font-medium text-gray-900 dark:text-white">Email:</span> {formData.tenant2Email}
+                                                        </p>
+                                                </div>
+                                        </div>
+                                </div>
 
 				{/* Information Notice */}
 				<div className="mt-8 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
