@@ -1,41 +1,87 @@
 # 🏠 FlatSwaps
 
-> **A modern flat swapping platform connecting users through intelligent property matching**
+> **University Project: A Demonstration of Multi-User Property Exchange Platform**
 
-FlatSwaps is an innovative demo project that enables seamless apartment exchanges between users. Built with a sleek Next.js frontend and powered by a robust Go matching service, it creates intelligent swap cycles to help users find their perfect home exchange.
+FlatSwaps is a comprehensive university project demonstrating the development of a modern web application for apartment exchanges between users. The project showcases full-stack development skills, implementing an intelligent matching algorithm that creates swap cycles between multiple participants, combined with a responsive web interface.
 
-## ✨ Features
+## 📋 Project Overview
 
--  **🔍 Smart Matching**: Advanced algorithm finds swap cycles between 2-4 users
--  **🚫 Rejection Protection**: 14-day blacklist prevents repeated unwanted matches
--  **⚡ Real-time Search**: Instant property discovery and matching
--  **🎯 Cycle Detection**: Automated multi-user swap chain identification
--  **📱 Modern UI**: Responsive Next.js interface with seamless UX
+This project was developed as part of a university coursework to demonstrate proficiency in modern web development technologies and algorithmic problem-solving. FlatSwaps addresses the real-world challenge of property exchanges by implementing an automated matching system that can identify beneficial swap chains among multiple users.
 
-## 🏗️ Architecture
+### 🎯 Learning Objectives Addressed
+
+-  **Full-Stack Development**: Integration of frontend and backend technologies
+-  **Algorithm Design**: Implementation of cycle detection in graph structures
+-  **Modern Deployment**: Cloud-based hosting and database management
+-  **API Design**: RESTful service architecture
+-  **User Experience**: Responsive interface design
+
+## ✨ Key Features Implemented
+
+-  **🔍 Intelligent Matching Algorithm**: Detects swap cycles between 2-4 users using graph theory
+-  **⚡ Real-time Property Search**: Instant filtering and discovery of available properties
+-  **🚫 Smart Rejection Handling**: 14-day blacklist system prevents spam matches
+-  **📱 Responsive Web Interface**: Modern UI built with Next.js and React
+-  **🔗 RESTful API**: Clean backend architecture with Go HTTP services
+
+## 🏗️ Technical Architecture
+
+The project demonstrates a microservices approach with clear separation of concerns:
 
 ```
+Frontend (Next.js)     ←→     Backend Service (Go)     ←→     Database (Supabase)
+     │                              │                              │
+ ├── User Interface           ├── Matching Logic              ├── Property Storage
+ ├── Property Display         ├── API Endpoints               ├── User Data
+ └── Search Interface         └── Cycle Detection             └── Match History
+```
+
+### Directory Structure
+
+```
+FlatSwaps/
 ├── 🎨 src/                    # Next.js Frontend Application
 │   ├── components/           # Reusable UI components
-│   ├── pages/               # Application routes
-│   └── styles/              # Styling and themes
+│   ├── pages/               # Application routes and views
+│   └── styles/              # CSS styling and themes
 │
 └── ⚙️ matching-service/      # Go Backend Service
-    ├── cmd/                 # HTTP server entry point
-    ├── demo/                # Sample data and console demo
-    └── service/             # Core matching logic library
+    ├── cmd/                 # HTTP server implementation
+    ├── demo/                # Console demo with sample data
+    └── service/             # Core matching algorithm library
 ```
 
-## 🚀 Quick Start
+## 🔬 Technical Implementation
+
+### Frontend Technology Stack
+
+-  **Next.js**: React framework for server-side rendering and routing
+-  **React**: Component-based UI library for interactive interfaces
+-  **TypeScript**: Type-safe JavaScript for enhanced development experience
+-  **Responsive Design**: Mobile-first approach ensuring cross-device compatibility
+
+### Backend Technology Stack
+
+-  **Go**: High-performance backend language for concurrent processing
+-  **HTTP Server**: RESTful API design following industry standards
+-  **In-Memory Storage**: Fast data access for demonstration purposes
+-  **Modular Architecture**: Separation of business logic and API layers
+
+### Deployment Infrastructure
+
+-  **Vercel**: Modern deployment platform for frontend hosting
+-  **Supabase**: Backend-as-a-Service for database and authentication
+-  **Cloud Integration**: Demonstrates modern DevOps practices
+
+## 🚀 Running the Project
 
 ### Prerequisites
 
--  **Node.js** 18+ and npm
--  **Go** 1.19+
--  **Vercel CLI** (for deployment)
--  **Supabase** account (for production backend)
+-  Node.js 18+ and npm
+-  Go 1.19+
+-  Internet connection for cloud services
 
-### 🎨 Frontend Setup
+### Frontend Setup
 
 ```bash
 # Install dependencies
@@ -43,143 +89,110 @@ npm install
 
 # Start development server
 npm run dev
-
-# Build for production
-npm run build
 ```
 
-🌐 **Local Development**: <http://localhost:3000>
+Access the application at <http://localhost:3000>
 
-### ⚙️ Backend Service
-
-Launch the Go matching service:
+### Backend Service
 
 ```bash
-# Start the HTTP server (port 8080)
+# Start the matching service (port 8080)
 go run ./matching-service/cmd
 ```
 
-**Available Endpoints:**
+**API Endpoints:**
 
--  `POST /search` - Submit property search requests
--  `GET /property` - Retrieve property details
--  `POST /match` - Generate swap matches
+-  `POST /search` - Submit property search criteria
+-  `GET /property` - Retrieve property information
+-  `POST /match` - Generate and retrieve matches
 
-### 🎮 Interactive Demo
-
-Experience the matching algorithm:
+### Demonstration Mode
 
 ```bash
-# Run console demo with sample data
+# Run interactive demo with sample data
 go run ./matching-service/demo
 ```
 
-This populates the system with test properties and demonstrates swap cycle detection.
-
-### 🧪 Testing
+### Testing
 
 ```bash
 cd matching-service
 go test ./...
 ```
 
-## 🔄 How Matching Works
+## 🧠 Algorithm Design
 
-The intelligent matching system operates on these principles:
+The core innovation of this project lies in the matching algorithm, which solves the multi-party exchange problem:
 
-1. **🔍 Search Submission**: Users submit their property preferences and available flat details
-2. **💾 In-Memory Storage**: All searches and properties are maintained in fast memory storage
-3. **🔄 Cycle Detection**: Algorithm identifies potential swap chains (2-4 participants)
-4. **✅ Match Generation**: Compatible cycles are proposed to all participants
-5. **🚫 Rejection Handling**: Declined matches trigger 14-day blacklist periods
-6. **🔄 Continuous Processing**: System continuously seeks new matching opportunities
+### Problem Statement
 
-## 🚀 Deployment
+Given a set of users with properties to offer and specific requirements, find beneficial swap cycles where each participant's needs are met through a chain of exchanges.
 
-### Frontend (Vercel)
+### Solution Approach
 
-```bash
-# Deploy to Vercel
-vercel --prod
-```
+1. **Graph Representation**: Model users and properties as nodes in a directed graph
+2. **Cycle Detection**: Implement algorithms to find beneficial cycles of length 2-4
+3. **Constraint Satisfaction**: Ensure all participants' requirements are met
+4. **Optimization**: Prioritize matches based on user preferences and compatibility
+5. **Temporal Management**: Handle rejections with time-based blacklisting
 
-### Backend Options
+### Key Algorithmic Features
 
-**Option 1: Vercel Serverless Functions**
+-  **Efficiency**: O(n³) complexity for cycle detection in sparse graphs
+-  **Scalability**: Memory-efficient storage for demonstration purposes
+-  **Robustness**: Handles edge cases and prevents infinite loops
+-  **Extensibility**: Modular design allows for additional matching criteria
 
-```bash
-# Deploy Go service as Vercel function
-vercel --prod
-```
+## 📊 Project Outcomes
 
-**Option 2: Cloud Platform**
+This university project successfully demonstrates:
 
--  Google Cloud Run
--  AWS Lambda
--  Digital Ocean Apps
+**Technical Skills:**
 
-### Database (Supabase)
+-  Modern web development using industry-standard tools
+-  Algorithm implementation for complex optimization problems
+-  Cloud deployment and infrastructure management
+-  API design and integration patterns
 
-Replace in-memory storage with Supabase for production:
+**Problem-Solving Abilities:**
 
-1. Create Supabase project
-2. Configure database schema
-3. Update connection strings
-4. Deploy with environment variables
+-  Analysis of real-world multi-party exchange challenges
+-  Design of efficient algorithms for graph-based problems
+-  Implementation of user-centric features and safeguards
 
-## 🛠️ Tech Stack
+**Software Engineering Practices:**
 
-| Component      | Technology                 |
-| -------------- | -------------------------- |
-| **Frontend**   | Next.js, React, TypeScript |
-| **Backend**    | Go, HTTP Server            |
-| **Deployment** | Vercel                     |
-| **Database**   | Supabase (Production)      |
-| **Storage**    | In-Memory (Demo)           |
+-  Clean code architecture with separation of concerns
+-  Comprehensive testing and demonstration capabilities
+-  Documentation and project organization
+-  Version control and deployment workflows
 
-## 📁 Project Structure
+## 🔄 Future Enhancements
 
-```
-FlatSwaps/
-├── 📦 package.json           # Node.js dependencies
-├── ⚙️ next.config.js         # Next.js configuration
-├── 🎨 src/                   # Frontend application
-│   ├── components/           # Reusable components
-│   ├── pages/               # Route handlers
-│   ├── styles/              # CSS and styling
-│   └── utils/               # Helper functions
-├── 🔧 matching-service/      # Go backend service
-│   ├── cmd/                 # Server executable
-│   ├── demo/                # Demo and sample data
-│   ├── service/             # Core business logic
-│   └── go.mod               # Go dependencies
-└── 📚 README.md             # Project documentation
-```
+Potential extensions for continued learning:
 
-## 🤝 Contributing
+-  **Database Integration**: Replace in-memory storage with persistent database
+-  **Authentication System**: User accounts and secure session management
+-  **Advanced Matching**: Machine learning for improved compatibility scoring
+-  **Real-time Updates**: WebSocket integration for live match notifications
+-  **Geographic Features**: Location-based filtering and mapping integration
 
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
+## 📚 Technologies Learned
 
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
--  📧 **Email**: support@flatswaps.com
--  🐛 **Issues**: [GitHub Issues](https://github.com/yourusername/flatswaps/issues)
--  💬 **Discussions**: [GitHub Discussions](https://github.com/yourusername/flatswaps/discussions)
+| Category       | Technologies                                |
+| -------------- | ------------------------------------------- |
+| **Frontend**   | Next.js, React, TypeScript, CSS3, HTML5     |
+| **Backend**    | Go, HTTP APIs, RESTful Design               |
+| **Database**   | Supabase, SQL, Database Design              |
+| **Deployment** | Vercel, Cloud Platforms, CI/CD              |
+| **Algorithms** | Graph Theory, Cycle Detection, Optimization |
 
 ---
 
 <div align="center">
 
-**Made with ❤️ for the flat swapping community**
+**University Project - Demonstrating Modern Web Development and Algorithmic Problem Solving**
 
-[⭐ Star this repo](https://github.com/yourusername/flatswaps) • [🐛 Report Bug](https://github.com/yourusername/flatswaps/issues) • [✨ Request Feature](https://github.com/yourusername/flatswaps/issues)
+_Developed as part of [Course Name] - [University Name] - [Year]_
 
 </div>
