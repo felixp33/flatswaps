@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FlatSwaps
 
-## Getting Started
+FlatSwaps is a demo project for swapping flats between users. It contains a Next.js
+front‑end and a small Go service that matches search requests with available
+properties.
 
-First, run the development server:
+## Directory structure
+
+- `src` – Next.js application used for the UI
+- `matching-service` – Go service implementing the matching logic
+  - `cmd` – HTTP server
+  - `demo` – console demo inserting sample data
+  - `service` – matching library used by both the server and the demo
+
+## Getting started
+
+### Front‑end
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000> to view the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Matching service
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Run the Go service on port `8080`:
 
-## Learn More
+```bash
+go run ./matching-service/cmd
+```
 
-To learn more about Next.js, take a look at the following resources:
+The service exposes `/search`, `/property` and `/match` endpoints.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Demo
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+To see the matching logic in action run:
 
-## Deploy on Vercel
+```bash
+go run ./matching-service/demo
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Tests
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+cd matching-service
+go test ./...
+```
+
+## Matching overview
+
+Searches and properties are stored in memory. The service looks for swap cycles
+between two to four users. When a participant rejects a match the pair is
+blacklisted for 14 days to prevent it from being suggested again immediately.

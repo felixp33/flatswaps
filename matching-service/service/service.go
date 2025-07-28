@@ -5,15 +5,18 @@ import (
 	"net/http"
 	"strings"
 	"sync"
+	"time"
 )
 
 // BinarySearchEntry holds a binary encoded search entry.
 type BinarySearchEntry struct {
 	UserID       string `json:"user_id"`
-	CityID       uint8  `json:"city_id"`
+	CityID       uint16 `json:"city_id"`
 	PropertyBits uint8  `json:"property_bits"`
 	MinRooms     uint8  `json:"min_rooms"`
+	MinSize      uint16 `json:"min_size"`
 	MaxPrice     uint32 `json:"max_price"`
+	RoomType     uint8  `json:"room_type"`
 	Amenities    uint64 `json:"amenities"`
 	DateStart    uint32 `json:"date_start"`
 	DateEnd      uint32 `json:"date_end"`
@@ -22,9 +25,11 @@ type BinarySearchEntry struct {
 // PropertyEntry represents a property listed by a user.
 type PropertyEntry struct {
 	UserID    string `json:"user_id"`
-	CityID    uint8  `json:"city_id"`
+	CityID    uint16 `json:"city_id"`
 	Rooms     uint8  `json:"rooms"`
+	Size      uint16 `json:"size"`
 	Price     uint32 `json:"price"`
+	RoomType  uint8  `json:"room_type"`
 	Amenities uint64 `json:"amenities"`
 }
 
@@ -33,6 +38,7 @@ type Server struct {
 	mu         sync.RWMutex
 	Searches   map[string]BinarySearchEntry
 	Properties map[string]PropertyEntry
+	Blacklist  map[string]time.Time
 }
 
 // NewServer creates an empty server instance.
@@ -40,6 +46,7 @@ func NewServer() *Server {
 	return &Server{
 		Searches:   make(map[string]BinarySearchEntry),
 		Properties: make(map[string]PropertyEntry),
+		Blacklist:  make(map[string]time.Time),
 	}
 }
 
@@ -69,6 +76,14 @@ func (s *Server) AddProperty(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
+// RejectPair records that a search rejected a property. The pair will not be
+// considered again for 14 days.
+func (s *Server) RejectPair(searchID, propID string) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.Blacklist[searchID+"|"+propID] = time.Now().Add(14 * 24 * time.Hour)
+}
+
 // Match handles GET /match and returns possible cycles.
 func (s *Server) Match(w http.ResponseWriter, r *http.Request) {
 	s.mu.RLock()
@@ -86,6 +101,12 @@ func matchSearch(search BinarySearchEntry, prop PropertyEntry) bool {
 	if prop.Rooms < search.MinRooms {
 		return false
 	}
+	if prop.Size < search.MinSize {
+		return false
+	}
+	if search.RoomType != 0 && prop.RoomType != search.RoomType {
+		return false
+	}
 	if prop.Price > search.MaxPrice {
 		return false
 	}
@@ -97,10 +118,21 @@ func matchSearch(search BinarySearchEntry, prop PropertyEntry) bool {
 
 // FindCycles searches for swap cycles of length 2-4.
 func (s *Server) FindCycles() [][]string {
+	now := time.Now()
+	// clean expired blacklist entries
+	for k, exp := range s.Blacklist {
+		if exp.Before(now) {
+			delete(s.Blacklist, k)
+		}
+	}
+
 	adj := make(map[string][]string)
 	for u, search := range s.Searches {
 		for v, prop := range s.Properties {
 			if u == v {
+				continue
+			}
+			if exp, ok := s.Blacklist[u+"|"+v]; ok && exp.After(now) {
 				continue
 			}
 			if matchSearch(search, prop) {
