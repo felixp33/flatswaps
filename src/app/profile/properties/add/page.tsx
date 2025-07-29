@@ -7,7 +7,7 @@ import FormField from "@/components/auth/FormField";
 import { AMENITY_CATEGORIES } from "@/lib/data/amenities";
 import { ValidationErrors } from "@/types/auth";
 import { validateLocation } from "@/lib/auth/validation";
-import { Plus, Home, Bed, Users, Check } from "lucide-react";
+import { Plus, Home, Bed, Check } from "lucide-react";
 
 interface PropertyData {
   propertyType: string;
@@ -51,16 +51,10 @@ export default function AddPropertyPage() {
       icon: Home,
     },
     {
-      id: "private_room",
-      title: "Private Room",
-      description: "Your own room in a shared flat",
+      id: "room",
+      title: "Room",
+      description: "A single room in a shared flat",
       icon: Bed,
-    },
-    {
-      id: "shared_room",
-      title: "Shared Room",
-      description: "Share a room with others",
-      icon: Users,
     },
   ];
 
