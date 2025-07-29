@@ -23,3 +23,14 @@ The server listens on port 8080 and supports the following endpoints:
 
 Run `go run ./matching-service/demo` to see a local example inserting sample
 data and printing the found cycles.
+
+## Docker
+
+Build and run the service in a container:
+
+```bash
+# from repository root
+docker compose up --build
+```
+
+The service will be available on `http://localhost:8080`.

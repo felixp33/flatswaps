@@ -100,6 +100,11 @@ Access the application at <http://localhost:3000>
 go run ./matching-service/cmd
 ```
 
+You can also run the service in Docker:
+```bash
+docker compose up --build
+```
+
 **API Endpoints:**
 
 -  `POST /search` - Submit property search criteria
