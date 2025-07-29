@@ -33,18 +33,18 @@ export default function PropertySummary({ property }: PropertySummaryProps) {
 						</h2>
 					</div>
 
-                                       {/* No Property State */}
-                                       <div className="text-center py-4">
-                                               <div className="mx-auto mb-2 flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700">
-                                                       <Home className="h-5 w-5 text-gray-400" />
-                                               </div>
-						<h3 className="text-sm font-medium text-gray-900 dark:text-white mb-2">No property listed yet</h3>
-						<p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-							Add your property to start connecting with other exchange students.
-						</p>
+					{/* No Property State - Horizontal Layout */}
+					<div className="flex items-center space-x-4">
+						<div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 flex-shrink-0">
+							<Home className="h-5 w-5 text-gray-400" />
+						</div>
+						<div className="flex-1 min-w-0">
+							<h3 className="text-sm font-medium text-gray-900 dark:text-white">No property listed</h3>
+							<p className="text-xs text-gray-600 dark:text-gray-300">Connect with exchange students</p>
+						</div>
 						<Link
 							href="/profile/properties/add"
-							className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
+							className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition-colors flex-shrink-0"
 						>
 							<Plus className="h-4 w-4 mr-2" />
 							Add Property
