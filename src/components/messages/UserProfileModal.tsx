@@ -52,14 +52,9 @@ export default function UserProfileModal({ user, onClose }: UserProfileModalProp
 								<MapPin className="h-4 w-4 mr-1" />
 								{user.location}
 							</div>
-							<div className="flex items-center space-x-4 text-sm">
-								<div className="flex items-center">
-									<span className="text-yellow-400 mr-1">★</span>
-									<span className="text-gray-900 dark:text-white font-medium">{user.rating}</span>
-									<span className="text-gray-500 dark:text-gray-400 ml-1">({user.reviewCount} reviews)</span>
-								</div>
-								<div className="text-gray-500 dark:text-gray-400">{user.responseRate}% response rate</div>
-							</div>
+                                                        <div className="flex items-center space-x-4 text-sm">
+                                                                <div className="text-gray-500 dark:text-gray-400">{user.responseRate}% response rate</div>
+                                                        </div>
 						</div>
 					</div>
 
@@ -99,10 +94,7 @@ export default function UserProfileModal({ user, onClose }: UserProfileModalProp
 												<span>
 													{property.bedrooms} bed • {property.bathrooms} bath
 												</span>
-												<span className="ml-2 flex items-center">
-													<span className="text-yellow-400 mr-1">★</span>
-													{property.rating}
-												</span>
+                                                                               {/* Rating removed until review system is implemented */}
 											</div>
 										</div>
 									</div>
@@ -111,26 +103,6 @@ export default function UserProfileModal({ user, onClose }: UserProfileModalProp
 						</div>
 					</div>
 
-					{/* Recent Reviews */}
-					<div>
-						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Recent Reviews</h4>
-						<div className="space-y-3">
-							{user.reviews.map((review) => (
-								<div key={review.id} className="border-l-2 border-blue-200 dark:border-blue-800 pl-3">
-									<div className="flex items-center space-x-2 mb-1">
-										<span className="text-sm font-medium text-gray-900 dark:text-white">{review.author}</span>
-										<div className="flex text-yellow-400">
-											{[...Array(review.rating)].map((_, i) => (
-												<span key={i}>★</span>
-											))}
-										</div>
-										<span className="text-xs text-gray-500 dark:text-gray-400">{review.date}</span>
-									</div>
-									<p className="text-sm text-gray-600 dark:text-gray-300">{review.text}</p>
-								</div>
-							))}
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
