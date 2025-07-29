@@ -31,12 +31,12 @@ const getFlatById = (id: string) => {
 		coordinates: { lat: 41.3851, lng: 2.1734 },
 		description:
 			"Beautiful beachfront apartment just 5 minutes walk from Barceloneta Beach. Perfect for couples or small families wanting to experience the vibrant Barcelona lifestyle. The apartment features a sunny balcony with partial sea views and is surrounded by excellent restaurants and cafes.",
-		features: {
-			bedrooms: 2,
-			bathrooms: 1,
-			guests: 4,
-			size: 75,
-		},
+                features: {
+                        rooms: 2,
+                        bathrooms: 1,
+                        guests: 4,
+                        size: 75,
+                },
 		images: [
 			"/images/flats/barcelona/living-room.png",
 			"/images/flats/barcelona/bedroom.png",
@@ -228,15 +228,15 @@ export default function FlatListingPage() {
 
 							{/* Property Stats */}
 							<div className="grid grid-cols-4 gap-4 mb-6">
-								<div className="text-center">
-									<div className="flex items-center justify-center mb-2">
-										<Bed className="h-5 w-5 text-gray-400" />
-									</div>
-									<div className="text-2xl font-bold text-gray-900 dark:text-white">
-										{flat.features.bedrooms}
-									</div>
-									<div className="text-sm text-gray-600 dark:text-gray-300">Bedrooms</div>
-								</div>
+                                                                <div className="text-center">
+                                                                        <div className="flex items-center justify-center mb-2">
+                                                                                <Bed className="h-5 w-5 text-gray-400" />
+                                                                        </div>
+                                                                        <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                                                                                {flat.features.rooms}
+                                                                        </div>
+                                                                        <div className="text-sm text-gray-600 dark:text-gray-300">Rooms</div>
+                                                                </div>
 								<div className="text-center">
 									<div className="flex items-center justify-center mb-2">
 										<Bath className="h-5 w-5 text-gray-400" />

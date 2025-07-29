@@ -33,13 +33,13 @@ export interface PricingBreakdown {
 }
 
 export interface UserProperty {
-	id: string;
-	title: string;
-	location: string;
-	bedrooms: number;
-	bathrooms: number;
-	rent?: number;
-	description?: string;
+        id: string;
+        title: string;
+        location: string;
+        rooms: number;
+        bathrooms: number;
+        rent?: number;
+        description?: string;
 }
 
 export interface ContractUser {

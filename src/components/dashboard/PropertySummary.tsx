@@ -9,8 +9,8 @@ interface PropertySummaryProps {
 		title: string;
 		description: string;
 		location: string;
-		bedrooms: number;
-		bathrooms: number;
+                rooms: number;
+                bathrooms: number;
 		guests: number;
 		size?: number;
 		images: string[];

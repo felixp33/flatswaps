@@ -19,12 +19,12 @@ interface PropertyData {
 		city: string;
 		country: string;
 	};
-	features: {
-		bedrooms: number;
-		bathrooms: number;
-		guests: number;
-		size: string;
-	};
+        features: {
+                rooms: number;
+                bathrooms: number;
+                guests: number;
+                size: string;
+        };
 	amenities: string[];
 	photos: File[];
 }
@@ -40,12 +40,12 @@ export default function OnboardingStep3() {
 			city: "",
 			country: "",
 		},
-		features: {
-			bedrooms: 1,
-			bathrooms: 1,
-			guests: 2,
-			size: "",
-		},
+                features: {
+                        rooms: 1,
+                        bathrooms: 1,
+                        guests: 2,
+                        size: "",
+                },
 		amenities: [],
 		photos: [],
 	});
@@ -292,20 +292,20 @@ export default function OnboardingStep3() {
 
 								<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 									<div>
-										<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-											Bedrooms
-										</label>
-										<select
-											value={propertyData.features.bedrooms}
-											onChange={(e) => handleInputChange("features.bedrooms", parseInt(e.target.value))}
-											className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800"
-										>
-											{[1, 2, 3, 4, 5, 6].map((num) => (
-												<option key={num} value={num}>
-													{num}
-												</option>
-											))}
-										</select>
+                                                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                                                               Rooms
+                                                                        </label>
+                                                                        <select
+                                                                               value={propertyData.features.rooms}
+                                                                               onChange={(e) => handleInputChange("features.rooms", parseInt(e.target.value))}
+                                                                               className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800"
+                                                                       >
+                                                                               {[1, 2, 3, 4, 5, 6].map((num) => (
+                                                                               <option key={num} value={num}>
+                                                                                       {num}
+                                                                               </option>
+                                                                               ))}
+                                                                       </select>
 									</div>
 									<div>
 										<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">

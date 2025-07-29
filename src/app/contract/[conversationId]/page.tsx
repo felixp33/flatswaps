@@ -52,22 +52,22 @@ const ContractPage: React.FC = () => {
 				tenant1Email: currentUser?.email || "",
 				property1Address: currentUser?.property?.location || "",
 				property1Rent: currentUser?.property?.rent?.toString() || "",
-				property1Description:
-					currentUser?.property?.description ||
-					(currentUser?.property
-						? `${currentUser.property.bedrooms} bedroom, ${currentUser.property.bathrooms} bathroom apartment - ${currentUser.property.title}`
-						: ""),
+                                property1Description:
+                                        currentUser?.property?.description ||
+                                        (currentUser?.property
+                                                ? `${currentUser.property.rooms} room, ${currentUser.property.bathrooms} bathroom apartment - ${currentUser.property.title}`
+                                                : ""),
 
 				// Other user as Tenant B
 				tenant2Name: otherUser?.name || "",
 				tenant2Email: otherUser?.email || "",
 				property2Address: otherUser?.property?.location || otherUser?.location || "",
 				property2Rent: otherUser?.property?.rent?.toString() || "",
-				property2Description:
-					otherUser?.property?.description ||
-					(otherUser?.property
-						? `${otherUser.property.bedrooms} bedroom, ${otherUser.property.bathrooms} bathroom apartment - ${otherUser.property.title}`
-						: ""),
+                                property2Description:
+                                        otherUser?.property?.description ||
+                                        (otherUser?.property
+                                                ? `${otherUser.property.rooms} room, ${otherUser.property.bathrooms} bathroom apartment - ${otherUser.property.title}`
+                                                : ""),
 			}));
 		}
 	}, [conversationId]);

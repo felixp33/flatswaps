@@ -12,11 +12,11 @@ export const featuredProperties: Property[] = [
 		reviews: 128,
 		imageUrl: "/images/property-1.png",
 		isSwapAvailable: true,
-		features: {
-			bedrooms: 2,
-			bathrooms: 1,
-			guests: 4,
-		},
+                features: {
+                        rooms: 2,
+                        bathrooms: 1,
+                        guests: 4,
+                },
 	},
 	{
 		id: "2",
@@ -27,11 +27,11 @@ export const featuredProperties: Property[] = [
 		reviews: 97,
 		imageUrl: "/images/property-2.png",
 		isSwapAvailable: false,
-		features: {
-			bedrooms: 3,
-			bathrooms: 2,
-			guests: 6,
-		},
+                features: {
+                        rooms: 3,
+                        bathrooms: 2,
+                        guests: 6,
+                },
 	},
 	{
 		id: "3",
@@ -42,11 +42,11 @@ export const featuredProperties: Property[] = [
 		reviews: 76,
 		imageUrl: "/images/property-3.png",
 		isSwapAvailable: true,
-		features: {
-			bedrooms: 4,
-			bathrooms: 3,
-			guests: 8,
-		},
+                features: {
+                        rooms: 4,
+                        bathrooms: 3,
+                        guests: 8,
+                },
 	},
 ];
 

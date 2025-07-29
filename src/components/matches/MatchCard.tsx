@@ -191,7 +191,7 @@ export default function MatchCard({ match, onAccept, onReject }: MatchCardProps)
 										<Users className="h-4 w-4 mr-1" />
 										{participant.property?.guests} guests
 									</div>
-									<div>{participant.property?.bedrooms} bed</div>
+                                                                        <div>{participant.property?.rooms} room</div>
 									<div>{participant.property?.bathrooms} bath</div>
 								</div>
 								{participant.swapDates && (

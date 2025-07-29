@@ -91,9 +91,9 @@ export default function UserProfileModal({ user, onClose }: UserProfileModalProp
 											<h5 className="text-sm font-medium text-gray-900 dark:text-white">{property.title}</h5>
 											<p className="text-xs text-gray-500 dark:text-gray-400">{property.location}</p>
 											<div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mt-1">
-												<span>
-													{property.bedrooms} bed • {property.bathrooms} bath
-												</span>
+                                                                               <span>
+                                                                               {property.rooms} room • {property.bathrooms} bath
+                                                                               </span>
                                                                                {/* Rating removed until review system is implemented */}
 											</div>
 										</div>

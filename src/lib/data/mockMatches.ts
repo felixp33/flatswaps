@@ -21,8 +21,8 @@ export const mockMatches = [
 				property: {
 					title: "Cozy Apartment Near Beach",
 					location: "Barcelona, Spain",
-					bedrooms: 2,
-					bathrooms: 1,
+                                        rooms: 2,
+                                        bathrooms: 1,
 					guests: 4,
 				},
 				swapDates: "Mar 15-25, 2024",
@@ -39,7 +39,7 @@ export const mockMatches = [
 				property: {
 					title: "Berlin Altbau Flat",
 					location: "Berlin, Germany",
-					bedrooms: 1,
+					rooms: 1,
 					bathrooms: 1,
 					guests: 2,
 				},
@@ -67,7 +67,7 @@ export const mockMatches = [
 				property: {
 					title: "Historic Villa in Trastevere",
 					location: "Rome, Italy",
-					bedrooms: 3,
+					rooms: 3,
 					bathrooms: 2,
 					guests: 6,
 				},
@@ -88,7 +88,7 @@ export const mockMatches = [
 				property: {
 					title: "Modern Flat in Shoreditch",
 					location: "London, UK",
-					bedrooms: 1,
+					rooms: 1,
 					bathrooms: 1,
 					guests: 2,
 				},
@@ -106,7 +106,7 @@ export const mockMatches = [
 				property: {
 					title: "Berlin Altbau Flat",
 					location: "Berlin, Germany",
-					bedrooms: 1,
+					rooms: 1,
 					bathrooms: 1,
 					guests: 2,
 				},
@@ -134,7 +134,7 @@ export const mockMatches = [
 				property: {
 					title: "Minimalist Studio in Shibuya",
 					location: "Tokyo, Japan",
-					bedrooms: 1,
+					rooms: 1,
 					bathrooms: 1,
 					guests: 2,
 				},
@@ -152,7 +152,7 @@ export const mockMatches = [
 				property: {
 					title: "Manhattan Loft",
 					location: "New York, USA",
-					bedrooms: 1,
+					rooms: 1,
 					bathrooms: 1,
 					guests: 2,
 				},
@@ -180,7 +180,7 @@ export const mockMatches = [
 				property: {
 					title: "Modern Apartment in Mitte",
 					location: "Berlin, Germany",
-					bedrooms: 2,
+					rooms: 2,
 					bathrooms: 1,
 					guests: 3,
 				},
@@ -198,7 +198,7 @@ export const mockMatches = [
 				property: {
 					title: "Manhattan Loft",
 					location: "New York, USA",
-					bedrooms: 1,
+					rooms: 1,
 					bathrooms: 1,
 					guests: 2,
 				},
@@ -226,7 +226,7 @@ export const mockMatches = [
 				property: {
 					title: "Cozy Flat in Camden",
 					location: "London, UK",
-					bedrooms: 1,
+					rooms: 1,
 					bathrooms: 1,
 					guests: 2,
 				},
@@ -244,7 +244,7 @@ export const mockMatches = [
 				property: {
 					title: "Manhattan Loft",
 					location: "New York, USA",
-					bedrooms: 1,
+					rooms: 1,
 					bathrooms: 1,
 					guests: 2,
 				},
