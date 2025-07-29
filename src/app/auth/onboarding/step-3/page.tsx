@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Home, Plus, Camera, MapPin, Users, Bed, Bath } from "lucide-react";
+import { AMENITY_CATEGORIES } from "@/lib/data/amenities";
 import OnboardingLayout from "@/components/auth/OnboardingLayout";
 import FormField from "@/components/auth/FormField";
 import { validateLocation } from "@/lib/auth/validation";
@@ -55,20 +56,6 @@ export default function OnboardingStep3() {
 	const stepLabels = ["Profile Setup", "Verification", "Property Setup", "Complete"];
 	const completedSteps = [true, true, false, false];
 
-	const availableAmenities = [
-		"WiFi",
-		"Kitchen",
-		"Washing Machine",
-		"Air Conditioning",
-		"Heating",
-		"Parking",
-		"Balcony",
-		"Garden",
-		"Elevator",
-		"Pet Friendly",
-		"Smoking Allowed",
-		"Gym",
-	];
 
 	const handleInputChange = (field: string, value: any) => {
 		if (field.includes(".")) {
@@ -363,22 +350,29 @@ export default function OnboardingStep3() {
 							</div>
 
 							{/* Amenities */}
-							<div className="space-y-4">
-								<h3 className="text-xl font-semibold text-gray-900 dark:text-white">Amenities</h3>
-								<div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-									{availableAmenities.map((amenity) => (
-										<label key={amenity} className="flex items-center space-x-2 cursor-pointer">
-											<input
-												type="checkbox"
-												checked={propertyData.amenities.includes(amenity)}
-												onChange={() => handleAmenityToggle(amenity)}
-												className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-											/>
-											<span className="text-sm text-gray-700 dark:text-gray-300">{amenity}</span>
-										</label>
-									))}
-								</div>
-							</div>
+                                                        <div className="space-y-4">
+                                                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Amenities</h3>
+                                                                {Object.values(AMENITY_CATEGORIES).map((category) => (
+                                                                        <div key={category.title} className="mb-4">
+                                                                                <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">
+                                                                                        {category.title}
+                                                                                </h4>
+                                                                                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                                                                        {category.amenities.map((amenity) => (
+                                                                                                <label key={amenity} className="flex items-center space-x-2 cursor-pointer">
+                                                                                                        <input
+                                                                                                                type="checkbox"
+                                                                                                                checked={propertyData.amenities.includes(amenity)}
+                                                                                                                onChange={() => handleAmenityToggle(amenity)}
+                                                                                                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                                                                                        />
+                                                                                                        <span className="text-sm text-gray-700 dark:text-gray-300">{amenity}</span>
+                                                                                                </label>
+                                                                                        ))}
+                                                                                </div>
+                                                                        </div>
+                                                                ))}
+                                                        </div>
 
 							{/* Photos */}
 							<div className="space-y-4">

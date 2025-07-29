@@ -12,35 +12,22 @@ export default function ProfileDashboard() {
 	const [completedChecklistItems, setCompletedChecklistItems] = useState(new Set<string>());
 
 	// Mock user data - in real app this would come from your auth/user context
-	const user = {
-		name: "Emma Meier",
-		email: "emmameier@example.com",
-		phone: "+49 123 456 7890",
-		location: "Berlin, Germany",
-		memberSince: "January 2022",
-		avatar: "/images/avatar-1.png",
-		verified: true,
-		rating: 4.8,
-		reviewCount: 23,
-		bio: "Software engineer and travel enthusiast. Love exploring new cities and experiencing different cultures through authentic local stays.",
-		languages: ["English", "German", "Spanish"],
-	};
+        const user = {
+                name: "Emma Meier",
+                email: "emmameier@example.com",
+                phone: "+49 123 456 7890",
+                location: "Berlin, Germany",
+                memberSince: "January 2022",
+                avatar: "/images/avatar-1.png",
+                verified: false,
+                rating: 4.8,
+                reviewCount: 23,
+                bio: "Software engineer and travel enthusiast. Love exploring new cities and experiencing different cultures through authentic local stays.",
+                languages: ["English", "German", "Spanish"],
+        };
 
 	// Mock property data - in real app this would come from API
-	const userProperty = {
-		id: "1",
-		title: "Modern Loft in Mitte",
-		description: "Beautiful 2-bedroom loft in the heart of Berlin. Perfect for exploring the city!",
-		location: "Berlin, Germany",
-		bedrooms: 2,
-		bathrooms: 1,
-		guests: 4,
-		size: 75,
-		images: ["/images/flat/living-room-main.png"],
-		rating: 4.9,
-		reviewCount: 12,
-		isActive: true,
-	};
+        const userProperty = null;
 
 	// Mock searches data - in real app this would come from API
 	const userSearches = [
@@ -70,8 +57,10 @@ export default function ProfileDashboard() {
 		},
 	];
 
-	// Mock contracts data
-	const recentContracts = mockContracts;
+        // Mock contracts data
+        const recentContracts = mockContracts;
+
+        const canSearch = user.verified && userProperty !== null;
 
 	return (
 		<ProfileLayout>
@@ -92,7 +81,7 @@ export default function ProfileDashboard() {
 
 				{/* Middle Grid - Searches and Contracts */}
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-					<SearchesSummary searches={userSearches} />
+                                        <SearchesSummary searches={userSearches} canSearch={canSearch} />
 					<ContractsCard contracts={recentContracts} />
 				</div>
 

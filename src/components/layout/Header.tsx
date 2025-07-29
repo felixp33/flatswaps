@@ -88,10 +88,16 @@ export default function Header() {
 						</div>
 
 						{/* Authentication Options or Profile */}
-						<div className="flex items-center space-x-3">
-							{/* Test Login Link - TEMPORARY */}
+                                                <div className="flex items-center space-x-3">
+                                                        {/* Test Signup Link - TEMPORARY */}
+                                                        <Link
+                                                                href="/auth/signup"
+                                                                className="hidden md:inline-flex items-center px-3 py-2 rounded-md text-sm font-medium text-orange-600 bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/30 transition-colors"
+                                                        >
+                                                                🧪 Test Signup
+                                                        </Link>
 
-							{/* Profile Button - Always visible for testing */}
+                                                        {/* Profile Button - Always visible for testing */}
 							<Link
 								href="/profile"
 								className="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border border-gray-200 dark:border-gray-600"

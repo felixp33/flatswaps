@@ -4,21 +4,41 @@ import Link from "next/link";
 import { Search, ChevronRight, MapPin, Plus } from "lucide-react";
 
 interface SearchesSummaryProps {
-	searches?: {
-		id: string;
-		name: string;
-		location: string;
-		isActive: boolean;
-		newMatches: number;
-		matchCount: number;
-	}[];
+        searches?: {
+                id: string;
+                name: string;
+                location: string;
+                isActive: boolean;
+                newMatches: number;
+                matchCount: number;
+        }[];
+        canSearch?: boolean;
 }
 
-export default function SearchesSummary({ searches = [] }: SearchesSummaryProps) {
-	// Find active searches
-	const activeSearches = searches.filter((search) => search.isActive);
-	const totalMatches = searches.reduce((sum, search) => sum + search.matchCount, 0);
-	const totalNewMatches = searches.reduce((sum, search) => sum + search.newMatches, 0);
+export default function SearchesSummary({ searches = [], canSearch = true }: SearchesSummaryProps) {
+        // Find active searches
+        const activeSearches = searches.filter((search) => search.isActive);
+        const totalMatches = searches.reduce((sum, search) => sum + search.matchCount, 0);
+        const totalNewMatches = searches.reduce((sum, search) => sum + search.newMatches, 0);
+
+        if (!canSearch) {
+                return (
+                        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                                <div className="p-6 text-center">
+                                        <Search className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                                        <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-2">
+                                                Complete your profile to start searching
+                                        </h3>
+                                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                                                Verify your identity, fill in your details and add your flat before creating a search.
+                                        </p>
+                                        <Link href="/profile/verification" className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
+                                                Start Verification
+                                        </Link>
+                                </div>
+                        </div>
+                );
+        }
 
 	return (
 		<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
