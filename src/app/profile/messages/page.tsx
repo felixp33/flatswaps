@@ -232,15 +232,14 @@ export default function MessagesPage() {
 				bio: "Travel enthusiast and professional photographer. I love exploring new cultures and meeting people from around the world. My Barcelona apartment is perfect for couples looking to experience the city like locals.",
 				languages: ["English", "Spanish", "French"],
 				properties: [
-					{
-						id: "1",
-						title: "Cozy Apartment Near Beach",
-						location: "Barcelona, Spain",
-						imageUrl: "/images/property-barcelona.png",
-						bedrooms: 2,
-						bathrooms: 1,
-						rating: 4.9,
-					},
+                                        {
+                                                id: "1",
+                                                title: "Cozy Apartment Near Beach",
+                                                location: "Barcelona, Spain",
+                                                imageUrl: "/images/property-barcelona.png",
+                                                rooms: 2,
+                                                rating: 4.9,
+                                        },
 				],
 				reviews: [
 					{
@@ -268,15 +267,14 @@ export default function MessagesPage() {
 				bio: "Architect and history lover living in the heart of Rome. My villa in Trastevere offers an authentic Roman experience with modern amenities.",
 				languages: ["Italian", "English", "German"],
 				properties: [
-					{
-						id: "2",
-						title: "Historic Villa in Trastevere",
-						location: "Rome, Italy",
-						imageUrl: "/images/property-rome.png",
-						bedrooms: 3,
-						bathrooms: 2,
-						rating: 4.9,
-					},
+                                        {
+                                                id: "2",
+                                                title: "Historic Villa in Trastevere",
+                                                location: "Rome, Italy",
+                                                imageUrl: "/images/property-rome.png",
+                                                rooms: 3,
+                                                rating: 4.9,
+                                        },
 				],
 				reviews: [
 					{

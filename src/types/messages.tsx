@@ -52,13 +52,12 @@ export interface UserProfile extends MessageUser {
 }
 
 export interface Property {
-	id: string;
-	title: string;
-	location: string;
-	imageUrl: string;
-	bedrooms: number;
-	bathrooms: number;
-	rating: number;
+        id: string;
+        title: string;
+        location: string;
+        imageUrl: string;
+        rooms: number;
+        rating: number;
 }
 
 export interface Review {

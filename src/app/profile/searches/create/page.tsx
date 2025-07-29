@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import FormField from "@/components/auth/FormField";
-import { Search, MapPin, Calendar, Home, Users, Bed, Bath, Check, X, Clock, Plane, GraduationCap } from "lucide-react";
+import { Search, MapPin, Calendar, Home, Users, Bed, Check, X, Clock, Plane, GraduationCap } from "lucide-react";
 import VisibilityPremiumBanner from "@/components/profile/VisibilityPremiumBanner";
 import { AMENITY_CATEGORIES } from "@/lib/data/amenities";
 

@@ -21,8 +21,7 @@ export const mockMatches = [
 				property: {
 					title: "Cozy Apartment Near Beach",
 					location: "Barcelona, Spain",
-					bedrooms: 2,
-					bathrooms: 1,
+                                        rooms: 2,
 					guests: 4,
 				},
 				swapDates: "Mar 15-25, 2024",
@@ -39,8 +38,7 @@ export const mockMatches = [
 				property: {
 					title: "Berlin Altbau Flat",
 					location: "Berlin, Germany",
-					bedrooms: 1,
-					bathrooms: 1,
+					rooms: 1,
 					guests: 2,
 				},
 				swapDates: "Apr 10-20, 2024",
@@ -67,8 +65,7 @@ export const mockMatches = [
 				property: {
 					title: "Historic Villa in Trastevere",
 					location: "Rome, Italy",
-					bedrooms: 3,
-					bathrooms: 2,
+					rooms: 3,
 					guests: 6,
 				},
 				swapDates: "Jun 5-15, 2024",
@@ -88,8 +85,7 @@ export const mockMatches = [
 				property: {
 					title: "Modern Flat in Shoreditch",
 					location: "London, UK",
-					bedrooms: 1,
-					bathrooms: 1,
+					rooms: 1,
 					guests: 2,
 				},
 				swapDates: "Jun 1-10, 2024",
@@ -106,8 +102,7 @@ export const mockMatches = [
 				property: {
 					title: "Berlin Altbau Flat",
 					location: "Berlin, Germany",
-					bedrooms: 1,
-					bathrooms: 1,
+					rooms: 1,
 					guests: 2,
 				},
 				swapDates: "Jun 12-22, 2024",
@@ -134,8 +129,7 @@ export const mockMatches = [
 				property: {
 					title: "Minimalist Studio in Shibuya",
 					location: "Tokyo, Japan",
-					bedrooms: 1,
-					bathrooms: 1,
+					rooms: 1,
 					guests: 2,
 				},
 				swapDates: "Feb 20-28, 2024",
@@ -152,8 +146,7 @@ export const mockMatches = [
 				property: {
 					title: "Manhattan Loft",
 					location: "New York, USA",
-					bedrooms: 1,
-					bathrooms: 1,
+					rooms: 1,
 					guests: 2,
 				},
 				swapDates: "Feb 20-28, 2024",
@@ -180,8 +173,7 @@ export const mockMatches = [
 				property: {
 					title: "Modern Apartment in Mitte",
 					location: "Berlin, Germany",
-					bedrooms: 2,
-					bathrooms: 1,
+					rooms: 2,
 					guests: 3,
 				},
 				swapDates: "Mar 1-10, 2024",
@@ -198,8 +190,7 @@ export const mockMatches = [
 				property: {
 					title: "Manhattan Loft",
 					location: "New York, USA",
-					bedrooms: 1,
-					bathrooms: 1,
+					rooms: 1,
 					guests: 2,
 				},
 				swapDates: "Mar 1-10, 2024",
@@ -226,8 +217,7 @@ export const mockMatches = [
 				property: {
 					title: "Cozy Flat in Camden",
 					location: "London, UK",
-					bedrooms: 1,
-					bathrooms: 1,
+					rooms: 1,
 					guests: 2,
 				},
 				swapDates: "May 15-25, 2024",
@@ -244,8 +234,7 @@ export const mockMatches = [
 				property: {
 					title: "Manhattan Loft",
 					location: "New York, USA",
-					bedrooms: 1,
-					bathrooms: 1,
+					rooms: 1,
 					guests: 2,
 				},
 				swapDates: "May 20-30, 2024",

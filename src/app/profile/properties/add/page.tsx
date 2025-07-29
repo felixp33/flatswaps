@@ -7,9 +7,10 @@ import FormField from "@/components/auth/FormField";
 import { AMENITY_CATEGORIES } from "@/lib/data/amenities";
 import { ValidationErrors } from "@/types/auth";
 import { validateLocation } from "@/lib/auth/validation";
-import { Plus } from "lucide-react";
+import { Plus, Home, Bed, Users, Check } from "lucide-react";
 
 interface PropertyData {
+  propertyType: string;
   title: string;
   description: string;
   location: {
@@ -18,8 +19,7 @@ interface PropertyData {
     country: string;
   };
   features: {
-    bedrooms: number;
-    bathrooms: number;
+    rooms: number;
     guests: number;
     size: string;
   };
@@ -30,16 +30,38 @@ interface PropertyData {
 export default function AddPropertyPage() {
   const router = useRouter();
   const [propertyData, setPropertyData] = useState<PropertyData>({
+    propertyType: "entire_flat",
     title: "",
     description: "",
     location: { address: "", city: "", country: "" },
-    features: { bedrooms: 1, bathrooms: 1, guests: 2, size: "" },
+    features: { rooms: 1, guests: 2, size: "" },
     amenities: [],
     photos: [],
   });
   const [photoPreview, setPhotoPreview] = useState<string[]>([]);
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [isLoading, setIsLoading] = useState(false);
+
+  const propertyTypes = [
+    {
+      id: "entire_flat",
+      title: "Entire Flat/Apartment",
+      description: "You have the whole place to yourself",
+      icon: Home,
+    },
+    {
+      id: "private_room",
+      title: "Private Room",
+      description: "Your own room in a shared flat",
+      icon: Bed,
+    },
+    {
+      id: "shared_room",
+      title: "Shared Room",
+      description: "Share a room with others",
+      icon: Users,
+    },
+  ];
 
   const handleInputChange = (field: string, value: any) => {
     if (field.includes(".")) {
@@ -91,6 +113,7 @@ export default function AddPropertyPage() {
 
   const validateForm = (): ValidationErrors => {
     const errs: ValidationErrors = {};
+    if (!propertyData.propertyType) errs.propertyType = "Property type is required";
     if (!propertyData.title.trim()) errs.title = "Property title is required";
     if (!propertyData.description.trim()) errs.description = "Property description is required";
     const locErrors = validateLocation(propertyData.location.city, propertyData.location.country);
@@ -132,6 +155,47 @@ export default function AddPropertyPage() {
               <p className="text-sm text-red-600 dark:text-red-400">{errors.general}</p>
             </div>
           )}
+
+          {/* Property Type */}
+          <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Property Type</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {propertyTypes.map((type) => {
+                const Icon = type.icon;
+                const selected = propertyData.propertyType === type.id;
+                return (
+                  <label
+                    key={type.id}
+                    className={`relative cursor-pointer rounded-lg border-2 p-4 transition-all ${
+                      selected
+                        ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                        : "border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      checked={selected}
+                      onChange={() => handleInputChange("propertyType", type.id)}
+                      className="sr-only"
+                    />
+                    <div>
+                      <Icon className={`h-6 w-6 mb-2 ${selected ? "text-blue-600 dark:text-blue-400" : "text-gray-400"}`} />
+                      <h3 className={`text-sm font-medium mb-1 ${selected ? "text-blue-900 dark:text-blue-100" : "text-gray-900 dark:text-white"}`}>{type.title}</h3>
+                      <p className={`text-xs ${selected ? "text-blue-700 dark:text-blue-300" : "text-gray-500 dark:text-gray-400"}`}>{type.description}</p>
+                    </div>
+                    {selected && (
+                      <div className="absolute top-2 right-2">
+                        <Check className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                      </div>
+                    )}
+                  </label>
+                );
+              })}
+            </div>
+            {errors.propertyType && (
+              <p className="text-sm text-red-600 dark:text-red-400 mt-2">{errors.propertyType}</p>
+            )}
+          </div>
 
           {/* Property Details */}
           <div className="space-y-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
@@ -187,26 +251,14 @@ export default function AddPropertyPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Bedrooms
+                  Rooms
                 </label>
                 <select
-                  value={propertyData.features.bedrooms}
-                  onChange={(e) => handleInputChange("features.bedrooms", parseInt(e.target.value))}
+                  value={propertyData.features.rooms}
+                  onChange={(e) => handleInputChange("features.rooms", parseInt(e.target.value))}
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800"
                 >
                   {[1,2,3,4,5,6].map((n) => (<option key={n} value={n}>{n}</option>))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Bathrooms
-                </label>
-                <select
-                  value={propertyData.features.bathrooms}
-                  onChange={(e) => handleInputChange("features.bathrooms", parseInt(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800"
-                >
-                  {[1,2,3,4,5].map((n) => (<option key={n} value={n}>{n}</option>))}
                 </select>
               </div>
               <div>
