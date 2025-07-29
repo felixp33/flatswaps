@@ -31,7 +31,7 @@ interface SearchFormData {
 	};
 	criteria: {
 		propertyTypes: string[];
-		rooms: number; // Changed from bedrooms and bathrooms
+                rooms: number; // Number of rooms
 		minSize?: number;
 		maxPrice?: number;
 		maxBudget?: number;
@@ -66,7 +66,7 @@ export default function CreateSearchPage() {
 		},
 		criteria: {
 			propertyTypes: [],
-			rooms: 1, // Changed from bedrooms: 1, bathrooms: 1
+                        rooms: 1,
 		},
 		amenities: [],
 	});

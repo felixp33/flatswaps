@@ -10,8 +10,7 @@ interface PropertySummaryProps {
 		description: string;
 		location: string;
                 rooms: number;
-                bathrooms: number;
-		guests: number;
+                guests: number;
 		size?: number;
 		images: string[];
 		rating?: number;

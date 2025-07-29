@@ -21,7 +21,6 @@ interface PropertyData {
 	};
         features: {
                 rooms: number;
-                bathrooms: number;
                 guests: number;
                 size: string;
         };
@@ -42,7 +41,6 @@ export default function OnboardingStep3() {
 		},
                 features: {
                         rooms: 1,
-                        bathrooms: 1,
                         guests: 2,
                         size: "",
                 },
@@ -308,20 +306,6 @@ export default function OnboardingStep3() {
                                                                        </select>
 									</div>
 									<div>
-										<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-											Bathrooms
-										</label>
-										<select
-											value={propertyData.features.bathrooms}
-											onChange={(e) => handleInputChange("features.bathrooms", parseInt(e.target.value))}
-											className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800"
-										>
-											{[1, 2, 3, 4, 5].map((num) => (
-												<option key={num} value={num}>
-													{num}
-												</option>
-											))}
-										</select>
 									</div>
 									<div>
 										<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">

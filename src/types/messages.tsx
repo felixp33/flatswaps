@@ -57,7 +57,6 @@ export interface Property {
         location: string;
         imageUrl: string;
         rooms: number;
-        bathrooms: number;
         rating: number;
 }
 

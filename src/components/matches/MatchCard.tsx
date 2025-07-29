@@ -192,7 +192,6 @@ export default function MatchCard({ match, onAccept, onReject }: MatchCardProps)
 										{participant.property?.guests} guests
 									</div>
                                                                         <div>{participant.property?.rooms} room</div>
-									<div>{participant.property?.bathrooms} bath</div>
 								</div>
 								{participant.swapDates && (
 									<div className="flex items-center text-sm text-gray-600 dark:text-gray-300">

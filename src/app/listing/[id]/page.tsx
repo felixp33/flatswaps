@@ -33,7 +33,6 @@ const getFlatById = (id: string) => {
 			"Beautiful beachfront apartment just 5 minutes walk from Barceloneta Beach. Perfect for couples or small families wanting to experience the vibrant Barcelona lifestyle. The apartment features a sunny balcony with partial sea views and is surrounded by excellent restaurants and cafes.",
                 features: {
                         rooms: 2,
-                        bathrooms: 1,
                         guests: 4,
                         size: 75,
                 },
@@ -237,15 +236,6 @@ export default function FlatListingPage() {
                                                                         </div>
                                                                         <div className="text-sm text-gray-600 dark:text-gray-300">Rooms</div>
                                                                 </div>
-								<div className="text-center">
-									<div className="flex items-center justify-center mb-2">
-										<Bath className="h-5 w-5 text-gray-400" />
-									</div>
-									<div className="text-2xl font-bold text-gray-900 dark:text-white">
-										{flat.features.bathrooms}
-									</div>
-									<div className="text-sm text-gray-600 dark:text-gray-300">Bathrooms</div>
-								</div>
 								<div className="text-center">
 									<div className="flex items-center justify-center mb-2">
 										<Users className="h-5 w-5 text-gray-400" />

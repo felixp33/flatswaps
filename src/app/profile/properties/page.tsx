@@ -47,7 +47,6 @@ export default function MyFlatPage() {
 			"Beautiful Altbau flat in the heart of Berlin, perfect for couples or small families. Walking distance to Flughafen Tempelhof and excellent public transport connections.",
                 features: {
                         rooms: 2,
-                        bathrooms: 1,
                         guests: 4,
                         size: 85,
                 },
@@ -239,12 +238,6 @@ export default function MyFlatPage() {
                                                                                {userFlat.features.rooms} rooms
                                                                                </span>
                                                                         </div>
-									<div className="flex items-center">
-										<Bath className="h-4 w-4 text-gray-400 mr-2" />
-										<span className="text-gray-600 dark:text-gray-300">
-											{userFlat.features.bathrooms} bathroom
-										</span>
-									</div>
 									<div className="flex items-center">
 										<Users className="h-4 w-4 text-gray-400 mr-2" />
 										<span className="text-gray-600 dark:text-gray-300">

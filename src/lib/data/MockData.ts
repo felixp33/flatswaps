@@ -14,7 +14,6 @@ export const featuredProperties: Property[] = [
 		isSwapAvailable: true,
                 features: {
                         rooms: 2,
-                        bathrooms: 1,
                         guests: 4,
                 },
 	},
@@ -29,7 +28,6 @@ export const featuredProperties: Property[] = [
 		isSwapAvailable: false,
                 features: {
                         rooms: 3,
-                        bathrooms: 2,
                         guests: 6,
                 },
 	},
@@ -44,7 +42,6 @@ export const featuredProperties: Property[] = [
 		isSwapAvailable: true,
                 features: {
                         rooms: 4,
-                        bathrooms: 3,
                         guests: 8,
                 },
 	},
