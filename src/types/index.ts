@@ -9,12 +9,12 @@ export interface Property {
 	reviews: number;
 	imageUrl: string;
 	isSwapAvailable?: boolean;
-	features: {
-		bedrooms?: number;
-		bathrooms?: number;
-		guests?: number;
-		amenities?: string[];
-	};
+        features: {
+                rooms?: number;
+                bathrooms?: number;
+                guests?: number;
+                amenities?: string[];
+        };
 	description?: string;
 	host?: User;
 }
@@ -56,11 +56,10 @@ export interface SearchFilters {
 		min: number;
 		max: number;
 	};
-	propertyType?: string;
-	swapOnly?: boolean;
-	bedrooms?: number;
-	bathrooms?: number;
-	amenities?: string[];
+        propertyType?: string;
+        swapOnly?: boolean;
+        rooms?: number;
+        amenities?: string[];
 }
 
 export interface NavItem {

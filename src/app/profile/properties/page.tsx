@@ -45,12 +45,12 @@ export default function MyFlatPage() {
 		location: "Berlin, Germany",
 		description:
 			"Beautiful Altbau flat in the heart of Berlin, perfect for couples or small families. Walking distance to Flughafen Tempelhof and excellent public transport connections.",
-		features: {
-			bedrooms: 2,
-			bathrooms: 1,
-			guests: 4,
-			size: 85,
-		},
+                features: {
+                        rooms: 2,
+                        bathrooms: 1,
+                        guests: 4,
+                        size: 85,
+                },
 		amenities: {
 			general: ["Non-smoking", "Pets allowed", "Long-term stays welcome", "Self check-in", "Private entrance"],
 			accessibility: ["Wide doorways", "Step-free access", "Accessible parking spot"],
@@ -233,12 +233,12 @@ export default function MyFlatPage() {
 									{userFlat.location}
 								</div>
 								<div className="flex items-center space-x-6 text-sm mb-6">
-									<div className="flex items-center">
-										<Bed className="h-4 w-4 text-gray-400 mr-2" />
-										<span className="text-gray-600 dark:text-gray-300">
-											{userFlat.features.bedrooms} bedrooms
-										</span>
-									</div>
+                                                                        <div className="flex items-center">
+                                                                               <Bed className="h-4 w-4 text-gray-400 mr-2" />
+                                                                               <span className="text-gray-600 dark:text-gray-300">
+                                                                               {userFlat.features.rooms} rooms
+                                                                               </span>
+                                                                        </div>
 									<div className="flex items-center">
 										<Bath className="h-4 w-4 text-gray-400 mr-2" />
 										<span className="text-gray-600 dark:text-gray-300">
