@@ -94,7 +94,7 @@ export interface FormFieldProps {
 }
 
 export interface SocialProvider {
-	id: "google" | "facebook" | "apple" | "linkedin";
+        id: "google" | "apple" | "linkedin";
 	name: string;
 	icon: string;
 	color: string;
