@@ -55,7 +55,7 @@ const ContractPage: React.FC = () => {
                                 property1Description:
                                         currentUser?.property?.description ||
                                         (currentUser?.property
-                                                ? `${currentUser.property.rooms} room, ${currentUser.property.bathrooms} bathroom apartment - ${currentUser.property.title}`
+                                                ? `${currentUser.property.rooms} room apartment - ${currentUser.property.title}`
                                                 : ""),
 
 				// Other user as Tenant B
@@ -66,7 +66,7 @@ const ContractPage: React.FC = () => {
                                 property2Description:
                                         otherUser?.property?.description ||
                                         (otherUser?.property
-                                                ? `${otherUser.property.rooms} room, ${otherUser.property.bathrooms} bathroom apartment - ${otherUser.property.title}`
+                                                ? `${otherUser.property.rooms} room apartment - ${otherUser.property.title}`
                                                 : ""),
 			}));
 		}

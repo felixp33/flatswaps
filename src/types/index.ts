@@ -11,7 +11,6 @@ export interface Property {
 	isSwapAvailable?: boolean;
         features: {
                 rooms?: number;
-                bathrooms?: number;
                 guests?: number;
                 amenities?: string[];
         };

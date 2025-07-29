@@ -37,7 +37,6 @@ export interface UserProperty {
         title: string;
         location: string;
         rooms: number;
-        bathrooms: number;
         rent?: number;
         description?: string;
 }

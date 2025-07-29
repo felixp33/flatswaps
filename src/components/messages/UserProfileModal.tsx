@@ -92,7 +92,7 @@ export default function UserProfileModal({ user, onClose }: UserProfileModalProp
 											<p className="text-xs text-gray-500 dark:text-gray-400">{property.location}</p>
 											<div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mt-1">
                                                                                <span>
-                                                                               {property.rooms} room • {property.bathrooms} bath
+                                                                               {property.rooms} room
                                                                                </span>
                                                                                {/* Rating removed until review system is implemented */}
 											</div>
