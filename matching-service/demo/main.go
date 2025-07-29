@@ -24,7 +24,7 @@ func printCycles(logger *log.Logger, srv *service.Server) [][]string {
 }
 
 func main() {
-	rand.Seed(time.Now().UnixNano())
+	time.Now().UnixNano()
 
 	// create logs folder and file
 	logDir := filepath.Join("logs")
