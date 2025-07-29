@@ -14,7 +14,7 @@ import (
 )
 
 func printCycles(logger *log.Logger, srv *service.Server) [][]string {
-	cycles := srv.FindCycles()
+	cycles := srv.FindCyclesVerbose(logger)
 	logger.Printf("Found %d cycles:", len(cycles))
 	for i, c := range cycles {
 		logger.Printf("  Cycle %d: %s", i+1, strings.Join(c, " -> "))
@@ -51,9 +51,13 @@ func main() {
 				break
 			}
 		}
-		srv.Properties[uid] = service.PropertyEntry{UserID: uid, CityID: cityProp, Rooms: 1, Size: 20, Price: 500, RoomType: 1, Amenities: 1}
-		srv.Searches[uid] = service.BinarySearchEntry{UserID: uid, CityID: citySearch, MinRooms: 1, MinSize: 15, MaxPrice: 600, RoomType: 1, Amenities: 1}
+		prop := service.PropertyEntry{UserID: uid, CityID: cityProp, Rooms: 1, Size: 20, Price: 500, RoomType: 1, Amenities: 1}
+		search := service.BinarySearchEntry{UserID: uid, CityID: citySearch, MinRooms: 1, MinSize: 15, MaxPrice: 600, RoomType: 1, Amenities: 1}
+		srv.Properties[uid] = prop
+		srv.Searches[uid] = search
 		logger.Printf("Added user %s", uid)
+		logger.Printf("  Property: %+v", prop)
+		logger.Printf("  Search:   %+v", search)
 		time.Sleep(200 * time.Millisecond)
 	}
 
@@ -72,9 +76,13 @@ func main() {
 				break
 			}
 		}
-		srv.Properties[uid] = service.PropertyEntry{UserID: uid, CityID: cityProp, Rooms: 1, Size: 20, Price: 500, RoomType: 1, Amenities: 1}
-		srv.Searches[uid] = service.BinarySearchEntry{UserID: uid, CityID: citySearch, MinRooms: 1, MinSize: 15, MaxPrice: 600, RoomType: 1, Amenities: 1}
+		prop := service.PropertyEntry{UserID: uid, CityID: cityProp, Rooms: 1, Size: 20, Price: 500, RoomType: 1, Amenities: 1}
+		search := service.BinarySearchEntry{UserID: uid, CityID: citySearch, MinRooms: 1, MinSize: 15, MaxPrice: 600, RoomType: 1, Amenities: 1}
+		srv.Properties[uid] = prop
+		srv.Searches[uid] = search
 		logger.Printf("Added user %s", uid)
+		logger.Printf("  Property: %+v", prop)
+		logger.Printf("  Search:   %+v", search)
 		cycles := printCycles(logger, srv)
 		if len(cycles) > 0 {
 			c := cycles[0]

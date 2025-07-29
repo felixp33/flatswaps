@@ -2,6 +2,7 @@ package service
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"strings"
 	"sync"
@@ -117,26 +118,43 @@ func matchSearch(search BinarySearchEntry, prop PropertyEntry) bool {
 }
 
 // FindCycles searches for swap cycles of length 2-4.
-func (s *Server) FindCycles() [][]string {
+func (s *Server) findCycles(logger *log.Logger) [][]string {
+	if logger != nil {
+		logger.Println("Cleaning blacklist and building graph...")
+	}
 	now := time.Now()
 	// clean expired blacklist entries
 	for k, exp := range s.Blacklist {
 		if exp.Before(now) {
+			if logger != nil {
+				logger.Printf("  removing expired blacklist entry %s", k)
+			}
 			delete(s.Blacklist, k)
 		}
 	}
 
 	adj := make(map[string][]string)
 	for u, search := range s.Searches {
+		if logger != nil {
+			logger.Printf("Evaluating search %s", u)
+		}
 		for v, prop := range s.Properties {
 			if u == v {
 				continue
 			}
 			if exp, ok := s.Blacklist[u+"|"+v]; ok && exp.After(now) {
+				if logger != nil {
+					logger.Printf("  pair %s->%s blacklisted", u, v)
+				}
 				continue
 			}
 			if matchSearch(search, prop) {
+				if logger != nil {
+					logger.Printf("  %s matches %s", u, v)
+				}
 				adj[u] = append(adj[u], v)
+			} else if logger != nil {
+				logger.Printf("  %s does not match %s", u, v)
 			}
 		}
 	}
@@ -157,17 +175,36 @@ func (s *Server) FindCycles() [][]string {
 				if !seen[key] {
 					seen[key] = true
 					cycles = append(cycles, cycle)
+					if logger != nil {
+						logger.Printf("Found cycle: %s", strings.Join(cycle, " -> "))
+					}
 				}
 			} else if !contains(path, next) {
+				if logger != nil {
+					logger.Printf("  exploring path %s -> %s", strings.Join(path, " -> "), next)
+				}
 				dfs(start, append(path, next))
 			}
 		}
 	}
 
 	for u := range adj {
+		if logger != nil {
+			logger.Printf("Starting DFS from %s", u)
+		}
 		dfs(u, []string{u})
 	}
 	return cycles
+}
+
+// FindCycles searches for swap cycles of length 2-4.
+func (s *Server) FindCycles() [][]string {
+	return s.findCycles(nil)
+}
+
+// FindCyclesVerbose performs cycle search with debug logging.
+func (s *Server) FindCyclesVerbose(logger *log.Logger) [][]string {
+	return s.findCycles(logger)
 }
 
 func contains(slice []string, v string) bool {
