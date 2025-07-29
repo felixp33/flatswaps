@@ -7,6 +7,7 @@ import ProfileLayout from "@/components/profile/ProfileLayout";
 import FormField from "@/components/auth/FormField";
 import { Search, MapPin, Calendar, Home, Users, Bed, Bath, Check, X, Clock, Plane, GraduationCap } from "lucide-react";
 import VisibilityPremiumBanner from "@/components/profile/VisibilityPremiumBanner";
+import { AMENITY_CATEGORIES } from "@/lib/data/amenities";
 
 interface SearchFormData {
 	name?: string;
@@ -91,25 +92,7 @@ export default function CreateSearchPage() {
 		},
 	];
 
-	// Updated categorized amenities matching your mobile app structure
-	const amenityCategories = {
-		essentials: {
-			title: "Essentials",
-			amenities: ["WiFi", "Heating", "Air Conditioning", "Parking", "Kitchen Access"],
-		},
-		appliances: {
-			title: "Appliances",
-			amenities: ["Washer", "Dryer", "Dishwasher", "Microwave", "Refrigerator"],
-		},
-		accessibility: {
-			title: "Accessibility",
-			amenities: ["Wheelchair Access", "Elevator", "Ground Floor Access"],
-		},
-		others: {
-			title: "Policies",
-			amenities: ["Pets Allowed", "Smoking Allowed"],
-		},
-	};
+        const amenityCategories = AMENITY_CATEGORIES;
 
 	const durationUnits = [
 		{ value: "days", label: "days" },
