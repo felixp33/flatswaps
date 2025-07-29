@@ -26,8 +26,8 @@ export default function ProfileDashboard() {
                 languages: ["English", "German", "Spanish"],
         };
 
-	// Mock property data - in real app this would come from API
-        const userProperty = null;
+        // Mock property data - in real app this would come from API
+        const userProperty = undefined;
 
 	// Mock searches data - in real app this would come from API
 	const userSearches = [
@@ -60,7 +60,7 @@ export default function ProfileDashboard() {
         // Mock contracts data
         const recentContracts = mockContracts;
 
-        const canSearch = user.verified && userProperty !== null;
+        const canSearch = user.verified && userProperty !== undefined;
 
 	return (
 		<ProfileLayout>
