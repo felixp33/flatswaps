@@ -33,11 +33,11 @@ export default function PropertySummary({ property }: PropertySummaryProps) {
 						</h2>
 					</div>
 
-					{/* No Property State */}
-					<div className="text-center py-8">
-						<div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700">
-							<Home className="h-6 w-6 text-gray-400" />
-						</div>
+                                       {/* No Property State */}
+                                       <div className="text-center py-4">
+                                               <div className="mx-auto mb-2 flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700">
+                                                       <Home className="h-5 w-5 text-gray-400" />
+                                               </div>
 						<h3 className="text-sm font-medium text-gray-900 dark:text-white mb-2">No property listed yet</h3>
 						<p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
 							Add your property to start connecting with other exchange students.

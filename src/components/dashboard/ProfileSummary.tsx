@@ -44,8 +44,8 @@ export default function ProfileSummary({ user }: ProfileSummaryProps) {
 				</div>
 
 				{/* Profile Info */}
-				<div className="flex items-center space-x-3">
-					<div className="relative">
+                                <div className="flex items-center space-x-3">
+                                        <div className="relative">
 						{user.avatar ? (
 							<img
 								src={user.avatar}
@@ -78,18 +78,24 @@ export default function ProfileSummary({ user }: ProfileSummaryProps) {
 								</svg>
 							</div>
 						)}
-					</div>
+                                        </div>
 
-					<div className="flex-1 min-w-0">
-						<h3 className="font-medium text-gray-900 dark:text-white truncate">{user.name}</h3>
+                                        <div className="flex-1 min-w-0">
+                                                <h3 className="font-medium text-gray-900 dark:text-white truncate">{user.name}</h3>
 
-						<div className="flex items-center mt-1">
-							<MapPin className="h-3 w-3 text-gray-400 mr-1" />
-							<span className="text-sm text-gray-600 dark:text-gray-300">{user.location}</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+                                                <div className="flex items-center mt-1">
+                                                        <MapPin className="h-3 w-3 text-gray-400 mr-1" />
+                                                        <span className="text-sm text-gray-600 dark:text-gray-300">{user.location}</span>
+                                                </div>
+                                        </div>
+                                </div>
+
+                                {!user.verified && (
+                                        <p className="mt-4 text-sm text-yellow-600 dark:text-yellow-400">
+                                                Verify your profile to unlock all features.
+                                        </p>
+                                )}
+                        </div>
+                </div>
+        );
 }
