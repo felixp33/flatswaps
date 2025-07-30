@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { ArrowLeft, Lock, CheckCircle, XCircle } from "lucide-react";
@@ -8,7 +8,7 @@ import FormField from "@/components/auth/FormField";
 import PasswordStrength from "@/components/auth/PasswordStrength";
 import { validatePassword } from "@/lib/auth/validation";
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
@@ -49,11 +49,9 @@ export default function ResetPasswordPage() {
 
     try {
       // TODO: Integrate with Supabase to update password
-      console.log("Resetting password with token:", token);
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setSuccess(true);
     } catch (err) {
-      console.error("Password reset error:", err);
       setError("Failed to reset password. Please try again.");
     } finally {
       setIsLoading(false);
@@ -177,3 +175,24 @@ export default function ResetPasswordPage() {
     </div>
   );
 }
+
+function LoadingFallback() {
+  return (
+    <div className="text-center">
+      <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-900 mb-6">
+        <Lock className="h-6 w-6 text-blue-600 dark:text-blue-400 animate-spin" />
+      </div>
+      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Loading...</h2>
+      <p className="text-gray-600 dark:text-gray-400">Preparing password reset form.</p>
+    </div>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <ResetPasswordContent />
+    </Suspense>
+  );
+}
+
