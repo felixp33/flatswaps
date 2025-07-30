@@ -142,12 +142,15 @@ export default function SignInPage() {
 								</label>
 							</div>
 
-							<div className="text-sm">
-								<Link href="/auth/forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
-									Forgot your password?
-								</Link>
-							</div>
-						</div>
+                                                        <div className="text-sm flex flex-col items-end">
+                                                                <Link href="/auth/forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
+                                                                        Forgot your password?
+                                                                </Link>
+                                                                <Link href="/auth/reset-password" className="font-medium text-blue-600 hover:text-blue-500 mt-1">
+                                                                        Reset password
+                                                                </Link>
+                                                        </div>
+                                                </div>
 
 						{/* Submit Button */}
 						<button
