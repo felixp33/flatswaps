@@ -8,9 +8,11 @@ import SocialLogin from "@/components/auth/SocialLogin";
 import FormField from "@/components/auth/FormField";
 import { validateEmail } from "@/lib/auth/validation";
 import { ValidationErrors } from "@/types/auth";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function SignInPage() {
-	const router = useRouter();
+        const router = useRouter();
+        const { signIn, signInWithProvider } = useAuth();
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
@@ -27,10 +29,18 @@ export default function SignInPage() {
 		}
 	};
 
-	const handleSocialLogin = async (provider: string) => {
-		console.log(`Social login with ${provider}`);
-		// TODO: Implement social login
-	};
+        const handleSocialLogin = async (provider: string) => {
+                setIsLoading(true);
+                try {
+                        const { error } = await signInWithProvider(provider as 'google');
+                        if (error) {
+                                console.error('Social login error:', error);
+                                setErrors({ general: 'Authentication failed. Please try again.' });
+                        }
+                } finally {
+                        setIsLoading(false);
+                }
+        };
 
 	const validateForm = (): ValidationErrors => {
 		const errors: ValidationErrors = {};
@@ -52,20 +62,19 @@ export default function SignInPage() {
 			return;
 		}
 
-		setIsLoading(true);
-		try {
-			// TODO: Implement actual sign in
-			console.log("Sign in with:", formData);
-			// Simulate API call
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-			router.push("/profile");
-		} catch (error) {
-			console.error("Sign in error:", error);
-			setErrors({ general: "Invalid email or password. Please try again." });
-		} finally {
-			setIsLoading(false);
-		}
-	};
+                setIsLoading(true);
+                try {
+                        const { error } = await signIn(formData.email, formData.password);
+                        if (error) {
+                                setErrors({ general: "Invalid email or password. Please try again." });
+                        }
+                } catch (error) {
+                        console.error("Sign in error:", error);
+                        setErrors({ general: "Something went wrong. Please try again." });
+                } finally {
+                        setIsLoading(false);
+                }
+        };
 
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex flex-col justify-center py-12 sm:px-6 lg:px-8">

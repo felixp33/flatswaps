@@ -12,8 +12,9 @@ interface AuthContextType {
 	loading: boolean;
 	signUp: (email: string, password: string) => Promise<{ error?: any }>;
 	signIn: (email: string, password: string) => Promise<{ error?: any }>;
-	signOut: () => Promise<void>;
-	resetPassword: (email: string) => Promise<{ error?: any }>;
+        signOut: () => Promise<void>;
+        signInWithProvider: (provider: 'google') => Promise<{ error?: any }>;
+        resetPassword: (email: string) => Promise<{ error?: any }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -73,12 +74,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		}
 	};
 
-	const signIn = async (email: string, password: string) => {
-		try {
-			const { data, error } = await supabase.auth.signInWithPassword({
-				email,
-				password,
-			});
+        const signIn = async (email: string, password: string) => {
+                try {
+                        const { data, error } = await supabase.auth.signInWithPassword({
+                                email,
+                                password,
+                        });
 
 			if (error) {
 				return { error };
@@ -87,12 +88,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			return { data };
 		} catch (error) {
 			return { error };
-		}
-	};
+                }
+        };
 
-	const signOut = async () => {
-		await supabase.auth.signOut();
-	};
+        const signInWithProvider = async (provider: 'google') => {
+                try {
+                        const { error, data } = await supabase.auth.signInWithOAuth({
+                                provider,
+                        });
+                        if (error) {
+                                return { error };
+                        }
+                        return { data };
+                } catch (error) {
+                        return { error };
+                }
+        };
+
+        const signOut = async () => {
+                await supabase.auth.signOut();
+        };
 
 	const resetPassword = async (email: string) => {
 		try {
@@ -110,15 +125,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		}
 	};
 
-	const value = {
-		user,
-		session,
-		loading,
-		signUp,
-		signIn,
-		signOut,
-		resetPassword,
-	};
+        const value = {
+                user,
+                session,
+                loading,
+                signUp,
+                signIn,
+                signInWithProvider,
+                signOut,
+                resetPassword,
+        };
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
