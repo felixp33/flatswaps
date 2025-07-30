@@ -13,7 +13,7 @@ import { ValidationErrors } from "@/types/auth";
 
 export default function SignUpPage() {
 	const router = useRouter();
-	const { signUp } = useAuth();
+        const { signUp, signInWithProvider } = useAuth();
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
@@ -32,10 +32,18 @@ export default function SignUpPage() {
 		}
 	};
 
-	const handleSocialLogin = async (provider: string) => {
-		console.log(`Social login with ${provider}`);
-		// TODO: Implement social login (we'll do this in the next step)
-	};
+        const handleSocialLogin = async (provider: string) => {
+                setIsLoading(true);
+                try {
+                        const { error } = await signInWithProvider(provider as 'google');
+                        if (error) {
+                                console.error('Social login error:', error);
+                                setErrors({ general: 'Authentication failed. Please try again.' });
+                        }
+                } finally {
+                        setIsLoading(false);
+                }
+        };
 
 	const validateForm = (): ValidationErrors => {
 		const errors: ValidationErrors = {};
