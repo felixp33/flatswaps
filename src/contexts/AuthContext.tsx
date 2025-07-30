@@ -31,6 +31,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			const {
 				data: { session },
 			} = await supabase.auth.getSession();
+
+			console.log("🔍 Initial session check:", {
+				hasSession: !!session,
+				user: session?.user?.email,
+				provider: session?.user?.app_metadata?.provider,
+			});
+
 			setSession(session);
 			setUser(session?.user ?? null);
 			setLoading(false);
@@ -42,6 +49,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		const {
 			data: { subscription },
 		} = supabase.auth.onAuthStateChange(async (event, session) => {
+			console.log("🔄 Auth state change:", {
+				event,
+				hasSession: !!session,
+				user: session?.user?.email,
+				provider: session?.user?.app_metadata?.provider,
+				onboardingCompleted: session?.user?.user_metadata?.onboarding_completed,
+			});
+
 			setSession(session);
 			setUser(session?.user ?? null);
 			setLoading(false);
@@ -52,14 +67,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 				const user = session?.user;
 				const isOAuthUser = user?.app_metadata?.provider === "google";
 
+				console.log("✅ User signed in:", {
+					email: user?.email,
+					isOAuthUser,
+					onboardingCompleted: user?.user_metadata?.onboarding_completed,
+					provider: user?.app_metadata?.provider,
+				});
+
 				if (isOAuthUser && !user?.user_metadata?.onboarding_completed) {
-					// Redirect to onboarding for new OAuth users
+					console.log("🚀 Redirecting to onboarding");
 					router.push("/auth/onboarding/step-1");
 				} else {
-					// Regular users or completed onboarding go to profile
+					console.log("🚀 Redirecting to profile");
 					router.push("/profile");
 				}
 			} else if (event === "SIGNED_OUT") {
+				console.log("👋 User signed out, redirecting to home");
 				router.push("/");
 			}
 		});
@@ -103,6 +126,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 	const signInWithProvider = async (provider: "google") => {
 		try {
+			console.log("🔗 Starting OAuth flow with redirect to:", `${window.location.origin}/auth/callback`);
+
 			const { error, data } = await supabase.auth.signInWithOAuth({
 				provider,
 				options: {
@@ -115,11 +140,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			});
 
 			if (error) {
+				console.error("❌ OAuth error:", error);
 				return { error };
 			}
 
+			console.log("✅ OAuth initiated successfully");
 			return { data };
 		} catch (error) {
+			console.error("💥 OAuth exception:", error);
 			return { error };
 		}
 	};
