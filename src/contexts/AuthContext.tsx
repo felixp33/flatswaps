@@ -12,9 +12,9 @@ interface AuthContextType {
 	loading: boolean;
 	signUp: (email: string, password: string) => Promise<{ error?: any }>;
 	signIn: (email: string, password: string) => Promise<{ error?: any }>;
-        signOut: () => Promise<void>;
-        signInWithProvider: (provider: 'google') => Promise<{ error?: any }>;
-        resetPassword: (email: string) => Promise<{ error?: any }>;
+	signOut: () => Promise<void>;
+	signInWithProvider: (provider: "google") => Promise<{ error?: any }>;
+	resetPassword: (email: string) => Promise<{ error?: any }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -48,7 +48,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 			// Redirect based on auth state
 			if (event === "SIGNED_IN") {
-				router.push("/profile");
+				// Check if user is coming from OAuth and needs onboarding
+				const user = session?.user;
+				const isOAuthUser = user?.app_metadata?.provider === "google";
+
+				if (isOAuthUser && !user?.user_metadata?.onboarding_completed) {
+					// Redirect to onboarding for new OAuth users
+					router.push("/auth/onboarding/step-1");
+				} else {
+					// Regular users or completed onboarding go to profile
+					router.push("/profile");
+				}
 			} else if (event === "SIGNED_OUT") {
 				router.push("/");
 			}
@@ -74,12 +84,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		}
 	};
 
-        const signIn = async (email: string, password: string) => {
-                try {
-                        const { data, error } = await supabase.auth.signInWithPassword({
-                                email,
-                                password,
-                        });
+	const signIn = async (email: string, password: string) => {
+		try {
+			const { data, error } = await supabase.auth.signInWithPassword({
+				email,
+				password,
+			});
 
 			if (error) {
 				return { error };
@@ -88,26 +98,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			return { data };
 		} catch (error) {
 			return { error };
-                }
-        };
+		}
+	};
 
-        const signInWithProvider = async (provider: 'google') => {
-                try {
-                        const { error, data } = await supabase.auth.signInWithOAuth({
-                                provider,
-                        });
-                        if (error) {
-                                return { error };
-                        }
-                        return { data };
-                } catch (error) {
-                        return { error };
-                }
-        };
+	const signInWithProvider = async (provider: "google") => {
+		try {
+			const { error, data } = await supabase.auth.signInWithOAuth({
+				provider,
+				options: {
+					redirectTo: `${window.location.origin}/auth/callback`,
+					queryParams: {
+						access_type: "offline",
+						prompt: "consent",
+					},
+				},
+			});
 
-        const signOut = async () => {
-                await supabase.auth.signOut();
-        };
+			if (error) {
+				return { error };
+			}
+
+			return { data };
+		} catch (error) {
+			return { error };
+		}
+	};
+
+	const signOut = async () => {
+		await supabase.auth.signOut();
+	};
 
 	const resetPassword = async (email: string) => {
 		try {
@@ -125,16 +144,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		}
 	};
 
-        const value = {
-                user,
-                session,
-                loading,
-                signUp,
-                signIn,
-                signInWithProvider,
-                signOut,
-                resetPassword,
-        };
+	const value = {
+		user,
+		session,
+		loading,
+		signUp,
+		signIn,
+		signInWithProvider,
+		signOut,
+		resetPassword,
+	};
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
