@@ -3,7 +3,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import SocialLogin from "@/components/auth/SocialLogin";
 import FormField from "@/components/auth/FormField";
@@ -12,7 +11,6 @@ import { validateEmail, validatePassword } from "@/lib/auth/validation";
 import { ValidationErrors } from "@/types/auth";
 
 export default function SignUpPage() {
-	const router = useRouter();
         const { signUp, signInWithProvider } = useAuth();
 	const [formData, setFormData] = useState({
 		email: "",

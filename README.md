@@ -93,6 +93,27 @@ npm run dev
 
 Access the application at <http://localhost:3000>
 
+### Authentication Setup
+
+Wrap the entire app with `AuthProvider` so pages can access authentication helpers like `signInWithProvider`.
+
+```tsx
+// src/app/layout.tsx
+<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+    <AuthProvider>
+        {children}
+    </AuthProvider>
+</ThemeProvider>
+```
+
+Key auth files:
+
+- `src/components/auth/SocialLogin` – Google OAuth button
+- `src/components/auth/FormField` – reusable form inputs
+- `src/components/auth/PasswordStrength` – password validation UI
+- `src/lib/auth/validation` – form validation helpers
+- `src/app/auth/signin/page.tsx` – sign‑in page
+
 ### Backend Service
 
 ```bash
