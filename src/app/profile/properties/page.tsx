@@ -271,7 +271,7 @@ export default function MyFlatPage() {
 
 								{/* Preview of Interior amenities */}
 								<div className="flex flex-wrap gap-2">
-									{userFlat.amenities.interior.slice(0, 3).map((amenity, index) => (
+                                {userFlat.amenities.interior.slice(0, 3).map((amenity: string, index: number) => (
 										<span
 											key={index}
 											className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
@@ -311,7 +311,7 @@ export default function MyFlatPage() {
 					<div className="mb-6">
 						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">General</h4>
 						<div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-							{userFlat.amenities.general.map((amenity, index) => (
+                                                        {userFlat.amenities.general.map((amenity: string, index: number) => (
 								<div key={index} className="flex items-center text-gray-600 dark:text-gray-300">
 									<span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
 									{amenity}
@@ -324,7 +324,7 @@ export default function MyFlatPage() {
 					<div className="mb-6">
 						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Accessibility</h4>
 						<div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-							{userFlat.amenities.accessibility.map((amenity, index) => (
+                                                        {userFlat.amenities.accessibility.map((amenity: string, index: number) => (
 								<div key={index} className="flex items-center text-gray-600 dark:text-gray-300">
 									<span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
 									{amenity}
@@ -337,7 +337,7 @@ export default function MyFlatPage() {
 					<div className="mb-6">
 						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Interior</h4>
 						<div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-							{userFlat.amenities.interior.map((amenity, index) => (
+                                                        {userFlat.amenities.interior.map((amenity: string, index: number) => (
 								<div key={index} className="flex items-center text-gray-600 dark:text-gray-300">
 									<span className="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>
 									{amenity}
@@ -350,7 +350,7 @@ export default function MyFlatPage() {
 					<div className="mb-6">
 						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Exterior</h4>
 						<div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-							{userFlat.amenities.exterior.map((amenity, index) => (
+                                                        {userFlat.amenities.exterior.map((amenity: string, index: number) => (
 								<div key={index} className="flex items-center text-gray-600 dark:text-gray-300">
 									<span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
 									{amenity}
@@ -363,7 +363,7 @@ export default function MyFlatPage() {
 					<div>
 						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Equipment</h4>
 						<div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-							{userFlat.amenities.equipment.map((amenity, index) => (
+                                                        {userFlat.amenities.equipment.map((amenity: string, index: number) => (
 								<div key={index} className="flex items-center text-gray-600 dark:text-gray-300">
 									<span className="w-2 h-2 bg-pink-500 rounded-full mr-3"></span>
 									{amenity}
