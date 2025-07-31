@@ -1,7 +1,7 @@
 // src/app/profile/properties/page.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import {
@@ -17,8 +17,10 @@ import {
 	X,
 	ChevronLeft,
 	ChevronRight,
-	Plus,
+        Plus,
 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { fetchFlat, upsertFlat } from "@/lib/api";
 
 export default function MyFlatPage() {
 	const router = useRouter();
@@ -38,32 +40,42 @@ export default function MyFlatPage() {
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 	const [isUploading, setIsUploading] = useState(false);
 
-	// Mock user's flat data
-	const userFlat = {
-		id: "1",
-		title: "Berlin Altbau",
-		location: "Berlin, Germany",
-		description:
-			"Beautiful Altbau flat in the heart of Berlin, perfect for couples or small families. Walking distance to Flughafen Tempelhof and excellent public transport connections.",
+        const { user } = useAuth();
+
+        const placeholderFlat = {
+                id: "1",
+                title: "Berlin Altbau",
+                location: "Berlin, Germany",
+                description:
+                        "Beautiful Altbau flat in the heart of Berlin, perfect for couples or small families. Walking distance to Flughafen Tempelhof and excellent public transport connections.",
                 features: {
                         rooms: 2,
                         guests: 4,
                         size: 85,
                 },
-		amenities: {
-			general: ["Non-smoking", "Pets allowed", "Long-term stays welcome", "Self check-in", "Private entrance"],
-			accessibility: ["Wide doorways", "Step-free access", "Accessible parking spot"],
-			interior: ["Fitted Kitchen", "Shower", "Separate WC", "WiFi", "Heating", "Dishwasher"],
-			exterior: ["Balcony", "Garden access", "Bike storage", "Parking space"],
-			equipment: ["Washing machine", "Dryer", "Iron", "Hair dryer", "First aid kit"],
-		},
-		rating: 4.8,
-		reviews: 23,
-		verified: true,
-		isActive: true,
-		isSwapAvailable: true,
-		lastUpdated: "March 15, 2024",
-	};
+                amenities: {
+                        general: ["Non-smoking", "Pets allowed", "Long-term stays welcome", "Self check-in", "Private entrance"],
+                        accessibility: ["Wide doorways", "Step-free access", "Accessible parking spot"],
+                        interior: ["Fitted Kitchen", "Shower", "Separate WC", "WiFi", "Heating", "Dishwasher"],
+                        exterior: ["Balcony", "Garden access", "Bike storage", "Parking space"],
+                        equipment: ["Washing machine", "Dryer", "Iron", "Hair dryer", "First aid kit"],
+                },
+                rating: 4.8,
+                reviews: 23,
+                verified: true,
+                isActive: true,
+                isSwapAvailable: true,
+                lastUpdated: "March 15, 2024",
+        };
+
+        const [userFlat, setUserFlat] = useState<any>(placeholderFlat);
+
+        useEffect(() => {
+                if (!user) return;
+                fetchFlat(user.id).then((data) => {
+                        if (data) setUserFlat(data);
+                });
+        }, [user]);
 
 	const openGallery = (index: number) => {
 		setSelectedImageIndex(index);
@@ -259,7 +271,7 @@ export default function MyFlatPage() {
 
 								{/* Preview of Interior amenities */}
 								<div className="flex flex-wrap gap-2">
-									{userFlat.amenities.interior.slice(0, 3).map((amenity, index) => (
+                                {userFlat.amenities.interior.slice(0, 3).map((amenity: string, index: number) => (
 										<span
 											key={index}
 											className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
@@ -299,7 +311,7 @@ export default function MyFlatPage() {
 					<div className="mb-6">
 						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">General</h4>
 						<div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-							{userFlat.amenities.general.map((amenity, index) => (
+                                                        {userFlat.amenities.general.map((amenity: string, index: number) => (
 								<div key={index} className="flex items-center text-gray-600 dark:text-gray-300">
 									<span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
 									{amenity}
@@ -312,7 +324,7 @@ export default function MyFlatPage() {
 					<div className="mb-6">
 						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Accessibility</h4>
 						<div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-							{userFlat.amenities.accessibility.map((amenity, index) => (
+                                                        {userFlat.amenities.accessibility.map((amenity: string, index: number) => (
 								<div key={index} className="flex items-center text-gray-600 dark:text-gray-300">
 									<span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
 									{amenity}
@@ -325,7 +337,7 @@ export default function MyFlatPage() {
 					<div className="mb-6">
 						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Interior</h4>
 						<div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-							{userFlat.amenities.interior.map((amenity, index) => (
+                                                        {userFlat.amenities.interior.map((amenity: string, index: number) => (
 								<div key={index} className="flex items-center text-gray-600 dark:text-gray-300">
 									<span className="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>
 									{amenity}
@@ -338,7 +350,7 @@ export default function MyFlatPage() {
 					<div className="mb-6">
 						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Exterior</h4>
 						<div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-							{userFlat.amenities.exterior.map((amenity, index) => (
+                                                        {userFlat.amenities.exterior.map((amenity: string, index: number) => (
 								<div key={index} className="flex items-center text-gray-600 dark:text-gray-300">
 									<span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
 									{amenity}
@@ -351,7 +363,7 @@ export default function MyFlatPage() {
 					<div>
 						<h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Equipment</h4>
 						<div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-							{userFlat.amenities.equipment.map((amenity, index) => (
+                                                        {userFlat.amenities.equipment.map((amenity: string, index: number) => (
 								<div key={index} className="flex items-center text-gray-600 dark:text-gray-300">
 									<span className="w-2 h-2 bg-pink-500 rounded-full mr-3"></span>
 									{amenity}

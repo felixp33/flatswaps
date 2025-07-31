@@ -1,24 +1,26 @@
 // src/app/profile/messages/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MessageCircle } from "lucide-react";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import ConversationList from "@/components/messages/ConversationList";
 import ChatArea from "@/components/messages/ChatArea";
 import UserProfileModal from "@/components/messages/UserProfileModal";
 import { Conversation, ConversationMessages, UserProfile } from "@/types/messages";
+import { useAuth } from "@/contexts/AuthContext";
+import { fetchConversations, fetchMessages, sendMessage } from "@/lib/api";
 
 export default function MessagesPage() {
-	const [selectedConversationId, setSelectedConversationId] = useState("1");
-	const [showUserProfile, setShowUserProfile] = useState(false);
+        const { user } = useAuth();
+        const [selectedConversationId, setSelectedConversationId] = useState("1");
+        const [showUserProfile, setShowUserProfile] = useState(false);
 
-	// Mock conversations data
-	const conversations: Conversation[] = [
-		{
-			id: "1",
-			user: {
-				name: "Carlos Gomez",
+        const placeholderConversations: Conversation[] = [
+                {
+                        id: "1",
+                        user: {
+                                name: "Carlos Gomez",
 				location: "Barcelona, Spain",
 				avatar: "/images/avatar-1.png",
 				online: true,
@@ -29,11 +31,11 @@ export default function MessagesPage() {
 				isRead: true,
 				fromMe: false,
 			},
-			unread: 0,
-		},
-		{
-			id: "2",
-			user: {
+                        unread: 0,
+                },
+                {
+                        id: "2",
+                        user: {
 				name: "Marco Rodriguez",
 				location: "Rome, Italy",
 				avatar: "/images/avatar-2.png",
@@ -81,8 +83,8 @@ export default function MessagesPage() {
 		},
 	];
 
-	// Mock messages for each conversation with some having attachments
-	const conversationMessages: ConversationMessages = {
+        // Mock messages for each conversation with some having attachments
+        const placeholderConversationMessages: ConversationMessages = {
 		"1": [
 			{
 				id: "1",
@@ -193,19 +195,48 @@ export default function MessagesPage() {
 				fromMe: true,
 			},
 		],
-	};
+        };
 
-	const selectedConversation = conversations.find((conv) => conv.id === selectedConversationId);
-	const currentMessages = conversationMessages[selectedConversationId] || [];
+        const [conversations, setConversations] = useState<Conversation[]>(placeholderConversations);
+        const [conversationMessages, setConversationMessages] = useState<ConversationMessages>(
+                placeholderConversationMessages
+        );
 
-	const handleSendMessage = (message: string, files: File[]) => {
-		// In a real app, this would send the message and files to the backend
-		console.log("Sending message:", message);
-		console.log("Sending files:", files);
+        useEffect(() => {
+                if (!user) return;
+                fetchConversations(user.id).then((data) => {
+                        if (data && data.length > 0) setConversations(data);
+                });
+        }, [user]);
 
-		// For demo purposes, we could add the message to the current conversation
-		// This would typically be handled by your state management solution (Redux, Zustand, etc.)
-	};
+        useEffect(() => {
+                if (!user) return;
+                fetchMessages(selectedConversationId).then((msgs) => {
+                        if (msgs && msgs.length > 0) {
+                                setConversationMessages((prev) => ({
+                                        ...prev,
+                                        [selectedConversationId]: msgs,
+                                }));
+                        }
+                });
+        }, [user, selectedConversationId]);
+
+        const selectedConversation = conversations.find((conv) => conv.id === selectedConversationId);
+        const currentMessages = conversationMessages[selectedConversationId] || [];
+
+        const handleSendMessage = async (message: string, files: File[]) => {
+                if (user) {
+                        await sendMessage(selectedConversationId, message);
+                        fetchMessages(selectedConversationId).then((msgs) => {
+                                if (msgs) {
+                                        setConversationMessages((prev) => ({
+                                                ...prev,
+                                                [selectedConversationId]: msgs,
+                                        }));
+                                }
+                        });
+                }
+        };
 
 	const handleShowUserProfile = (conversationId?: string) => {
 		if (conversationId) {
@@ -214,15 +245,15 @@ export default function MessagesPage() {
 		setShowUserProfile(true);
 	};
 
-	// Mock user profile data - in real app this would be fetched based on user ID
-	const getUserProfile = (): UserProfile => {
-		const user = selectedConversation?.user;
-		if (!user) {
-			throw new Error("No selected conversation");
-		}
+        // Mock user profile data - in real app this would be fetched based on user ID
+        const getUserProfile = (): UserProfile => {
+                const userInfo = selectedConversation?.user;
+                if (!userInfo) {
+                        throw new Error("No selected conversation");
+                }
 
-		// In a real app, you'd fetch this data based on the user ID
-		const profileDataMap: { [key: string]: Partial<UserProfile> } = {
+                // In a real app, you'd fetch this data based on the user ID
+                const profileDataMap: { [key: string]: Partial<UserProfile> } = {
 			"1": {
 				memberSince: "March 2023",
 				rating: 4.8,
@@ -288,11 +319,11 @@ export default function MessagesPage() {
 			},
 		};
 
-		const profileData = profileDataMap[selectedConversationId] || profileDataMap["1"];
+                const profileData = profileDataMap[selectedConversationId] || profileDataMap["1"];
 
-		return {
-			...user,
-			memberSince: profileData.memberSince || "2023",
+                return {
+                        ...userInfo,
+                        memberSince: profileData.memberSince || "2023",
 			rating: profileData.rating || 4.5,
 			reviewCount: profileData.reviewCount || 10,
 			responseRate: profileData.responseRate || 90,

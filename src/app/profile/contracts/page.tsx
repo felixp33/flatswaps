@@ -4,8 +4,20 @@ import Link from "next/link";
 import { ArrowLeft, FileText, Clock, CheckCircle, AlertCircle } from "lucide-react";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import { mockContracts, ContractSummary } from "@/lib/data/mockContracts";
+import { useAuth } from "@/contexts/AuthContext";
+import { fetchContracts } from "@/lib/api";
+import { useState, useEffect } from "react";
 
 export default function ContractsPage() {
+  const { user } = useAuth();
+  const [contracts, setContracts] = useState<ContractSummary[]>(mockContracts);
+
+  useEffect(() => {
+    if (!user) return;
+    fetchContracts(user.id).then((data) => {
+      if (data && data.length > 0) setContracts(data);
+    });
+  }, [user]);
   const getStatusConfig = (status: ContractSummary["status"]) => {
     const configs = {
       draft: {
@@ -59,7 +71,7 @@ export default function ContractsPage() {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">My Contracts</h1>
 
         <div className="space-y-3">
-          {mockContracts.map((contract) => {
+          {contracts.map((contract) => {
             const status = getStatusConfig(contract.status);
             const StatusIcon = status.icon;
             const href = contract.conversationId

@@ -8,6 +8,8 @@ import { AMENITY_CATEGORIES } from "@/lib/data/amenities";
 import { ValidationErrors } from "@/types/auth";
 import { validateLocation } from "@/lib/auth/validation";
 import { Plus, Home, Bed, Users, Check } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { upsertFlat } from "@/lib/api";
 
 interface PropertyData {
   propertyType: string;
@@ -29,6 +31,7 @@ interface PropertyData {
 
 export default function AddPropertyPage() {
   const router = useRouter();
+  const { user } = useAuth();
   const [propertyData, setPropertyData] = useState<PropertyData>({
     propertyType: "entire_flat",
     title: "",
@@ -132,8 +135,12 @@ export default function AddPropertyPage() {
 
     setIsLoading(true);
     try {
-      console.log("Create property", propertyData);
-      await new Promise((res) => setTimeout(res, 1000));
+      if (user) {
+        await upsertFlat({
+          owner_id: user.id,
+          ...propertyData,
+        });
+      }
       router.push("/profile/properties");
     } catch (err) {
       setErrors({ general: "Failed to create property" });
