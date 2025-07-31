@@ -1,19 +1,22 @@
 // src/app/profile/details/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import { Edit, Save, X, Shield, Star, MapPin, Calendar, Camera } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { fetchProfile, upsertProfile } from "@/lib/api";
 
 export default function ProfileDetails() {
-	const [isEditing, setIsEditing] = useState(false);
+        const { user } = useAuth();
+        const [isEditing, setIsEditing] = useState(false);
 
-	const [formData, setFormData] = useState({
-		// Basic Information
-		firstName: "Emma",
-		lastName: "Maier",
-		email: "emma .meier@example.com",
-		phone: "+49 (30) 123-45678",
+        const [formData, setFormData] = useState({
+                // Basic Information
+                firstName: "Emma",
+                lastName: "Maier",
+                email: "emma .meier@example.com",
+                phone: "+49 (30) 123-45678",
 		bio: "Software engineer and travel enthusiast. Love exploring new cities and experiencing different cultures through authentic local stays. My modern loft in Berlin is perfect for professionals or couples wanting to experience the vibrant startup scene and rich history of the city.",
 
 		// Occupation Details
@@ -23,7 +26,27 @@ export default function ProfileDetails() {
 		languages: ["English", "German", "Spanish"],
 	});
 
-	const [originalData, setOriginalData] = useState(formData);
+        const [originalData, setOriginalData] = useState(formData);
+
+        useEffect(() => {
+                if (!user) return;
+                fetchProfile(user.id).then((data) => {
+                        if (data) {
+                                setFormData({
+                                        firstName: data.first_name || "",
+                                        lastName: data.last_name || "",
+                                        email: data.email || "",
+                                        phone: data.phone || "",
+                                        bio: data.bio || "",
+                                        employmentType: data.employment_type || "",
+                                        incomeRange: data.income_range || "",
+                                        workLocation: data.work_location || "",
+                                        languages: data.languages || [],
+                                });
+                                setOriginalData(data);
+                        }
+                });
+        }, [user]);
 
 	const employmentTypes = [
 		"Full-time Employee",
@@ -76,12 +99,24 @@ export default function ProfileDetails() {
 		}));
 	};
 
-	const handleSave = () => {
-		setOriginalData(formData);
-		setIsEditing(false);
-		// In a real app, you would save to backend here
-		console.log("Saving profile data:", formData);
-	};
+        const handleSave = async () => {
+                setOriginalData(formData);
+                setIsEditing(false);
+                if (user) {
+                        await upsertProfile({
+                                id: user.id,
+                                first_name: formData.firstName,
+                                last_name: formData.lastName,
+                                email: formData.email,
+                                phone: formData.phone,
+                                bio: formData.bio,
+                                employment_type: formData.employmentType,
+                                income_range: formData.incomeRange,
+                                work_location: formData.workLocation,
+                                languages: formData.languages,
+                        });
+                }
+        };
 
 	const handleCancel = () => {
 		setFormData(originalData);

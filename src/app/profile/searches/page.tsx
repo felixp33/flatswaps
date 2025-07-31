@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import {
@@ -17,6 +17,8 @@ import {
 	Pause,
 	Trash2,
 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { fetchSearches } from "@/lib/api";
 
 // Dropdown Menu Component
 interface DropdownMenuProps {
@@ -95,21 +97,22 @@ function SearchDropdownMenu({ search, onDeleteClick }: DropdownMenuProps) {
 
 // Main Component
 export default function SearchesPage() {
-	const [deleteModal, setDeleteModal] = useState({
-		isOpen: false,
-		searchId: null as string | null,
-		searchName: "",
-	});
+        const { user } = useAuth();
+        const [deleteModal, setDeleteModal] = useState({
+                isOpen: false,
+                searchId: null as string | null,
+                searchName: "",
+        });
 
 	// LOCATION: Inside the SearchesPage component, around line 85-130
 	// This replaces the existing searches array in your searches/page.tsx
 
-	// Updated mock data with rooms and categorized amenities
-	const searches = [
-		{
-			id: "1",
-			name: "Apartment",
-			location: "Barcelona, Spain",
+        // Updated mock data with rooms and categorized amenities
+        const placeholderSearches = [
+                {
+                        id: "1",
+                        name: "Apartment",
+                        location: "Barcelona, Spain",
 			isActive: true,
 			newMatches: 3,
 			matchCount: 12,
@@ -140,7 +143,16 @@ export default function SearchesPage() {
 			},
 			amenities: ["WiFi", "Heating", "Elevator"], // ✅ NEW: Added amenities array
 		},
-	];
+        ];
+
+        const [searches, setSearches] = useState(placeholderSearches);
+
+        useEffect(() => {
+                if (!user) return;
+                fetchSearches(user.id).then((data) => {
+                        if (data && data.length > 0) setSearches(data);
+                });
+        }, [user]);
 
 	const getStatusColor = (isActive: boolean) => {
 		return isActive

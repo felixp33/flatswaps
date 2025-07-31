@@ -1,7 +1,7 @@
 // src/app/profile/properties/page.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import {
@@ -17,8 +17,10 @@ import {
 	X,
 	ChevronLeft,
 	ChevronRight,
-	Plus,
+        Plus,
 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { fetchFlat, upsertFlat } from "@/lib/api";
 
 export default function MyFlatPage() {
 	const router = useRouter();
@@ -38,32 +40,42 @@ export default function MyFlatPage() {
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 	const [isUploading, setIsUploading] = useState(false);
 
-	// Mock user's flat data
-	const userFlat = {
-		id: "1",
-		title: "Berlin Altbau",
-		location: "Berlin, Germany",
-		description:
-			"Beautiful Altbau flat in the heart of Berlin, perfect for couples or small families. Walking distance to Flughafen Tempelhof and excellent public transport connections.",
+        const { user } = useAuth();
+
+        const placeholderFlat = {
+                id: "1",
+                title: "Berlin Altbau",
+                location: "Berlin, Germany",
+                description:
+                        "Beautiful Altbau flat in the heart of Berlin, perfect for couples or small families. Walking distance to Flughafen Tempelhof and excellent public transport connections.",
                 features: {
                         rooms: 2,
                         guests: 4,
                         size: 85,
                 },
-		amenities: {
-			general: ["Non-smoking", "Pets allowed", "Long-term stays welcome", "Self check-in", "Private entrance"],
-			accessibility: ["Wide doorways", "Step-free access", "Accessible parking spot"],
-			interior: ["Fitted Kitchen", "Shower", "Separate WC", "WiFi", "Heating", "Dishwasher"],
-			exterior: ["Balcony", "Garden access", "Bike storage", "Parking space"],
-			equipment: ["Washing machine", "Dryer", "Iron", "Hair dryer", "First aid kit"],
-		},
-		rating: 4.8,
-		reviews: 23,
-		verified: true,
-		isActive: true,
-		isSwapAvailable: true,
-		lastUpdated: "March 15, 2024",
-	};
+                amenities: {
+                        general: ["Non-smoking", "Pets allowed", "Long-term stays welcome", "Self check-in", "Private entrance"],
+                        accessibility: ["Wide doorways", "Step-free access", "Accessible parking spot"],
+                        interior: ["Fitted Kitchen", "Shower", "Separate WC", "WiFi", "Heating", "Dishwasher"],
+                        exterior: ["Balcony", "Garden access", "Bike storage", "Parking space"],
+                        equipment: ["Washing machine", "Dryer", "Iron", "Hair dryer", "First aid kit"],
+                },
+                rating: 4.8,
+                reviews: 23,
+                verified: true,
+                isActive: true,
+                isSwapAvailable: true,
+                lastUpdated: "March 15, 2024",
+        };
+
+        const [userFlat, setUserFlat] = useState<any>(placeholderFlat);
+
+        useEffect(() => {
+                if (!user) return;
+                fetchFlat(user.id).then((data) => {
+                        if (data) setUserFlat(data);
+                });
+        }, [user]);
 
 	const openGallery = (index: number) => {
 		setSelectedImageIndex(index);

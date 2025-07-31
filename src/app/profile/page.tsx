@@ -1,18 +1,31 @@
 // src/app/profile/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProfileLayout from "@/components/profile/ProfileLayout";
-import { ProfileSummary, PropertySummary, ExchangeChecklist, ContractsCard } from "@/components/dashboard";
+import {
+  ProfileSummary,
+  PropertySummary,
+  ExchangeChecklist,
+  ContractsCard,
+} from "@/components/dashboard";
 import { mockContracts } from "@/lib/data/mockContracts";
 import SearchesSummary from "@/components/dashboard/SearchesSummary";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  fetchProfile,
+  fetchFlat,
+  fetchSearches,
+  fetchContracts,
+} from "@/lib/api";
 
 export default function ProfileDashboard() {
 	// State for checklist progress (in real app, this would come from context/API)
 	const [completedChecklistItems, setCompletedChecklistItems] = useState(new Set<string>());
 
-	// Mock user data - in real app this would come from your auth/user context
-        const user = {
+        const { user: authUser } = useAuth();
+
+        const placeholderUser = {
                 name: "Emma Meier",
                 email: "emmameier@example.com",
                 phone: "+49 123 456 7890",
@@ -26,39 +39,53 @@ export default function ProfileDashboard() {
                 languages: ["English", "German", "Spanish"],
         };
 
-        // Mock property data - in real app this would come from API
-        const userProperty = undefined;
+        const [user, setUser] = useState<any>(placeholderUser);
+        const [userProperty, setUserProperty] = useState<any | undefined>(undefined);
+        const [userSearches, setUserSearches] = useState<any[]>([]);
+        const [recentContracts, setRecentContracts] = useState<any[]>(mockContracts);
 
-	// Mock searches data - in real app this would come from API
-	const userSearches = [
-		{
-			id: "1",
-			name: "Summer in Barcelona",
-			location: "Barcelona, Spain",
-			isActive: true,
-			newMatches: 3,
-			matchCount: 12,
-		},
-		{
-			id: "2",
-			name: "Tokyo Adventure",
-			location: "Tokyo, Japan",
-			isActive: false,
-			newMatches: 0,
-			matchCount: 8,
-		},
-		{
-			id: "3",
-			name: "London Business Trip",
-			location: "London, UK",
-			isActive: true,
-			newMatches: 2,
-			matchCount: 15,
-		},
-	];
+        useEffect(() => {
+                if (!authUser) return;
+                fetchProfile(authUser.id).then((data) => {
+                        if (data) setUser(data);
+                });
+                fetchFlat(authUser.id).then((data) => setUserProperty(data || undefined));
+                fetchSearches(authUser.id).then((data) => {
+                        if (data && data.length > 0) setUserSearches(data);
+                });
+                fetchContracts(authUser.id).then((data) => {
+                        if (data && data.length > 0) setRecentContracts(data);
+                });
+        }, [authUser]);
 
-        // Mock contracts data
-        const recentContracts = mockContracts;
+        const placeholderSearches = [
+                {
+                        id: "1",
+                        name: "Summer in Barcelona",
+                        location: "Barcelona, Spain",
+                        isActive: true,
+                        newMatches: 3,
+                        matchCount: 12,
+                },
+                {
+                        id: "2",
+                        name: "Tokyo Adventure",
+                        location: "Tokyo, Japan",
+                        isActive: false,
+                        newMatches: 0,
+                        matchCount: 8,
+                },
+                {
+                        id: "3",
+                        name: "London Business Trip",
+                        location: "London, UK",
+                        isActive: true,
+                        newMatches: 2,
+                        matchCount: 15,
+                },
+        ];
+
+
 
         const canSearch = user.verified && userProperty !== undefined;
 
@@ -81,8 +108,13 @@ export default function ProfileDashboard() {
 
 				{/* Middle Grid - Searches and Contracts */}
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                                        <SearchesSummary searches={userSearches} canSearch={canSearch} />
-					<ContractsCard contracts={recentContracts} />
+                                        <SearchesSummary
+                                                searches={userSearches.length > 0 ? userSearches : placeholderSearches}
+                                                canSearch={canSearch}
+                                        />
+                                        <ContractsCard
+                                                contracts={recentContracts.length > 0 ? recentContracts : mockContracts}
+                                        />
 				</div>
 
 				{/* Bottom Grid - Exchange Checklist (full width) */}
