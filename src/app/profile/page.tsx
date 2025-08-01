@@ -14,9 +14,9 @@ import SearchesSummary from "@/components/dashboard/SearchesSummary";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   fetchProfile,
-  fetchFlat,
-  fetchSearches,
-  fetchContracts,
+  fetchUserFlats,
+  fetchUserSearches,
+  fetchUserContracts,
 } from "@/lib/api";
 
 export default function ProfileDashboard() {
@@ -49,11 +49,13 @@ export default function ProfileDashboard() {
                 fetchProfile(authUser.id).then((data) => {
                         if (data) setUser(data);
                 });
-                fetchFlat(authUser.id).then((data) => setUserProperty(data || undefined));
-                fetchSearches(authUser.id).then((data) => {
+                fetchUserFlats().then((flats) => {
+                        setUserProperty(flats[0] || undefined);
+                });
+                fetchUserSearches().then((data) => {
                         if (data && data.length > 0) setUserSearches(data);
                 });
-                fetchContracts(authUser.id).then((data) => {
+                fetchUserContracts().then((data) => {
                         if (data && data.length > 0) setRecentContracts(data);
                 });
         }, [authUser]);

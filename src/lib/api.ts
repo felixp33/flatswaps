@@ -1,5 +1,6 @@
 // src/lib/api.ts - Updated for your existing profiles table
 import { supabase } from "./supabase";
+import { Conversation, Message } from "@/types/messages";
 
 // Types matching your actual database structure
 export interface Profile {
@@ -432,4 +433,56 @@ export async function uploadFile(file: File, bucket: string, path?: string) {
 	} = supabase.storage.from(bucket).getPublicUrl(fileName);
 
 	return { data: { ...data, publicUrl }, error: null };
+}
+
+// Messaging operations
+export async function fetchConversations(userId: string): Promise<Conversation[]> {
+        const { data, error } = await supabase
+                .from('conversations')
+                .select('*')
+                .eq('user_id', userId)
+                .order('created_at', { ascending: false });
+
+        if (error) {
+                console.error('Error fetching conversations:', error);
+                return [];
+        }
+
+        return (data as Conversation[]) || [];
+}
+
+export async function fetchMessages(conversationId: string): Promise<Message[]> {
+        const { data, error } = await supabase
+                .from('messages')
+                .select('*')
+                .eq('conversation_id', conversationId)
+                .order('created_at', { ascending: true });
+
+        if (error) {
+                console.error('Error fetching messages:', error);
+                return [];
+        }
+
+        return (data as Message[]) || [];
+}
+
+export async function sendMessage(conversationId: string, text: string) {
+        const user = await getCurrentUser();
+
+        if (!user) {
+                return { error: { message: 'User not authenticated' } };
+        }
+
+        const { error } = await supabase.from('messages').insert({
+                conversation_id: conversationId,
+                user_id: user.id,
+                text,
+                created_at: new Date().toISOString(),
+        });
+
+        if (error) {
+                console.error('Error sending message:', error);
+        }
+
+        return { error };
 }

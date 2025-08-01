@@ -5,7 +5,7 @@ import { ArrowLeft, FileText, Clock, CheckCircle, AlertCircle } from "lucide-rea
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import { mockContracts, ContractSummary } from "@/lib/data/mockContracts";
 import { useAuth } from "@/contexts/AuthContext";
-import { fetchContracts } from "@/lib/api";
+import { fetchUserContracts } from "@/lib/api";
 import { useState, useEffect } from "react";
 
 export default function ContractsPage() {
@@ -14,7 +14,7 @@ export default function ContractsPage() {
 
   useEffect(() => {
     if (!user) return;
-    fetchContracts(user.id).then((data) => {
+    fetchUserContracts().then((data) => {
       if (data && data.length > 0) setContracts(data);
     });
   }, [user]);
