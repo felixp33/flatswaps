@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { ArrowLeft, FileText, Clock, CheckCircle, AlertCircle } from "lucide-react";
 import ProfileLayout from "@/components/profile/ProfileLayout";
-import { mockContracts } from "@/lib/data/mockContracts";
 import { ContractSummary } from "@/types/contract";
 import { useAuth } from "@/contexts/AuthContext";
 import { fetchUserContracts } from "@/lib/api";
@@ -11,13 +10,22 @@ import { useState, useEffect } from "react";
 
 export default function ContractsPage() {
   const { user } = useAuth();
-  const [contracts, setContracts] = useState<ContractSummary[]>(mockContracts);
+  const [contracts, setContracts] = useState<ContractSummary[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user) return;
-    fetchUserContracts().then((data) => {
-      if (data && data.length > 0) setContracts(data);
-    });
+    setLoading(true);
+    fetchUserContracts()
+      .then((data) => {
+        setContracts(data || []);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Failed to load contracts");
+      })
+      .finally(() => setLoading(false));
   }, [user]);
   const getStatusConfig = (status: ContractSummary["status"]) => {
     const configs = {
@@ -54,6 +62,22 @@ export default function ContractsPage() {
     } as const;
     return configs[status];
   };
+
+  if (loading) {
+    return (
+      <ProfileLayout>
+        <div className="p-6">Loading...</div>
+      </ProfileLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <ProfileLayout>
+        <div className="p-6 text-red-500">{error}</div>
+      </ProfileLayout>
+    );
+  }
 
   return (
     <ProfileLayout>
@@ -114,6 +138,9 @@ export default function ContractsPage() {
               </Link>
             );
           })}
+          {contracts.length === 0 && (
+            <p className="text-sm text-gray-600 dark:text-gray-300">No contracts found.</p>
+          )}
         </div>
       </div>
     </ProfileLayout>
