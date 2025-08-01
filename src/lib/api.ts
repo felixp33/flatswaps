@@ -256,31 +256,52 @@ export async function deleteSearch(searchId: string) {
 }
 
 // Contract operations
-export async function fetchUserContracts(): Promise<Contract[]> {
-	const user = await getCurrentUser();
+// Return a lightweight summary of the user's contracts for dashboard views
+export interface ContractSummary {
+        id: string;
+        title: string;
+        otherParty: string;
+        status: string;
+        createdDate: string;
+        startDate?: string;
+        endDate?: string;
+        conversationId?: string;
+}
 
-	if (!user) {
-		console.error("User not authenticated");
-		return [];
+export async function fetchUserContracts(): Promise<ContractSummary[]> {
+        const user = await getCurrentUser();
+
+        if (!user) {
+                console.error("User not authenticated");
+                return [];
 	}
 
-	const { data, error } = await supabase
-		.from("contracts")
-		.select(
-			`
+        const { data, error } = await supabase
+                .from("contracts")
+                .select(
+                        `
       *,
-      flats(title, address, city)
+      flats(title)
     `
-		)
-		.eq("user_id", user.id)
-		.order("created_at", { ascending: false });
+                )
+                .eq("user_id", user.id)
+                .order("created_at", { ascending: false });
 
-	if (error) {
-		console.error("Error fetching contracts:", error);
-		return [];
-	}
+        if (error) {
+                console.error("Error fetching contracts:", error);
+                return [];
+        }
 
-	return data || [];
+        return (data || []).map((c: any) => ({
+                id: c.id,
+                title: c.flats?.title || "Contract",
+                otherParty: c.landlord_name || c.tenant_name || "Unknown",
+                status: c.status || "pending",
+                createdDate: c.created_at || "",
+                startDate: c.start_date || undefined,
+                endDate: c.end_date || undefined,
+                conversationId: c.conversation_id || undefined,
+        }));
 }
 
 export async function upsertContract(contract: Partial<Contract>) {
