@@ -8,8 +8,8 @@ import {
   PropertySummary,
   ExchangeChecklist,
   ContractsCard,
+  CardSkeleton,
 } from "@/components/dashboard";
-import { mockContracts } from "@/lib/data/mockContracts";
 import SearchesSummary from "@/components/dashboard/SearchesSummary";
 import { useAuth } from "@/contexts/AuthContext";
 import { fetchDashboardData } from "@/lib/api";
@@ -50,15 +50,7 @@ export default function ProfileDashboard() {
                         .finally(() => setLoading(false));
         }, [authUser]);
 
-        const canSearch = user?.verified && userProperty !== undefined;
-
-        if (loading) {
-                return (
-                        <ProfileLayout>
-                                <div className="p-6">Loading...</div>
-                        </ProfileLayout>
-                );
-        }
+       const canSearch = user?.verified && userProperty !== undefined;
 
         if (error) {
                 return (
@@ -74,31 +66,53 @@ export default function ProfileDashboard() {
 				{/* Header */}
 				<div className="mb-8">
                                         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                                                Welcome back, {user ? user.name.split(" ")[0] : ""}!
+                                                {loading ? (
+                                                        <span className="inline-block w-40 h-8 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></span>
+                                                ) : (
+                                                        <>Welcome back, {user ? user.name.split(" ")[0] : ""}!</>
+                                                )}
                                         </h1>
 					<p className="text-gray-600 dark:text-gray-300">Here's an overview of your Flatswaps activity</p>
 				</div>
 
-				{/* Top Grid - Profile and Property */}
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                                        {user ? (
+                                {/* Top Grid - Profile and Property */}
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                                        {loading ? (
+                                                <CardSkeleton />
+                                        ) : user ? (
                                                 <ProfileSummary user={user} />
                                         ) : (
-                                                <div className="p-6 bg-white dark:bg-gray-800 rounded-lg">Loading...</div>
+                                                <CardSkeleton />
                                         )}
-                                        <PropertySummary property={userProperty} />
+                                        {loading ? (
+                                                <CardSkeleton />
+                                        ) : (
+                                                <PropertySummary property={userProperty} />
+                                        )}
                                 </div>
 
 				{/* Middle Grid - Searches and Contracts */}
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                                        <SearchesSummary searches={userSearches} canSearch={canSearch} />
-                                        <ContractsCard contracts={recentContracts} />
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                                        {loading ? (
+                                                <CardSkeleton />
+                                        ) : (
+                                                <SearchesSummary searches={userSearches} canSearch={canSearch} />
+                                        )}
+                                        {loading ? (
+                                                <CardSkeleton />
+                                        ) : (
+                                                <ContractsCard contracts={recentContracts} />
+                                        )}
                                 </div>
 
 				{/* Bottom Grid - Exchange Checklist (full width) */}
-				<div className="grid grid-cols-1 gap-6">
-					<ExchangeChecklist completedItems={completedChecklistItems} />
-				</div>
+                                <div className="grid grid-cols-1 gap-6">
+                                        {loading ? (
+                                                <CardSkeleton height="h-48" />
+                                        ) : (
+                                                <ExchangeChecklist completedItems={completedChecklistItems} />
+                                        )}
+                                </div>
 			</div>
 		</ProfileLayout>
 	);
