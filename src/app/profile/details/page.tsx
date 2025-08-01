@@ -30,22 +30,22 @@ export default function ProfileDetails() {
 
         useEffect(() => {
                 if (!user) return;
-                fetchProfile(user.id).then((data) => {
-                        if (data) {
-                                setFormData({
-                                        firstName: data.first_name || "",
-                                        lastName: data.last_name || "",
-                                        email: data.email || "",
-                                        phone: data.phone || "",
-                                        bio: data.bio || "",
-                                        employmentType: data.employment_type || "",
-                                        incomeRange: data.income_range || "",
-                                        workLocation: data.work_location || "",
-                                        languages: data.languages || [],
-                                });
-                                setOriginalData(data);
-                        }
-                });
+    fetchProfile(user.id).then((data) => {
+            if (data) {
+                    setFormData({
+                            firstName: (data as any).firstname || "",
+                            lastName: (data as any).lastname || "",
+                            email: data.email || "",
+                            phone: data.phone || "",
+                            bio: (data as any).bio || "",
+                            employmentType: (data as any).employment_type || "",
+                            incomeRange: (data as any).income_range || "",
+                            workLocation: (data as any).location || "",
+                            languages: data.languages || [],
+                    });
+                    setOriginalData(data as any);
+            }
+    });
         }, [user]);
 
 	const employmentTypes = [
@@ -104,15 +104,14 @@ export default function ProfileDetails() {
                 setIsEditing(false);
                 if (user) {
                         await upsertProfile({
-                                id: user.id,
-                                first_name: formData.firstName,
-                                last_name: formData.lastName,
+                                firstname: formData.firstName,
+                                lastname: formData.lastName,
                                 email: formData.email,
                                 phone: formData.phone,
                                 bio: formData.bio,
                                 employment_type: formData.employmentType,
                                 income_range: formData.incomeRange,
-                                work_location: formData.workLocation,
+                                location: formData.workLocation,
                                 languages: formData.languages,
                         });
                 }

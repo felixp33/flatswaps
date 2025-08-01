@@ -18,7 +18,7 @@ import {
 	Trash2,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { fetchSearches } from "@/lib/api";
+import { fetchUserSearches } from "@/lib/api";
 
 // Dropdown Menu Component
 interface DropdownMenuProps {
@@ -149,7 +149,7 @@ export default function SearchesPage() {
 
         useEffect(() => {
                 if (!user) return;
-                fetchSearches(user.id).then((data) => {
+                fetchUserSearches().then((data) => {
                         if (data && data.length > 0) setSearches(data);
                 });
         }, [user]);

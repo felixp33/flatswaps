@@ -20,7 +20,7 @@ import {
         Plus,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { fetchFlat, upsertFlat } from "@/lib/api";
+import { fetchUserFlats, upsertFlat } from "@/lib/api";
 
 export default function MyFlatPage() {
 	const router = useRouter();
@@ -72,8 +72,8 @@ export default function MyFlatPage() {
 
         useEffect(() => {
                 if (!user) return;
-                fetchFlat(user.id).then((data) => {
-                        if (data) setUserFlat(data);
+                fetchUserFlats().then((flats) => {
+                        if (flats && flats.length > 0) setUserFlat(flats[0]);
                 });
         }, [user]);
 

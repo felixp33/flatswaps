@@ -1,19 +1,24 @@
 // src/lib/api.ts - Updated for your existing profiles table
 import { supabase } from "./supabase";
+import { Conversation, Message } from "@/types/messages";
+import { ContractSummary, ContractStatus } from "@/types/contract";
 
 // Types matching your actual database structure
 export interface Profile {
-	user_id: string; // This matches your existing column name
-	firstname?: string;
-	lastname?: string;
-	email?: string;
-	income?: number;
-	location?: string;
-	birthdate?: string;
-	sex?: string;
-	phone?: string;
-	languages?: string[];
-	created_at?: string;
+        user_id: string; // This matches your existing column name
+        firstname?: string;
+        lastname?: string;
+        email?: string;
+        bio?: string;
+        income?: number;
+        location?: string;
+        employment_type?: string;
+        income_range?: string;
+        birthdate?: string;
+        sex?: string;
+        phone?: string;
+        languages?: string[];
+        created_at?: string;
 	updated_at?: string;
 }
 
@@ -255,31 +260,42 @@ export async function deleteSearch(searchId: string) {
 }
 
 // Contract operations
-export async function fetchUserContracts(): Promise<Contract[]> {
-	const user = await getCurrentUser();
+// Return a lightweight summary of the user's contracts for dashboard views
 
-	if (!user) {
-		console.error("User not authenticated");
-		return [];
+export async function fetchUserContracts(): Promise<ContractSummary[]> {
+        const user = await getCurrentUser();
+
+        if (!user) {
+                console.error("User not authenticated");
+                return [];
 	}
 
-	const { data, error } = await supabase
-		.from("contracts")
-		.select(
-			`
+        const { data, error } = await supabase
+                .from("contracts")
+                .select(
+                        `
       *,
-      flats(title, address, city)
+      flats(title)
     `
-		)
-		.eq("user_id", user.id)
-		.order("created_at", { ascending: false });
+                )
+                .eq("user_id", user.id)
+                .order("created_at", { ascending: false });
 
-	if (error) {
-		console.error("Error fetching contracts:", error);
-		return [];
-	}
+        if (error) {
+                console.error("Error fetching contracts:", error);
+                return [];
+        }
 
-	return data || [];
+        return (data || []).map((c: any) => ({
+                id: c.id,
+                title: c.flats?.title || "Contract",
+                otherParty: c.landlord_name || c.tenant_name || "Unknown",
+                status: (c.status as ContractStatus) || ("pending" as ContractStatus),
+                createdDate: c.created_at || "",
+                startDate: c.start_date || undefined,
+                endDate: c.end_date || undefined,
+                conversationId: c.conversation_id || undefined,
+        }));
 }
 
 export async function upsertContract(contract: Partial<Contract>) {
@@ -432,4 +448,56 @@ export async function uploadFile(file: File, bucket: string, path?: string) {
 	} = supabase.storage.from(bucket).getPublicUrl(fileName);
 
 	return { data: { ...data, publicUrl }, error: null };
+}
+
+// Messaging operations
+export async function fetchConversations(userId: string): Promise<Conversation[]> {
+        const { data, error } = await supabase
+                .from('conversations')
+                .select('*')
+                .eq('user_id', userId)
+                .order('created_at', { ascending: false });
+
+        if (error) {
+                console.error('Error fetching conversations:', error);
+                return [];
+        }
+
+        return (data as Conversation[]) || [];
+}
+
+export async function fetchMessages(conversationId: string): Promise<Message[]> {
+        const { data, error } = await supabase
+                .from('messages')
+                .select('*')
+                .eq('conversation_id', conversationId)
+                .order('created_at', { ascending: true });
+
+        if (error) {
+                console.error('Error fetching messages:', error);
+                return [];
+        }
+
+        return (data as Message[]) || [];
+}
+
+export async function sendMessage(conversationId: string, text: string) {
+        const user = await getCurrentUser();
+
+        if (!user) {
+                return { error: { message: 'User not authenticated' } };
+        }
+
+        const { error } = await supabase.from('messages').insert({
+                conversation_id: conversationId,
+                user_id: user.id,
+                text,
+                created_at: new Date().toISOString(),
+        });
+
+        if (error) {
+                console.error('Error sending message:', error);
+        }
+
+        return { error };
 }
