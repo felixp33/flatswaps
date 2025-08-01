@@ -1,6 +1,7 @@
 // src/lib/api.ts - Updated for your existing profiles table
 import { supabase } from "./supabase";
 import { Conversation, Message } from "@/types/messages";
+import { ContractSummary, ContractStatus } from "@/types/contract";
 
 // Types matching your actual database structure
 export interface Profile {
@@ -257,16 +258,6 @@ export async function deleteSearch(searchId: string) {
 
 // Contract operations
 // Return a lightweight summary of the user's contracts for dashboard views
-export interface ContractSummary {
-        id: string;
-        title: string;
-        otherParty: string;
-        status: string;
-        createdDate: string;
-        startDate?: string;
-        endDate?: string;
-        conversationId?: string;
-}
 
 export async function fetchUserContracts(): Promise<ContractSummary[]> {
         const user = await getCurrentUser();
@@ -296,7 +287,7 @@ export async function fetchUserContracts(): Promise<ContractSummary[]> {
                 id: c.id,
                 title: c.flats?.title || "Contract",
                 otherParty: c.landlord_name || c.tenant_name || "Unknown",
-                status: c.status || "pending",
+                status: (c.status as ContractStatus) || ("pending" as ContractStatus),
                 createdDate: c.created_at || "",
                 startDate: c.start_date || undefined,
                 endDate: c.end_date || undefined,

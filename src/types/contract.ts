@@ -54,7 +54,26 @@ export interface ConversationData {
 }
 
 export interface ContractStep {
-	number: number;
-	title: string;
-	icon: any; // Lucide React icon component
+        number: number;
+        title: string;
+        icon: any; // Lucide React icon component
+}
+
+export type ContractStatus =
+        | "draft"
+        | "pending"
+        | "signed"
+        | "active"
+        | "completed"
+        | "cancelled";
+
+export interface ContractSummary {
+        id: string;
+        title: string;
+        otherParty: string;
+        status: ContractStatus;
+        createdDate: string;
+        startDate?: string;
+        endDate?: string;
+        conversationId?: string;
 }

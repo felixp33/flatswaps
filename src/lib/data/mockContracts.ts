@@ -1,13 +1,4 @@
-export interface ContractSummary {
-  id: string;
-  title: string;
-  otherParty: string;
-  status: "draft" | "pending" | "signed" | "active" | "completed" | "cancelled";
-  createdDate: string;
-  startDate?: string;
-  endDate?: string;
-  conversationId?: string;
-}
+import { ContractSummary } from "@/types/contract";
 
 export const mockContracts: ContractSummary[] = [
   {
