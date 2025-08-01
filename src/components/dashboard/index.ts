@@ -6,6 +6,7 @@ export { default as PropertySummary } from "./PropertySummary";
 export { default as ExchangeChecklist } from "./ExchangeChecklist";
 export { default as ContractsCard } from "./ContractsCard";
 export { default as ExpandedChecklist } from "./ExpandedChecklist";
+export { default as CardSkeleton } from "./CardSkeleton";
 
 // Export types for TypeScript support
 export type { default as ProfileSummaryProps } from "./ProfileSummary";
