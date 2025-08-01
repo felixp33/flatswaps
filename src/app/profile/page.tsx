@@ -12,12 +12,7 @@ import {
 import { mockContracts } from "@/lib/data/mockContracts";
 import SearchesSummary from "@/components/dashboard/SearchesSummary";
 import { useAuth } from "@/contexts/AuthContext";
-import {
-  fetchProfile,
-  fetchUserFlats,
-  fetchUserSearches,
-  fetchUserContracts,
-} from "@/lib/api";
+import { fetchDashboardData } from "@/lib/api";
 
 export default function ProfileDashboard() {
 	// State for checklist progress (in real app, this would come from context/API)
@@ -25,99 +20,80 @@ export default function ProfileDashboard() {
 
         const { user: authUser } = useAuth();
 
-        const placeholderUser = {
-                name: "Emma Meier",
-                email: "emmameier@example.com",
-                phone: "+49 123 456 7890",
-                location: "Berlin, Germany",
-                memberSince: "January 2022",
-                avatar: "/images/avatar-1.png",
-                verified: false,
-                rating: 4.8,
-                reviewCount: 23,
-                bio: "Software engineer and travel enthusiast. Love exploring new cities and experiencing different cultures through authentic local stays.",
-                languages: ["English", "German", "Spanish"],
-        };
 
-        const [user, setUser] = useState<any>(placeholderUser);
+        const [user, setUser] = useState<any | null>(null);
         const [userProperty, setUserProperty] = useState<any | undefined>(undefined);
         const [userSearches, setUserSearches] = useState<any[]>([]);
-        const [recentContracts, setRecentContracts] = useState<any[]>(mockContracts);
+        const [recentContracts, setRecentContracts] = useState<any[]>([]);
+        const [loading, setLoading] = useState(true);
+        const [error, setError] = useState<string | null>(null);
 
         useEffect(() => {
                 if (!authUser) return;
-                fetchProfile(authUser.id).then((data) => {
-                        if (data) setUser(data);
-                });
-                fetchUserFlats().then((flats) => {
-                        setUserProperty(flats[0] || undefined);
-                });
-                fetchUserSearches().then((data) => {
-                        if (data && data.length > 0) setUserSearches(data);
-                });
-                fetchUserContracts().then((data) => {
-                        if (data && data.length > 0) setRecentContracts(data);
-                });
+                setLoading(true);
+                fetchDashboardData()
+                        .then((data) => {
+                                if (data.error) {
+                                        setError(data.error);
+                                        return;
+                                }
+                                if (data.profile) setUser(data.profile);
+                                if (data.flats && data.flats.length > 0)
+                                        setUserProperty(data.flats[0]);
+                                setUserSearches(data.searches || []);
+                                setRecentContracts(data.contracts || []);
+                        })
+                        .catch((err) => {
+                                console.error(err);
+                                setError("Failed to load dashboard data");
+                        })
+                        .finally(() => setLoading(false));
         }, [authUser]);
 
-        const placeholderSearches = [
-                {
-                        id: "1",
-                        name: "Summer in Barcelona",
-                        location: "Barcelona, Spain",
-                        isActive: true,
-                        newMatches: 3,
-                        matchCount: 12,
-                },
-                {
-                        id: "2",
-                        name: "Tokyo Adventure",
-                        location: "Tokyo, Japan",
-                        isActive: false,
-                        newMatches: 0,
-                        matchCount: 8,
-                },
-                {
-                        id: "3",
-                        name: "London Business Trip",
-                        location: "London, UK",
-                        isActive: true,
-                        newMatches: 2,
-                        matchCount: 15,
-                },
-        ];
+        const canSearch = user?.verified && userProperty !== undefined;
 
+        if (loading) {
+                return (
+                        <ProfileLayout>
+                                <div className="p-6">Loading...</div>
+                        </ProfileLayout>
+                );
+        }
 
+        if (error) {
+                return (
+                        <ProfileLayout>
+                                <div className="p-6 text-red-500">{error}</div>
+                        </ProfileLayout>
+                );
+        }
 
-        const canSearch = user.verified && userProperty !== undefined;
-
-	return (
-		<ProfileLayout>
+        return (
+                <ProfileLayout>
 			<div className="p-6 max-w-7xl mx-auto">
 				{/* Header */}
 				<div className="mb-8">
-					<h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-						Welcome back, {user.name.split(" ")[0]}!
-					</h1>
+                                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                                                Welcome back, {user ? user.name.split(" ")[0] : ""}!
+                                        </h1>
 					<p className="text-gray-600 dark:text-gray-300">Here's an overview of your Flatswaps activity</p>
 				</div>
 
 				{/* Top Grid - Profile and Property */}
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-					<ProfileSummary user={user} />
-					<PropertySummary property={userProperty} />
-				</div>
+                                        {user ? (
+                                                <ProfileSummary user={user} />
+                                        ) : (
+                                                <div className="p-6 bg-white dark:bg-gray-800 rounded-lg">Loading...</div>
+                                        )}
+                                        <PropertySummary property={userProperty} />
+                                </div>
 
 				{/* Middle Grid - Searches and Contracts */}
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                                        <SearchesSummary
-                                                searches={userSearches.length > 0 ? userSearches : placeholderSearches}
-                                                canSearch={canSearch}
-                                        />
-                                        <ContractsCard
-                                                contracts={recentContracts.length > 0 ? recentContracts : mockContracts}
-                                        />
-				</div>
+                                        <SearchesSummary searches={userSearches} canSearch={canSearch} />
+                                        <ContractsCard contracts={recentContracts} />
+                                </div>
 
 				{/* Bottom Grid - Exchange Checklist (full width) */}
 				<div className="grid grid-cols-1 gap-6">
