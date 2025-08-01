@@ -5,17 +5,20 @@ import { ContractSummary, ContractStatus } from "@/types/contract";
 
 // Types matching your actual database structure
 export interface Profile {
-	user_id: string; // This matches your existing column name
-	firstname?: string;
-	lastname?: string;
-	email?: string;
-	income?: number;
-	location?: string;
-	birthdate?: string;
-	sex?: string;
-	phone?: string;
-	languages?: string[];
-	created_at?: string;
+        user_id: string; // This matches your existing column name
+        firstname?: string;
+        lastname?: string;
+        email?: string;
+        bio?: string;
+        income?: number;
+        location?: string;
+        employment_type?: string;
+        income_range?: string;
+        birthdate?: string;
+        sex?: string;
+        phone?: string;
+        languages?: string[];
+        created_at?: string;
 	updated_at?: string;
 }
 
