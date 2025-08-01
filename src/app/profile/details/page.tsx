@@ -104,7 +104,6 @@ export default function ProfileDetails() {
                 setIsEditing(false);
                 if (user) {
                         await upsertProfile({
-                                id: user.id,
                                 firstname: formData.firstName,
                                 lastname: formData.lastName,
                                 email: formData.email,
