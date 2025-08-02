@@ -1,11 +1,35 @@
+"use client";
+
 // src/app/profile/settings/page.tsx
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import { Bell, Shield, Eye, Globe, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { deleteAccount } from "@/lib/api";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function ProfileSettings() {
-	return (
-		<ProfileLayout>
-			<div className="p-6 space-y-6">
+        const { user } = useAuth();
+        const router = useRouter();
+        const [confirmOpen, setConfirmOpen] = useState(false);
+        const [isDeleting, setIsDeleting] = useState(false);
+
+        const handleDelete = async () => {
+                setIsDeleting(true);
+                const { error } = await deleteAccount();
+                setIsDeleting(false);
+                setConfirmOpen(false);
+
+                if (!error) {
+                        router.push("/");
+                } else {
+                        console.error(error);
+                }
+        };
+
+        return (
+                <ProfileLayout>
+                        <div className="p-6 space-y-6">
 				{/* Header */}
 				<div>
 					<h1 className="text-2xl font-bold text-gray-900 dark:text-white">Settings</h1>
@@ -178,25 +202,48 @@ export default function ProfileSettings() {
 								</div>
 								<button className="text-sm text-red-600 hover:text-red-500 font-medium">Deactivate</button>
 							</div>
-							<div className="flex items-center justify-between">
-								<div>
-									<span className="text-sm font-medium text-gray-900 dark:text-white">Delete account</span>
-									<p className="text-xs text-gray-500 dark:text-gray-400">
-										Permanently delete your account and data
-									</p>
-								</div>
-								<button className="text-sm text-red-600 hover:text-red-500 font-medium">Delete</button>
-							</div>
-						</div>
-					</div>
-				</div>
+                                                        <div className="flex items-center justify-between">
+                                                                <div>
+                                                                        <span className="text-sm font-medium text-gray-900 dark:text-white">Delete account</span>
+                                                                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                                                Permanently delete your account and data
+                                                                        </p>
+                                                                </div>
+                                                                <button
+                                                                        onClick={() => setConfirmOpen(true)}
+                                                                        className="text-sm text-red-600 hover:text-red-500 font-medium"
+                                                                >
+                                                                        Delete
+                                                                </button>
+                                                        </div>
+                                               </div>
+                                       </div>
+                               </div>
 
-				{/* Save Button */}
-				<div className="flex justify-end">
-					<button className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-						Save Changes
-					</button>
-				</div>
+                                {/* Delete Confirmation Modal */}
+                                {confirmOpen && (
+                                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                                                <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
+                                                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Delete Account</h3>
+                                                        <p className="text-gray-600 dark:text-gray-300 mb-6">Are you sure you want to delete your account? This action cannot be undone.</p>
+                                                        <div className="flex justify-end space-x-3">
+                                                                <button onClick={() => setConfirmOpen(false)} disabled={isDeleting} className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50">
+                                                                        Cancel
+                                                                </button>
+                                                                <button onClick={handleDelete} disabled={isDeleting} className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50">
+                                                                        {isDeleting ? "Deleting..." : "Delete"}
+                                                                </button>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                )}
+
+                                {/* Save Button */}
+                                <div className="flex justify-end">
+                                        <button className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                                Save Changes
+                                        </button>
+                                </div>
 			</div>
 		</ProfileLayout>
 	);

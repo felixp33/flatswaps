@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ChevronDown } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { fetchProfile } from "@/lib/api";
 
 export default function Header() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,16 +22,26 @@ export default function Header() {
 		{ code: "it", name: "Italiano", flag: "🇮🇹" },
 	];
 
-	const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
+        const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
 
-	// Simulate logged-in state - In real app, this would come from your auth context/state
-	const isLoggedIn = true; // Changed to true to show profile for testing
-	const user = {
-		name: "Emma Meier",
-		email: "john.doe@example.com",
-		avatar:
-			"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2787&q=80",
-	};
+        const { user } = useAuth();
+        const [firstName, setFirstName] = useState<string | null>(null);
+
+        useEffect(() => {
+                if (!user) {
+                        setFirstName(null);
+                        return;
+                }
+
+                fetchProfile(user.id).then((profile) => {
+                        const name =
+                                profile?.firstname ||
+                                user.user_metadata?.full_name?.split(" ")[0] ||
+                                user.email?.split("@")[0] ||
+                                null;
+                        setFirstName(name);
+                });
+        }, [user]);
 
 	// No navigation items needed
 
@@ -87,32 +99,29 @@ export default function Header() {
 							)}
 						</div>
 
-						{/* Authentication Options or Profile */}
+                                                {/* Authentication Options or Profile */}
                                                 <div className="flex items-center space-x-3">
-                                                        {/* Test Signup Link - TEMPORARY */}
-                                                        <Link
-                                                                href="/auth/signup"
-                                                                className="hidden md:inline-flex items-center px-3 py-2 rounded-md text-sm font-medium text-orange-600 bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/30 transition-colors"
-                                                        >
-                                                                🧪 Test Signup
-                                                        </Link>
-
-                                                        {/* Profile Button - Always visible for testing */}
-							<Link
-								href="/profile"
-								className="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border border-gray-200 dark:border-gray-600"
-							>
-								<div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-sm">
-									{user.name
-										.split(" ")
-										.map((n) => n[0])
-										.join("")}
-								</div>
-								<span className="hidden md:block text-sm font-medium text-gray-700 dark:text-gray-300">
-									{user.name.split(" ")[0]}
-								</span>
-							</Link>
-						</div>
+                                                        {user ? (
+                                                                <Link
+                                                                        href="/profile"
+                                                                        className="flex items-center space-x-2 px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border border-gray-200 dark:border-gray-600"
+                                                                >
+                                                                        <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-sm">
+                                                                                {firstName ? firstName.charAt(0).toUpperCase() : "U"}
+                                                                        </div>
+                                                                        <span className="hidden md:block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                                                                {firstName || "Account"}
+                                                                        </span>
+                                                                </Link>
+                                                        ) : (
+                                                                <Link
+                                                                        href="/auth/signup"
+                                                                        className="px-3 py-2 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+                                                                >
+                                                                        Create Account
+                                                                </Link>
+                                                        )}
+                                                </div>
 
 						{/* Mobile menu button */}
 						<button
@@ -180,52 +189,42 @@ export default function Header() {
 							))}
 						</div>
 
-						{/* Mobile Auth/Profile Section */}
-						<div className="space-y-2">
-							{/* Test Login Link - Mobile */}
-							<Link
-								href="/auth/onboarding/step-1"
-								className="block px-3 py-2 rounded-md text-base font-medium text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/30"
-								onClick={() => setIsMenuOpen(false)}
-							>
-								🧪 Test Onboarding
-							</Link>
+                                                {/* Mobile Auth/Profile Section */}
+                                                <div className="space-y-2">
+                                                        {user ? (
+                                                                <Link
+                                                                        href="/profile"
+                                                                        className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-600"
+                                                                        onClick={() => setIsMenuOpen(false)}
+                                                                >
+                                                                        <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-sm mr-3">
+                                                                                {firstName ? firstName.charAt(0).toUpperCase() : "U"}
+                                                                        </div>
+                                                                        <div>
+                                                                                <p className="text-sm font-medium text-gray-900 dark:text-white">{firstName || "Account"}</p>
+                                                                                <p className="text-xs text-gray-500 dark:text-gray-400">View Profile</p>
+                                                                        </div>
+                                                                </Link>
+                                                        ) : (
+                                                                <Link
+                                                                        href="/auth/signup"
+                                                                        className="block px-3 py-2 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-700"
+                                                                        onClick={() => setIsMenuOpen(false)}
+                                                                >
+                                                                        Create Account
+                                                                </Link>
+                                                        )}
 
-							{/* Profile Button - Always visible for testing */}
-							<Link
-								href="/profile"
-								className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-600"
-								onClick={() => setIsMenuOpen(false)}
-							>
-								<div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-sm mr-3">
-									{user.name
-										.split(" ")
-										.map((n) => n[0])
-										.join("")}
-								</div>
-								<div>
-									<p className="text-sm font-medium text-gray-900 dark:text-white">{user.name}</p>
-									<p className="text-xs text-gray-500 dark:text-gray-400">View Profile</p>
-								</div>
-							</Link>
-
-							{/* Sign In/Up buttons - Always visible for testing auth flow */}
-							<Link
-								href="/auth/signin"
-								className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
-								onClick={() => setIsMenuOpen(false)}
-							>
-								Sign In
-							</Link>
-
-							<Link
-								href="/auth/signup"
-								className="block px-3 py-2 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-700"
-								onClick={() => setIsMenuOpen(false)}
-							>
-								Sign Up
-							</Link>
-						</div>
+                                                        {!user && (
+                                                                <Link
+                                                                        href="/auth/signin"
+                                                                        className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
+                                                                        onClick={() => setIsMenuOpen(false)}
+                                                                >
+                                                                        Sign In
+                                                                </Link>
+                                                        )}
+                                                </div>
 					</div>
 				</div>
 			)}
