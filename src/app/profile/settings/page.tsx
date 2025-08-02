@@ -1,3 +1,5 @@
+"use client";
+
 // src/app/profile/settings/page.tsx
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import { Bell, Shield, Eye, Globe, Trash2 } from "lucide-react";
