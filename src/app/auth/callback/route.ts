@@ -1,63 +1,56 @@
-// src/app/auth/callback/route.ts
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+// src/app/api/delete-account/route.ts
+
+// OLD IMPORTS (remove these)
+// import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+
+// NEW IMPORTS
+import { createServerClient } from "@supabase/ssr";
+import { createClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
-	const requestUrl = new URL(request.url);
-	const code = requestUrl.searchParams.get("code");
-	const error = requestUrl.searchParams.get("error");
-	const origin = requestUrl.origin;
+export async function DELETE() {
+	const cookieStore = await cookies();
 
-	console.log("🔄 Callback route hit:", {
-		url: requestUrl.toString(),
-		hasCode: !!code,
-		error: error,
-		origin: origin,
-	});
+	// OLD WAY (replace this)
+	// const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+
+	// NEW WAY
+	const supabase = createServerClient(
+		process.env.NEXT_PUBLIC_SUPABASE_URL!,
+		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+		{
+			cookies: {
+				get(name: string) {
+					return cookieStore.get(name)?.value;
+				},
+				set(name: string, value: string, options: any) {
+					cookieStore.set({ name, value, ...options });
+				},
+				remove(name: string, options: any) {
+					cookieStore.set({ name, value: "", ...options });
+				},
+			},
+		}
+	);
+
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
+
+	if (!user) {
+		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+	}
+
+	const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+
+	const { error } = await admin.auth.admin.deleteUser(user.id);
 
 	if (error) {
-		console.error("❌ OAuth error in callback:", error);
-		return NextResponse.redirect(`${origin}/auth/signin?error=${error}`);
+		return NextResponse.json({ error: error.message }, { status: 500 });
 	}
 
-	if (code) {
-		const cookieStore = cookies();
-		const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+	await supabase.auth.signOut();
 
-		try {
-			console.log("🔄 Exchanging code for session...");
-			const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-
-			if (error) {
-				console.error("❌ OAuth callback error:", error);
-				return NextResponse.redirect(`${origin}/auth/signin?error=oauth_callback_error`);
-			}
-
-			console.log("✅ Session exchange successful:", {
-				userId: data.user?.id,
-				email: data.user?.email,
-				provider: data.user?.app_metadata?.provider,
-				onboardingCompleted: data.user?.user_metadata?.onboarding_completed,
-			});
-
-			// Check if this is a new user (just signed up)
-			const user = data.user;
-			const isNewUser = !user.user_metadata?.onboarding_completed;
-
-			if (isNewUser) {
-				console.log("🚀 New user - redirecting to onboarding");
-				return NextResponse.redirect(`${origin}/auth/onboarding/step-1`);
-			} else {
-				console.log("🚀 Existing user - redirecting to profile");
-				return NextResponse.redirect(`${origin}/profile`);
-			}
-		} catch (error) {
-			console.error("💥 Unexpected error in OAuth callback:", error);
-			return NextResponse.redirect(`${origin}/auth/signin?error=unexpected_error`);
-		}
-	}
-
-	console.warn("⚠️ No code parameter provided");
-	return NextResponse.redirect(`${origin}/auth/signin?error=no_code_provided`);
+	return NextResponse.json({ success: true });
 }
