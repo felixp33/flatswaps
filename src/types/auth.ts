@@ -35,21 +35,19 @@ export interface SignUpData {
 }
 
 export interface ProfileSetupData {
-	profilePhoto?: File;
-	location: {
-		city: string;
-		country: string;
-	};
-	bio: string;
-	languages: string[];
-	contactMethod: "email" | "phone" | "both";
+        firstName: string;
+        lastName: string;
+        profilePhoto?: File;
+        location: {
+                city: string;
+                country: string;
+        };
+        languages: string[];
+        contactMethod: "email" | "phone" | "both";
 }
 
 export interface VerificationData {
-	emailCode?: string;
-	phoneNumber?: string;
-	phoneCode?: string;
-	universityEmail?: string;
+        emailCode?: string;
 }
 
 export interface OnboardingState {

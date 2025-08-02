@@ -114,23 +114,24 @@ export const validateSignUpForm = (data: {
 };
 
 export const validateProfileForm = (data: {
-	location: { city: string; country: string };
-	bio: string;
-	languages: string[];
+        firstName: string;
+        lastName: string;
+        location: { city: string; country: string };
+        languages: string[];
 }): ValidationErrors => {
-	const errors: ValidationErrors = {};
+        const errors: ValidationErrors = {};
 
-	const locationErrors = validateLocation(data.location.city, data.location.country);
-	Object.assign(errors, locationErrors);
+        if (!data.firstName.trim()) errors.firstName = "First name is required";
+        if (!data.lastName.trim()) errors.lastName = "Last name is required";
 
-	const bioError = validateBio(data.bio);
-	if (bioError) errors.bio = bioError;
+        const locationErrors = validateLocation(data.location.city, data.location.country);
+        Object.assign(errors, locationErrors);
 
-	if (data.languages.length === 0) {
-		errors.languages = "Please select at least one language";
-	}
+        if (data.languages.length === 0) {
+                errors.languages = "Please select at least one language";
+        }
 
-	return errors;
+        return errors;
 };
 
 export const validateVerificationCode = (code: string): string | null => {

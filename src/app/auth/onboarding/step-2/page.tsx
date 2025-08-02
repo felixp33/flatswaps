@@ -3,27 +3,22 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Mail, Phone, Shield, Check, RefreshCw } from "lucide-react";
+import { Mail, Check } from "lucide-react";
 import OnboardingLayout from "@/components/auth/OnboardingLayout";
 import FormField from "@/components/auth/FormField";
-import { validateVerificationCode, validatePhoneNumber } from "@/lib/auth/validation";
+import { validateVerificationCode } from "@/lib/auth/validation";
 import { VerificationData, ValidationErrors } from "@/types/auth";
 
 export default function OnboardingStep2() {
 	const router = useRouter();
-	const [formData, setFormData] = useState<VerificationData>({
-		emailCode: "",
-		phoneNumber: "",
-		phoneCode: "",
-		universityEmail: "",
-	});
+        const [formData, setFormData] = useState<VerificationData>({
+                emailCode: "",
+        });
 	const [errors, setErrors] = useState<ValidationErrors>({});
 	const [isLoading, setIsLoading] = useState(false);
-	const [verificationStates, setVerificationStates] = useState({
-		email: { sent: false, verified: false, resending: false },
-		phone: { sent: false, verified: false, resending: false },
-		university: { sent: false, verified: false, resending: false },
-	});
+        const [verificationStates, setVerificationStates] = useState({
+                email: { sent: false, verified: false, resending: false },
+        });
 	const [countdown, setCountdown] = useState(0);
 
 	const stepLabels = ["Profile Setup", "Verification", "Property Setup", "Complete"];
@@ -85,52 +80,6 @@ export default function OnboardingStep2() {
 		}
 	};
 
-	const sendPhoneVerification = async () => {
-		const phoneError = validatePhoneNumber(formData.phoneNumber || "");
-		if (phoneError) {
-			setErrors({ phoneNumber: phoneError });
-			return;
-		}
-
-		setVerificationStates((prev) => ({
-			...prev,
-			phone: { ...prev.phone, resending: true },
-		}));
-
-		try {
-			// TODO: Implement actual phone verification
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-			setVerificationStates((prev) => ({
-				...prev,
-				phone: { sent: true, verified: false, resending: false },
-			}));
-			setCountdown(60);
-		} catch (error) {
-			setErrors({ phoneNumber: "Failed to send verification code" });
-		}
-	};
-
-	const verifyPhoneCode = async () => {
-		const codeError = validateVerificationCode(formData.phoneCode || "");
-		if (codeError) {
-			setErrors({ phoneCode: codeError });
-			return;
-		}
-
-		setIsLoading(true);
-		try {
-			// TODO: Implement actual phone verification
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-			setVerificationStates((prev) => ({
-				...prev,
-				phone: { ...prev.phone, verified: true },
-			}));
-		} catch (error) {
-			setErrors({ phoneCode: "Invalid verification code" });
-		} finally {
-			setIsLoading(false);
-		}
-	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -261,120 +210,9 @@ export default function OnboardingStep2() {
 						)}
 					</div>
 
-					{/* Phone Verification - Optional */}
-					<div className="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
-						<div className="flex items-center mb-4">
-							<div
-								className={`w-10 h-10 rounded-full flex items-center justify-center mr-4 ${
-									verificationStates.phone.verified
-										? "bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-400"
-										: "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400"
-								}`}
-							>
-								{verificationStates.phone.verified ? (
-									<Check className="w-5 h-5" />
-								) : (
-									<Phone className="w-5 h-5" />
-								)}
-							</div>
-							<div className="flex-1">
-								<h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-									Phone Verification
-									<span className="ml-2 text-sm text-blue-500">Optional</span>
-								</h3>
-								<p className="text-sm text-gray-600 dark:text-gray-400">
-									Add your phone number for better security and communication
-								</p>
-							</div>
-							{verificationStates.phone.verified && (
-								<div className="text-green-600 dark:text-green-400">
-									<Check className="w-6 h-6" />
-								</div>
-							)}
-						</div>
-
-						{!verificationStates.phone.verified && (
-							<div className="space-y-4">
-								{!verificationStates.phone.sent ? (
-									<div className="flex space-x-4">
-										<FormField
-											label=""
-											name="phoneNumber"
-											value={formData.phoneNumber || ""}
-											onChange={(value) => handleInputChange("phoneNumber", value)}
-											error={errors.phoneNumber}
-											placeholder="+1 (555) 123-4567"
-										/>
-										<button
-											type="button"
-											onClick={sendPhoneVerification}
-											disabled={verificationStates.phone.resending}
-											className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 disabled:opacity-50"
-										>
-											{verificationStates.phone.resending ? "Sending..." : "Send Code"}
-										</button>
-									</div>
-								) : (
-									<div className="space-y-4">
-										<p className="text-sm text-gray-600 dark:text-gray-400">
-											We've sent a verification code to {formData.phoneNumber}
-										</p>
-										<div className="flex space-x-4">
-											<FormField
-												label=""
-												name="phoneCode"
-												value={formData.phoneCode || ""}
-												onChange={(value) => handleInputChange("phoneCode", value)}
-												error={errors.phoneCode}
-												placeholder="Enter 6-digit code"
-											/>
-											<button
-												type="button"
-												onClick={verifyPhoneCode}
-												disabled={isLoading}
-												className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 disabled:opacity-50"
-											>
-												Verify
-											</button>
-										</div>
-									</div>
-								)}
-							</div>
-						)}
-					</div>
-
-					{/* University Email - Optional */}
-					<div className="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
-						<div className="flex items-center mb-4">
-							<div className="w-10 h-10 rounded-full bg-purple-100 text-purple-600 dark:bg-purple-900 dark:text-purple-400 flex items-center justify-center mr-4">
-								<Shield className="w-5 h-5" />
-							</div>
-							<div className="flex-1">
-								<h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-									University Email
-									<span className="ml-2 text-sm text-purple-500">Student Bonus</span>
-								</h3>
-								<p className="text-sm text-gray-600 dark:text-gray-400">
-									Verify your .edu email for student discounts and exclusive features
-								</p>
-							</div>
-						</div>
-
-						<FormField
-							label=""
-							name="universityEmail"
-							type="email"
-							value={formData.universityEmail || ""}
-							onChange={(value) => handleInputChange("universityEmail", value)}
-							error={errors.universityEmail}
-							placeholder="your.name@university.edu"
-							hint="Optional: Add your university email for student benefits"
-						/>
-					</div>
-
-					{/* Action Buttons */}
-					<div className="flex justify-between">
-						<button
+                                        {/* Action Buttons */}
+                                        <div className="flex justify-between">
+                                                <button
 							type="button"
 							onClick={handleSkip}
 							className="px-6 py-3 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"

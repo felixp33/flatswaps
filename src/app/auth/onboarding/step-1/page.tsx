@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { Camera, MapPin, Check } from "lucide-react";
 import OnboardingLayout from "@/components/auth/OnboardingLayout";
 import FormField from "@/components/auth/FormField";
-import { validateProfileForm } from "@/lib/auth/validation";
 import { ProfileSetupData, ValidationErrors } from "@/types/auth";
 import Image from "next/image";
 
@@ -51,12 +50,13 @@ const POPULAR_CITIES = [
 
 export default function OnboardingStep1() {
 	const router = useRouter();
-	const [formData, setFormData] = useState<ProfileSetupData>({
-		location: { city: "", country: "" },
-		bio: "",
-		languages: ["English"], // Default to English
-		contactMethod: "both", // Default preference
-	});
+        const [formData, setFormData] = useState<ProfileSetupData>({
+                firstName: "",
+                lastName: "",
+                location: { city: "", country: "" },
+                languages: ["English"], // Default to English
+                contactMethod: "both", // Default preference
+        });
 	const [errors, setErrors] = useState<ValidationErrors>({});
 	const [isLoading, setIsLoading] = useState(false);
 	const [profileImage, setProfileImage] = useState<string | null>(null);
@@ -128,19 +128,27 @@ export default function OnboardingStep1() {
 		}
 	};
 
-	const validateSimplifiedForm = (): ValidationErrors => {
-		const errors: ValidationErrors = {};
+        const validateSimplifiedForm = (): ValidationErrors => {
+                const errors: ValidationErrors = {};
 
-		if (!formData.location.city) {
-			errors.city = "Please select your city";
-		}
+                if (!formData.firstName.trim()) {
+                        errors.firstName = "First name is required";
+                }
 
-		if (formData.languages.length === 0) {
-			errors.languages = "Please select at least one language";
-		}
+                if (!formData.lastName.trim()) {
+                        errors.lastName = "Last name is required";
+                }
 
-		return errors;
-	};
+                if (!formData.location.city) {
+                        errors.city = "Please select your city";
+                }
+
+                if (formData.languages.length === 0) {
+                        errors.languages = "Please select at least one language";
+                }
+
+                return errors;
+        };
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -189,7 +197,37 @@ export default function OnboardingStep1() {
 						</div>
 					)}
 
-					{/* Profile Photo - Optional */}
+                                        {/* Name Fields */}
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <FormField
+                                                        label="First Name"
+                                                        name="firstName"
+                                                        value={formData.firstName}
+                                                        onChange={(value) => {
+                                                                setFormData((prev) => ({ ...prev, firstName: value }));
+                                                                if (errors.firstName) {
+                                                                        setErrors((prev) => ({ ...prev, firstName: "" }));
+                                                                }
+                                                        }}
+                                                        error={errors.firstName}
+                                                        placeholder="Enter your first name"
+                                                />
+                                                <FormField
+                                                        label="Last Name"
+                                                        name="lastName"
+                                                        value={formData.lastName}
+                                                        onChange={(value) => {
+                                                                setFormData((prev) => ({ ...prev, lastName: value }));
+                                                                if (errors.lastName) {
+                                                                        setErrors((prev) => ({ ...prev, lastName: "" }));
+                                                                }
+                                                        }}
+                                                        error={errors.lastName}
+                                                        placeholder="Enter your last name"
+                                                />
+                                        </div>
+
+                                        {/* Profile Photo - Optional */}
 					<div className="text-center">
 						<div className="relative inline-block">
 							<div className="w-24 h-24 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
@@ -301,20 +339,9 @@ export default function OnboardingStep1() {
 						)}
 					</div>
 
-					{/* About Me - Optional and smaller */}
-					<FormField
-						label="Tell us about yourself (optional)"
-						name="bio"
-						type="textarea"
-						value={formData.bio}
-						onChange={(value) => setFormData((prev) => ({ ...prev, bio: value }))}
-						placeholder="What kind of traveler are you? What do you study? Any hobbies?"
-						hint="Help others get to know you better"
-					/>
-
-					{/* Submit Button */}
-					<div className="flex justify-end pt-4">
-						<button
+                                        {/* Submit Button */}
+                                        <div className="flex justify-end pt-4">
+                                                <button
 							type="submit"
 							disabled={isLoading}
 							className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
