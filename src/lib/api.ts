@@ -555,5 +555,18 @@ export async function sendMessage(conversationId: string, text: string) {
 		console.error("Error sending message:", error);
 	}
 
-	return { error };
+        return { error };
+}
+
+// Delete the currently authenticated user account
+export async function deleteAccount() {
+        const response = await fetch("/api/delete-account", {
+                method: "DELETE",
+        });
+
+        if (!response.ok) {
+                return { error: await response.text() };
+        }
+
+        return { error: null };
 }
