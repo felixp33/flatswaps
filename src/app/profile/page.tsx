@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import {
-  ProfileSummary,
-  PropertySummary,
-  ExchangeChecklist,
-  ContractsCard,
-  CardSkeleton,
+	ProfileSummary,
+	PropertySummary,
+	ExchangeChecklist,
+	ContractsCard,
+	CardSkeleton,
 } from "@/components/dashboard";
 import SearchesSummary from "@/components/dashboard/SearchesSummary";
 import { useAuth } from "@/contexts/AuthContext";
@@ -36,8 +36,7 @@ export default function ProfileDashboard() {
 					return;
 				}
 				if (data.profile) setUser(data.profile);
-				if (data.flats && data.flats.length > 0)
-					setUserProperty(data.flats[0]);
+				if (data.flats && data.flats.length > 0) setUserProperty(data.flats[0]);
 				setUserSearches(data.searches || []);
 				setRecentContracts(data.contracts || []);
 			})
@@ -79,11 +78,7 @@ export default function ProfileDashboard() {
 
 				{/* Top Grid - Profile and Property */}
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-					{user ? (
-						<ProfileSummary user={user} />
-					) : (
-						<CardSkeleton />
-					)}
+					{user ? <ProfileSummary user={user} /> : <CardSkeleton />}
 					<PropertySummary property={userProperty} />
 				</div>
 
