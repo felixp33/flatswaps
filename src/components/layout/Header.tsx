@@ -123,46 +123,48 @@ export default function Header() {
                                                         )}
                                                 </div>
 
-						{/* Mobile menu button */}
-						<button
-							type="button"
-							className="md:hidden bg-white dark:bg-gray-900 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
-							onClick={() => setIsMenuOpen(!isMenuOpen)}
-						>
-							<span className="sr-only">Open main menu</span>
-							<svg
-								className={`h-6 w-6 ${isMenuOpen ? "hidden" : "block"}`}
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								aria-hidden="true"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth="2"
-									d="M4 6h16M4 12h16M4 18h16"
-								/>
-							</svg>
-							<svg
-								className={`h-6 w-6 ${isMenuOpen ? "block" : "hidden"}`}
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								aria-hidden="true"
-							>
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-							</svg>
-						</button>
+                                                {/* Mobile menu button - only for logged-in users */}
+                                                {user && (
+                                                        <button
+                                                                type="button"
+                                                                className="md:hidden bg-white dark:bg-gray-900 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                                                                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                                        >
+                                                                <span className="sr-only">Open main menu</span>
+                                                                <svg
+                                                                        className={`h-6 w-6 ${isMenuOpen ? "hidden" : "block"}`}
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        fill="none"
+                                                                        viewBox="0 0 24 24"
+                                                                        stroke="currentColor"
+                                                                        aria-hidden="true"
+                                                                >
+                                                                        <path
+                                                                                strokeLinecap="round"
+                                                                                strokeLinejoin="round"
+                                                                                strokeWidth="2"
+                                                                                d="M4 6h16M4 12h16M4 18h16"
+                                                                        />
+                                                                </svg>
+                                                                <svg
+                                                                        className={`h-6 w-6 ${isMenuOpen ? "block" : "hidden"}`}
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        fill="none"
+                                                                        viewBox="0 0 24 24"
+                                                                        stroke="currentColor"
+                                                                        aria-hidden="true"
+                                                                >
+                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                                                </svg>
+                                                        </button>
+                                                )}
 					</div>
 				</div>
 			</div>
 
-			{/* Mobile menu */}
-			{isMenuOpen && (
-				<div className="md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+                        {/* Mobile menu */}
+                        {user && isMenuOpen && (
+                                <div className="md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
 					<div className="px-2 pt-2 pb-3 space-y-1">
 						{/* Mobile Language Selector */}
 						<div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-4">
